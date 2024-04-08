@@ -1,0 +1,77 @@
+#sidebar {
+  position: fixed;
+  top: 60px;
+  left: 10px;
+  width: 260px;
+  padding: 7px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+#sidebar ul {
+  margin: 0;
+  padding: 0.5rem;
+}
+
+#sidebar .side-menu a {
+  display: flex;
+  align-items: center;
+  margin-top: 0.33rem;
+  padding: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: rgb(85, 83, 83);
+  transition: 0.222s;
+}
+
+#sidebar .side-menu li a:hover{
+  background-color: rgb(175, 175, 175);
+  color: #fff;
+}
+
+#sidebar .side-menu li a.active {
+  background-color: rgb(175, 175, 175);
+  color: #fff;
+}
+
+#sidebar .side-menu a i {
+  margin-right: 9px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropbtn {
+  background-color: #fff;
+  color: black;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  border-radius: 8px;
+  background-color: #fff;
+  min-width: 214px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f9f9f9;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

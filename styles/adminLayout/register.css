@@ -1,0 +1,15 @@
+.register_container {
+    padding-top: 30px;
+
+}
+
+#register_form {
+    margin: 0 auto;
+    width: 50%;
+
+}
+.invalid-feedback {
+    padding-right: 1rem;
+    text-align: end;
+    font-weight: 600;
+}

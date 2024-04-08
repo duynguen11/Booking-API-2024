@@ -1,0 +1,73 @@
+.Banner-content {
+  width: 100%; /* Đảm bảo phần tử chứa hình ảnh nền chiếm toàn bộ chiều rộng */
+  height: 500px; /* Thiết lập chiều cao của phần tử */
+  background-image: url("../../public/banner/Banner_1.jpg"); /* Đường dẫn tới hình ảnh bạn muốn sử dụng làm nền */
+  background-size: cover; /* Thay đổi kích thước hình ảnh để nó phù hợp với phần tử */
+  background-position: center;
+  animation: changeBackground 22s infinite; /* Căn chỉnh hình ảnh để nó ở giữa phần tử */
+}
+
+@keyframes changeBackground {
+  0% {
+    background-image: url("../../public/banner/Banner_1.jpg");
+  }
+  25% {
+    background-image: url("../../public/banner/Banner_2.jpg");
+  }
+  50% {
+    background-image: url("../../public/banner/Banner_3.jpg");
+  }
+  75% {
+    background-image: url("../../public/banner/Banner_4.jpg");
+  }
+  100% {
+    background-image: url("../../public/banner/Banner_1.jpg");
+  }
+}
+
+.text-content {
+  color: white;
+}
+
+.text-content .text-title {
+  font-size: 3rem;
+}
+
+.text-content .text-infomation {
+  font-size: 1.2rem;
+}
+
+.input-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center; /* Canh giữa ngang */
+  align-items: center;
+}
+
+.input-field-container {
+  margin: 0 1px; /* Khoảng cách giữa các input */
+}
+
+.input-field {
+  font-weight: 600;
+  padding: 15px 2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #007bff; /* Màu sắc khi focus */
+}
+.btn-booking {
+  padding: 15px 2rem;
+  font-weight: 600;
+  background-color: rgba(40, 67, 135, 1);
+  border: 1px solid #ccc;
+  margin-left: 2px;
+  border-radius: 5px;
+}
+.btn-booking:hover {
+  background-color: rgba(4, 59, 92, 1);
+}

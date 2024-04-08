@@ -1,0 +1,11 @@
+#login_form {
+    margin: 0 auto;
+    width: 50%;
+}
+.form_container{
+    padding-top: 50px;
+}
+
+.invalid-feedback {
+    text-align: end;
+}

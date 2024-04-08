@@ -1,0 +1,56 @@
+.text-logo {
+  color: rgba(72, 113, 247, 1);
+}
+
+.navbar-header {
+  position: fixed; /* Cố định thanh nav ở đầu trang */
+  top: 0; /* Đặt vị trí của thanh nav ở phía trên cùng của trang */
+  width: 100%; /* Chiều rộng của thanh nav là 100% của trang */
+  z-index: 999;
+}
+
+.navbar-nav li {
+  margin-right: 0.5rem;
+}
+
+.drop-header {
+  margin-top: 20px;
+}
+
+.header {
+  background-color: #333;
+  color: #fff;
+  align-items: center;
+  padding-top: 200px;
+}
+.logo {
+  font-size: 24px;
+}
+.menu {
+  list-style-type: none;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  display: flex;
+  z-index: 888;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  top: 64px;
+  left: 0;
+  font-weight: 500;
+  box-shadow: 5px 5px 5px #ebebeb;
+  padding: 0.3rem;
+}
+.menu-item {
+  margin-right: 20px;
+}
+.menu-item:last-child {
+  margin-right: 0;
+}
+.menu-link {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.menu-link:hover {
+  color: rgba(72, 113, 247, 1);
+}
