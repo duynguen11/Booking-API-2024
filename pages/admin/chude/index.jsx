@@ -62,7 +62,6 @@ const ChuDe = () => {
         }
       );
       if (response.data) {
-        alert('ĐÃ THÊM MỚI CHỦ ĐỀ !')
         router.reload()
       } else {
         console.error(response.data.error || "Có lỗi xảy ra khi tạo chủ đề");
