@@ -148,13 +148,13 @@ const HomeHeader = () => {
       className="navbar navbar-expand-lg navbar-light bg-light px-5 navbar-header"
     >
       <div className="container-fluid">
-        <a
+        <Link
           style={{ fontSize: "25px" }}
           className="navbar-brand fw-bolder text-logo"
           href="/"
         >
           <i className="fa-solid fa-dice-d20"></i> TOUR & TRAVEL
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -175,22 +175,22 @@ const HomeHeader = () => {
             className="navbar-nav mb-2 mb-lg-0 fw-bolder header_home"
           >
             <li className="nav-item">
-              <a
+              <Link
                 className={`nav-link ${activeItem === "/" ? "active" : ""}`}
                 href="/"
               >
                 Trang chủ
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a
+              <Link
                 className={`nav-link ${
                   activeItem === "/tourlist" ? "active" : ""
                 }`}
                 href="/tourlist"
               >
                 Du lịch
-              </a>
+              </Link>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -209,22 +209,22 @@ const HomeHeader = () => {
               >
                 {category.map((c) => (
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" href="#">
                       {c.TenChuDe}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </li>
             <li className="nav-item">
-              <a
+              <Link
                 className={`nav-link ${
                   activeItem === "/lienhe" ? "active" : ""
                 }`}
                 href="/lienhe"
               >
                 Liên hệ
-              </a>
+              </Link>
             </li>
           </ul>
           <div className="d-flex align-items-center rounded fw-bolder">
@@ -244,14 +244,14 @@ const HomeHeader = () => {
                     className="modal-box rounded border w-100 p-2 bg-white "
                     style={{ position: "absolute", top: "50px", zIndex: "999" }}
                   >
-                    <a href="/thongtinuser" className="nav-link ">
+                    <Link href="/thongtinuser" className="nav-link ">
                       <i className="fa fa-user me-2"></i>Hồ sơ cá nhân
-                    </a>
+                    </Link>
                     <hr className="m-2" />
-                    <a href="/touryeuthich" className="nav-link">
+                    <Link href="/touryeuthich" className="nav-link">
                       <i className="fa-solid fa-layer-group me-2"></i>Tour đã
                       lưu
-                    </a>
+                    </Link>
                     <hr className="m-2" />
                     <a href="" className="nav-link">
                       <i className="fa-solid fa-business-time me-2"></i>Lịch sử
@@ -323,7 +323,7 @@ const HomeHeader = () => {
                     </Form.Text>
                   )}
                 </Form.Group>
-                <a href="/register">Bạn đã có tài khoản? Đăng ký.</a>
+                <Link href="/register">Bạn đã có tài khoản? Đăng ký.</Link>
               </Form>
             </Modal.Body>
             <Modal.Footer>

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useMemo, useCallback } from "react";
+import Link from "next/link";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -16,34 +17,34 @@ const Sidebar = () => {
     <div id="sidebar" className="d-flex flex-column justify-content-between">
       <ul className="side-menu">
         <li>
-          <a href="/admin" className={activeItem === "/admin" ? "active" : ""}>
+          <Link href="/admin" className={activeItem === "/admin" ? "active" : ""}>
             <i className="fas fa-house-user"></i>
             <span className="nav-item">Dashboard</span>
-          </a>
+          </Link>
         </li><hr />
         <li>
-          <a
+          <Link
             href="/admin/chude"
             className={activeItem === "/admin/chude" ? "active" : ""}
           >
             <i className="fa-solid fa-list"></i>
             <span className="nav-item">Quản lý danh mục</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="/admin/tour"
             className={activeItem === "/admin/tour" ? "active" : ""}
           >
             <i className="fa-solid fa-route"></i>
             Danh sách tour
             <i className="fa-solid"></i>
-          </a>
+          </Link>
         </li>
-        <li><a href="/admin/donhang" className={activeItem === "/admin/donhang" ? "active" : ""}><i className="fa-solid fa-file-invoice"></i>Đơn hàng</a></li>
+        <li><Link href="/admin/donhang" className={activeItem === "/admin/donhang" ? "active" : ""}><i className="fa-solid fa-file-invoice"></i>Đơn hàng</Link></li>
         <hr />
         <li className="dropdown">
-          <a
+          <Link
             href="#"
             className="dropbtn d-flex justify-content-between align-items-center"
           >
@@ -52,29 +53,29 @@ const Sidebar = () => {
               <span className="nav-item">Tài khoản</span>
             </div>
             <i className="fa-solid fa-angle-right"></i>
-          </a>
+          </Link>
           <div className="dropdown-content">
-            <a href="/admin/employee">Tài khoản nhân viên</a>
-            <a href="/admin/customer">Tài khoản khách hàng</a>
+            <Link href="/admin/employee">Tài khoản nhân viên</Link>
+            <Link href="/admin/customer">Tài khoản khách hàng</Link>
           </div>
         </li>
-        <li><a href="/admin/hopthu" className={activeItem === "/admin/hopthu" ? "active" : ""}><i className="fa-solid fa-inbox"></i>Hộp thư</a></li>
+        <li><Link href="/admin/hopthu" className={activeItem === "/admin/hopthu" ? "active" : ""}><i className="fa-solid fa-inbox"></i>Hộp thư</Link></li>
         <hr />
         <li>
-          <a href="#">
+          <Link href="#">
             <i className="fas fa-cog"></i>
             <span className="nav-item">Cài đặt</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link href="#">
             <i className="fa-regular fa-circle-question"></i>
             <span className="nav-item">Giúp đỡ</span>
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="p-2">
-        <a
+        <Link
           href="/admin/login"
           className="d-flex align-items-center btn btn-danger w-100"
         >
@@ -82,7 +83,7 @@ const Sidebar = () => {
           <span style={{ fontSize: ".9rem" }} className="nav-item">
             Đăng xuất
           </span>
-        </a>
+        </Link>
       </div>
     </div>
   );
