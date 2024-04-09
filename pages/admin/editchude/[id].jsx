@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Modal, Button, Form, Alert } from "react-bootstrap";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AdminLayout from "@/components/AdminLayout/AdminLayout";
@@ -20,12 +21,12 @@ const EditChude = () => {
       axios
         .get(`http://localhost:2024/api/chude/${id}`)
         .then((result) => {
-          setCategory({
-            ...category,
+          setCategory((prevCategory) => ({
+            ...prevCategory,
             MaChuDe: result.data.Result[0].MaChuDe,
             TenChuDe: result.data.Result[0].TenChuDe,
             ThongTinChuDe: result.data.Result[0].ThongTinChuDe,
-          });
+          }));
         })
         .catch((err) => console.log(err));
     }
@@ -124,9 +125,9 @@ const EditChude = () => {
           </Form.Group>
 
           <div className="d-flex justify-content-between mt-3">
-            <a className="btn btn-secondary" href="/admin/chude">
+            <Link className="btn btn-secondary" href="/admin/chude">
               Quay lại
-            </a>
+            </Link>
             <div className="d-flex">
               <button
                 type="submit"
