@@ -54,7 +54,7 @@ const ChuDe = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:2024/api/chude/create",
+        "https://api-bookingnodejs.onrender.com/api/chude/create",
         {
           MaChuDe: categoryCode,
           TenChuDe: categoryName,
@@ -75,7 +75,7 @@ const ChuDe = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:2024/api/chude/delete/${id}`
+        `https://api-bookingnodejs.onrender.com/api/chude/delete/${id}`
       );
       if (response.status === 200) {
         alert('ĐÃ XÓA CHỦ ĐỀ !')

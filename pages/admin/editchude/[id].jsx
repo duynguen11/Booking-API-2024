@@ -19,7 +19,7 @@ const EditChude = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://localhost:2024/api/chude/${id}`)
+        .get(`https://api-bookingnodejs.onrender.com/api/chude/${id}`)
         .then((result) => {
           setCategory((prevCategory) => ({
             ...prevCategory,
