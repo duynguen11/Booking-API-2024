@@ -278,9 +278,9 @@ const AddTourForm = () => {
             />
           </div>
           <div className="d-flex justify-content-between">
-            <a className="btn btn-secondary" href="/admin/tour">
+            <Link className="btn btn-secondary" href="/admin/tour">
               Quay lại
-            </a>
+            </Link>
             <div className="d-flex">
               <Button color="success" type="submit">
                 Lưu thông tin
