@@ -40,7 +40,7 @@ const EditChude = () => {
   const handleSubmit = async (id) => {
     try {
       const response = await axios.put(
-        `http://localhost:2024/api/chude/update/${id}`,
+        `https://api-bookingnodejs.onrender.com/api/chude/update/${id}`,
         category
       );
       if (response.status === 200) {
