@@ -122,7 +122,7 @@ const LienHe = () => {
                 className="rounded"
                 src="/banner/contact_us.png"
                 alt="Online View"
-                style={{ maxWidth: "100%" }}
+                style={{ width: "100%" }}
               />
             </div>
           </Col>
