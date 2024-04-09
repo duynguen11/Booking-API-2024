@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HomeHeader from "@/components/HomeLayout/HomeHeader";
 import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 const Booking = () => {
@@ -271,7 +272,7 @@ const Booking = () => {
       <div className="container" style={{ marginTop: "80px" }}>
         <div className="row border bg-light px-2 py-3 rounded mt-3">
           <div className="col-4">
-            <img
+            <Image
               className="rounded"
               style={{ width: "100%", height: "100%" }}
               src={`http://localhost:2024/${tourInfo.URL}`}
@@ -393,7 +394,7 @@ const Booking = () => {
               style={{ width: "fit-content" }}
             >
               <div className="">
-                <img
+                <Image
                   style={{ width: "150px", height: "150px" }}
                   className="rounded"
                   src=""
@@ -434,7 +435,7 @@ const Booking = () => {
                 <h5>Thông tin chuyến đi</h5>
                 <div className="d-flex">
                   <div className="me-3">
-                    <img
+                    <Image
                       className="rounded"
                       style={{ width: "150px", height: "100px" }}
                       src={`http://localhost:2024/${tourInfo.URL}`}

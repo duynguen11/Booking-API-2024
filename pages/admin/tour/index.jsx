@@ -3,6 +3,7 @@ import { Table, Modal, Button, Form, Alert } from "react-bootstrap";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AdminLayout from "@/components/AdminLayout/AdminLayout";
@@ -83,12 +84,13 @@ export default function Tour() {
             </tr>
           </thead>
           <tbody>
-            {tour.map((item) => (
-              <tr>
+            {tour.map((item, index) => (
+              <tr key={index}>
                 <td>
-                  <img
+                  <Image
                     style={{ width: "60px" }}
                     src={`http://localhost:2024/${item.URL}`}
+                    alt="hinh anh tour"
                   />
                 </td>
                 <td>{item.TenTour}</td>
