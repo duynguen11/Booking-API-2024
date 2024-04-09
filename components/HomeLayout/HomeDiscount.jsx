@@ -32,7 +32,8 @@ const HomeDiscount = () => {
             <div className="p-2 rounded d-flex mb-3 card-shadow">
               <div style={{width: '30%'}} className="image-container me-3">
                 <Image
-                  height={"250px"}
+                  width='300'
+                  height="250"
                   src={`http://localhost:2024/${t.URL}`}
                   className="card-img-top rounded"
                   alt={t.TenTour}
