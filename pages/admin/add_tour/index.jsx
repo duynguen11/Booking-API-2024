@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -110,7 +111,7 @@ const AddTourForm = () => {
             <label className="mt-3">Hình ảnh tour:</label>
             <div className="">
               {formData.HinhAnh.map((file, index) => (
-                <img
+                <Image
                   className="py-1 rounded"
                   key={index}
                   src={URL.createObjectURL(file)} // Tạo đường dẫn URL tạm thời cho hình ảnh
@@ -279,9 +280,11 @@ const AddTourForm = () => {
               Quay lại
             </a>
             <div className="d-flex">
-              <a href="/admin/addtour" className="btn btn-secondary me-2">
-                <i className="fa-solid fa-arrow-rotate-right"></i>
-              </a>
+              <Link href="/admin/addtour">
+                <a className="btn btn-secondary me-2">
+                  <i className="fa-solid fa-arrow-rotate-right"></i>
+                </a>
+              </Link>
               <Button color="success" type="submit">
                 Lưu thông tin
               </Button>
