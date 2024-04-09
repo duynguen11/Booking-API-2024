@@ -139,7 +139,7 @@ const TourList = () => {
       setIsDateContentVisible(false);
     }
     setPrevSelectedCategory(selectedCategory);
-  }, [selectedCategory, prevSelectedCategory, selectedDate, selectedDate]);
+  }, [selectedCategory, prevSelectedCategory, selectedDate]);
 
   const handleChange = (event) => {
     const newValue = parseInt(event.target.value);
@@ -225,7 +225,7 @@ const TourList = () => {
   };
 
   // Hàm useEffect để sắp xếp dữ liệu khi sortType thay đổi
-  useEffect(() => {
+  /*useEffect(() => {
     if (sortType === "price-desc") {
       const sortedTour = [...tour].sort((a, b) => b.GiaTour - a.GiaTour);
       setTour(sortedTour);
@@ -236,8 +236,21 @@ const TourList = () => {
       // Reset lại state `tour` về dữ liệu ban đầu
       setTour(initialTour);
     }
-  }, [sortType, initialTour]);
+  }, [sortType, initialTour]);*/
   // Dùng tour ở đây để đảm bảo useEffect cập nhật khi tour thay đổi
+
+  useEffect(() => {
+    if (sortType === "price-desc") {
+      const sortedTour = [...initialTour].sort((a, b) => b.GiaTour - a.GiaTour);
+      setTour(sortedTour);
+    } else if (sortType === "price-asc") {
+      const sortedTour = [...initialTour].sort((a, b) => a.GiaTour - b.GiaTour);
+      setTour(sortedTour);
+    } else {
+      // Reset lại state `tour` về dữ liệu ban đầu
+      setTour(initialTour);
+    }
+  }, [sortType, initialTour]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);

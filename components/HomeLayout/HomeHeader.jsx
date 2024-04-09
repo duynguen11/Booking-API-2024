@@ -207,8 +207,8 @@ const HomeHeader = () => {
                 className="dropdown-menu drop-header"
                 aria-labelledby="navbarDropdown"
               >
-                {category.map((c) => (
-                  <li>
+                {category.map((c, index) => (
+                  <li key={index}>
                     <Link className="dropdown-item" href="#">
                       {c.TenChuDe}
                     </Link>
