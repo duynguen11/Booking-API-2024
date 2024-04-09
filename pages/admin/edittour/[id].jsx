@@ -5,6 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AdminLayout from "@/components/AdminLayout/AdminLayout";
 import axios from "axios";
+import Link from "next/link";
+import Image from 'next/image';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -32,9 +34,8 @@ const EditTour = () => {
       axios
         .get(`http://localhost:2024/api/tour/${id}`)
         .then((result) => {
-          console.log(result.data[0]);
-          setTour({
-            ...tour,
+          setTour((prevTour) => ({
+            ...prevTour,
             MaTour: result.data[0].MaTour,
             TenTour: result.data[0].TenTour,
             GiaTour: result.data[0].GiaTour,
@@ -48,7 +49,7 @@ const EditTour = () => {
             DiemDen: result.data[0].DiemDen,
             MaHinhAnh: result.data[0].MaHinhAnh,
             URL: result.data[0].URL,
-          });
+          }));
         })
         .catch((err) => console.log(err));
     }
@@ -458,9 +459,9 @@ const EditTour = () => {
         <div className="row d-flex d-flex justify-content-around w-70 my-3">
           <div className="col-7">
             <div className="mb-3">
-              <img
+              <Image
                 src={`http://localhost:2024/${tour.URL}`}
-                alt="Your Image"
+                alt="Tour Big Image"
                 className="mr-3 rounded"
                 style={{ width: "100%" }}
               />
@@ -496,8 +497,8 @@ const EditTour = () => {
           <div className="d-flex justify-content-between">
             <div className="image-container mb-5">
               {imageURLs.map((imageURL, index) => (
-                <div className="image-wrapper">
-                  <img
+                <div className="image-wrapper" key={index}>
+                  <Image
                     className="rounded"
                     style={{
                       width: "200px",
@@ -520,8 +521,8 @@ const EditTour = () => {
                 <p className="fw-bolder">Tải lên bộ sưu tập</p>
                 <div className="image-preview d-flex">
                   {images.map((image, index) => (
-                    <div>
-                      <img
+                    <div key={index}>
+                      <Image
                         style={{
                           width: "200px",
                           height: "200px",
@@ -710,7 +711,7 @@ const EditTour = () => {
                     }
                   >
                     {category.map((c) => {
-                      return <option value={c.MaChuDe}>{c.TenChuDe}</option>;
+                      return <option key={c.MaChuDe} value={c.MaChuDe}>{c.TenChuDe}</option>;
                     })}
                   </select>
                 </div>
@@ -733,7 +734,6 @@ const EditTour = () => {
         <div className="d-flex justify-content-between">
           <a className=""></a>
           <div className="d-flex">
-            <a href="/"></a>
             <Button onClick={handleInfoTour} variant="success" type="submit">
               Lưu thông tin
             </Button>
@@ -748,7 +748,7 @@ const EditTour = () => {
                 style={{ width: "200px", height: "200px" }}
                 className="border rounded"
               >
-                <img src="" alt="" />
+                <Image src="" alt="" />
               </div>
               <div className="mt-2">
                 <div>Họ tên: {hoten}</div>
