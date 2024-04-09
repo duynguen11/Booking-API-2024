@@ -114,7 +114,8 @@ const AddTourForm = () => {
                 <Image
                   className="py-1 rounded"
                   key={index}
-                  src={URL.createObjectURL(file)} // Tạo đường dẫn URL tạm thời cho hình ảnh
+                  src={URL.createObjectURL(file)}
+                  alt="image"// Tạo đường dẫn URL tạm thời cho hình ảnh
                   style={{ width: "100%" }}
                 />
               ))}
@@ -282,7 +283,7 @@ const AddTourForm = () => {
             <div className="d-flex">
               <Link href="/admin/addtour">
                 <a className="btn btn-secondary me-2">
-                  <i className="fa-solid fa-arrow-rotate-right"></i>
+                  <i className="fa-solid fa-arrow-rotate-right" alt="arrow"></i>
                 </a>
               </Link>
               <Button color="success" type="submit">
