@@ -3,6 +3,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from 'next/image'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HomeHeader from "@/components/HomeLayout/HomeHeader";
@@ -45,7 +47,7 @@ const ThongtinUser = () => {
           toast.success("Cập nhật thông tin thành công .");
         }
       })
-      
+
       .catch((error) => {
         console.error("Error saving user info:", error);
         // Xử lý lỗi khi gửi dữ liệu lên máy chủ
@@ -102,14 +104,14 @@ const ThongtinUser = () => {
                 className="nav-ttcn px-5"
               >
                 <li>
-                  <a href="/thongtinuser">
+                  <Link href="/thongtinuser">
                     <i className="fa fa-user me-2"></i>Hồ sơ cá nhân
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/touryeuthich">
+                  <Link href="/touryeuthich">
                     <i className="fa-solid fa-layer-group me-2"></i>Tour đã lưu
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="">
@@ -118,10 +120,10 @@ const ThongtinUser = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="/phanhoi">
+                  <Link href="/phanhoi">
                     <i className="fa-solid fa-inbox me-2"></i>
                     Hộp thư
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -129,7 +131,7 @@ const ThongtinUser = () => {
               <h4>CẬP NHẬT THÔNG TIN CÁ NHÂN</h4>
               <label>Ảnh đại diện:</label>
               <div className="d-flex align-items-center">
-                <img
+                <Image
                   className="rounded"
                   style={{ width: "200px", height: "200px" }}
                   src={
@@ -137,7 +139,7 @@ const ThongtinUser = () => {
                       ? `http://localhost:2024/avatars/${userInfo.Avatar_URL}`
                       : "/avatar/avatar_default.jpg"
                   }
-                  alt=""
+                  alt="avatar user"
                 />
                 {selectedImage && (
                   <div className="d-flex align-items-center ms-2">
@@ -145,7 +147,7 @@ const ThongtinUser = () => {
                       style={{ fontSize: "20px" }}
                       className="fa-solid fa-code-compare"
                     ></i>
-                    <img
+                    <Image
                       style={{ width: "200px", height: "200px" }}
                       className="rounded border ms-2"
                       src={

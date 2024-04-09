@@ -246,7 +246,7 @@ const ThongtinTour = () => {
                 </div>
                 <div className="col-4 pe-0 ps-0 rounded d-flex flex-column justify-content-center align-items-center">
                   <div className="">
-                    <img
+                    <Image
                       className="rounded mb-2"
                       src="/banner/Banner_2.jpg"
                       alt=""
@@ -254,7 +254,7 @@ const ThongtinTour = () => {
                     />
                   </div>
                   <div className="">
-                    <img
+                    <Image
                       className="rounded"
                       src="/banner/Banner_4.jpg"
                       alt=""
