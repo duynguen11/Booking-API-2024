@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Modal } from "react-bootstrap";
@@ -203,7 +204,10 @@ const ThongtinTour = () => {
       <div></div>
       <div className="px-5" style={{ marginTop: "130px" }}>
         {tour.map((t, index) => (
-          <div className="container px-5 d-flex justify-content-center align-items-center">
+          <div
+            className="container px-5 d-flex justify-content-center align-items-center"
+            key={index}
+          >
             <div>
               <div className="row d-flex">
                 <div className="col-8">
@@ -233,7 +237,7 @@ const ThongtinTour = () => {
               </div>
               <div className="row mt-3" style={{ height: "100%" }}>
                 <div className="col-8 rounded d-flex justify-content-center align-items-center">
-                  <img
+                  <Image
                     src={`http://localhost:2024/${t.URL}`}
                     className="card-img-top rounded me-1"
                     alt={t.TenTour}
@@ -301,7 +305,7 @@ const ThongtinTour = () => {
                   handleOpenModal(`http://localhost:2024/${item.URL}`)
                 }
               >
-                <img
+                <Image
                   className="rounded mt-2"
                   width={"300px"}
                   height={"200px"}
@@ -314,7 +318,7 @@ const ThongtinTour = () => {
         </Row>
         <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
           <Modal.Body style={{ textAlign: "center" }}>
-            <img
+            <Image
               src={selectedImage}
               alt="Ảnh lớn"
               style={{ width: "100%", height: "500px", objectFit: "cover" }}
@@ -342,8 +346,8 @@ const ThongtinTour = () => {
                 THÔNG TIN CHI TIẾT CHUYẾN ĐI
               </h4>
               {chitiettour.map((c, index) => (
-                <div className="bg-light p-3 rounded">
-                  <div className="" key={index}>
+                <div className="bg-light p-3 rounded" key={index}>
+                  <div className="" >
                     <p>
                       <i class="fa-solid fa-calendar-days me-2"></i>
                       Ngày đi: {format(new Date(c.TTCT_ngaydi), "dd-MM-yyyy")}
@@ -403,7 +407,7 @@ const ThongtinTour = () => {
             {chitiettour.map((c, index) => (
               <div className="d-flex p-3 bg-light rounded" key={index}>
                 <div className="">
-                  <img
+                  <Image
                     className="rounded"
                     width={"150px"}
                     height={"150px"}
@@ -453,7 +457,7 @@ const ThongtinTour = () => {
                   style={{ width: "350px" }}
                 >
                   <div className="shadow p-2 rounded" style={{ width: "100%" }}>
-                    <img
+                    <Image
                       height={"220px"}
                       src={`http://localhost:2024/${item.URL}`}
                       className="card-img-top rounded"
