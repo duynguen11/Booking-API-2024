@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Image from 'next/image';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AdminLayout from "@/components/AdminLayout/AdminLayout";
@@ -34,8 +35,8 @@ const CustomerInfo = () => {
       axios
         .get(apiUrl)
         .then((result) => {
-          setInfoCustomer({
-            ...infoCustomer,
+          setInfoCustomer((prevInfoCustomer) => ({
+            ...prevInfoCustomer,
             Avatar_url: result.data.userInfo.Avatar_URL,
             MaTaikhoan: result.data.userInfo.MaTaikhoan,
             TaiKhoan: result.data.userInfo.TaiKhoan,
@@ -45,7 +46,7 @@ const CustomerInfo = () => {
             NgaySinh: result.data.userInfo.NgaySinh,
             GioiTinh: result.data.userInfo.GioiTinh,
             DiaChi: result.data.userInfo.DiaChi,
-          });
+          }));
         })
         .catch((err) => console.log(err));
     }
@@ -80,11 +81,11 @@ const CustomerInfo = () => {
         <h4 className="fw-bolder">Thông tin thành viên</h4>
         <div className="row">
           <div className="col-md-4 d-flex justify-content-center align-items-center">
-            <img
+            <Image
             className="rounded"
               style={{ width: "200px", height: "200px" }}
               src={`http://localhost:2024/avatars/${infoCustomer.Avatar_url}`}
-              alt=""
+              alt="image avatar"
             />
           </div>
           <div className="col-md-8">
