@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Image from 'next/image';
 import Link from "next/link";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -282,9 +283,9 @@ const AddTourForm = () => {
             </a>
             <div className="d-flex">
               <Link href="/admin/addtour">
-                <a className="btn btn-secondary me-2">
+                <button className="btn btn-secondary me-2">
                   <i className="fa-solid fa-arrow-rotate-right" alt="arrow"></i>
-                </a>
+                </button>
               </Link>
               <Button color="success" type="submit">
                 Lưu thông tin
