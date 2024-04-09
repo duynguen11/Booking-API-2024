@@ -15,7 +15,7 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const register = () => {
+const Register = () => {
   const [submitted, setSubmitted] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [formData, setFormData] = useState({
@@ -208,4 +208,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;
