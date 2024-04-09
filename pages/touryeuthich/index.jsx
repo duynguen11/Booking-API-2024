@@ -48,9 +48,9 @@ const TourYeuthich = () => {
               className="nav-ttcn px-5"
             >
               <li>
-                <a href="/thongtinuser">
+                <Link href="/thongtinuser">
                   <i className="fa fa-user me-2"></i>Hồ sơ cá nhân
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="">
@@ -64,10 +64,10 @@ const TourYeuthich = () => {
                 </a>
               </li>
               <li>
-                <a href="/phanhoi">
+                <Link href="/phanhoi">
                   <i className="fa-solid fa-inbox me-2"></i>
                   Hộp thư
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -88,8 +88,8 @@ const TourYeuthich = () => {
             </tr>
           </thead>
           <tbody>
-            {favoriteTour.map((item) => (
-              <tr>
+            {favoriteTour.map((item, index) => (
+              <tr key={index}>
                 <td>{item.TenTour}</td>
                 <td>{item.GiaTour}</td>
                 <td>{item.ThoiGian}</td>

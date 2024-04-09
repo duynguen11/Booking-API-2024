@@ -1,12 +1,13 @@
 import React from "react";
+import Link from "next/link";
 
 const Header = () => {
   return (
     <div className="header-admin">
       <div className="logo">
-        <a className="fw-bold" href="/admin">
+        <Link className="fw-bold" href="/admin">
           HỆ THỐNG QUẢN LÝ ADMIN
-        </a>
+        </Link>
       </div>
     </div>
   );
