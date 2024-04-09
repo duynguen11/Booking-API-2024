@@ -3,6 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
+import Image from 'next/image'
 import HomeHeader from "@/components/HomeLayout/HomeHeader";
 import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import { ToastContainer, toast } from "react-toastify";
@@ -26,13 +27,13 @@ const LienHe = () => {
             `http://localhost:2024/api/account/user-info/${userId}`
           );
           const userData = response.data;
-          setMessData({
-            ...messData,
+          setMessData((prevMessData) => ({
+            ...prevMessData,
             hoten: userData.userInfo.HoTen,
             email: userData.userInfo.Email,
             lienhe: userData.userInfo.LienHe,
             // Thêm các trường khác nếu cần
-          });
+          }));
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
@@ -117,7 +118,7 @@ const LienHe = () => {
         <Row className="mt-4">
           <Col xs={12} md={6}>
             <div>
-              <img
+              <Image
                 className="rounded"
                 src="/banner/contact_us.png"
                 alt="Online View"

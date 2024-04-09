@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import Link from 'next/link'
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeHeader from "@/components/HomeLayout/HomeHeader";
@@ -49,14 +50,14 @@ const Phanhoi = () => {
               className="nav-ttcn px-5"
             >
               <li>
-                <a href="/thongtinuser">
+                <Link href="/thongtinuser">
                   <i className="fa fa-user me-2"></i>Hồ sơ cá nhân
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/touryeuthich">
+                <Link href="/touryeuthich">
                   <i className="fa-solid fa-layer-group me-2"></i>Tour đã lưu
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="">
@@ -65,10 +66,10 @@ const Phanhoi = () => {
                 </a>
               </li>
               <li>
-                <a href="/phanhoi">
+                <Link href="/phanhoi">
                   <i className="fa-solid fa-inbox me-2"></i>
                   Hộp thư
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
