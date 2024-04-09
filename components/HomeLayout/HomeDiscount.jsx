@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import Image from "next/image";
 import { Container } from "react-bootstrap";
 
 const HomeDiscount = () => {
@@ -30,7 +31,7 @@ const HomeDiscount = () => {
           <div className="col-12" key={t.MaTour}>
             <div className="p-2 rounded d-flex mb-3 card-shadow">
               <div style={{width: '30%'}} className="image-container me-3">
-                <img
+                <Image
                   height={"250px"}
                   src={`http://localhost:2024/${t.URL}`}
                   className="card-img-top rounded"

@@ -3,6 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeLayout from "@/components/HomeLayout/HomeLayout";
 import axios from "axios";
+import Image from "next/image";
 import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import { Form, InputGroup, FormControl, Button, Modal } from "react-bootstrap";
 import { RingLoader } from "react-spinners";
@@ -480,7 +481,7 @@ const TourList = () => {
                               >
                                 <i className="fa-solid fa-heart"></i>
                               </div>
-                              <img
+                              <Image
                                 height={"220px"}
                                 src={`http://localhost:2024/${t.URL}`}
                                 className="card-img-top rounded"
@@ -570,7 +571,7 @@ const TourList = () => {
                         >
                           <i class="fa-solid fa-heart"></i>
                         </div>
-                        <img
+                        <Image
                           height={"220px"}
                           src={`http://localhost:2024/${t.URL}`}
                           className="card-img-top rounded"
@@ -674,7 +675,7 @@ const TourList = () => {
                               >
                                 <i class="fa-solid fa-heart"></i>
                               </div>
-                              <img
+                              <Image
                                 height={"220px"}
                                 src={`http://localhost:2024/${t.URL}`}
                                 className="card-img-top rounded"
