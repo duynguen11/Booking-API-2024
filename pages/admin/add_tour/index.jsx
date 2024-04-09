@@ -282,11 +282,6 @@ const AddTourForm = () => {
               Quay lại
             </a>
             <div className="d-flex">
-              <Link href="/admin/addtour">
-                <button className="btn btn-secondary me-2">
-                  <i className="fa-solid fa-arrow-rotate-right" alt="arrow"></i>
-                </button>
-              </Link>
               <Button color="success" type="submit">
                 Lưu thông tin
               </Button>
