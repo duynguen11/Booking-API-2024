@@ -16,7 +16,7 @@ export default function Tour() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:2024/api/tour");
+        const response = await axios.get("https://api-bookingnodejs.onrender.com/api/tour");
         setTour(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -29,7 +29,7 @@ export default function Tour() {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:2024/api/tour/delete/${id}`
+        `https://api-bookingnodejs.onrender.com/tour/delete/${id}`
       );
       if (response.data.status) {
         alert("ĐÃ XÓA TOUR !");
