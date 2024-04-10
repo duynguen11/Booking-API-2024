@@ -30,7 +30,7 @@ const AddTourForm = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:2024/api/chude")
+      .get("https://api-bookingnodejs.onrender.com/api/chude")
       .then((result) => {
         if (result.data) {
           // Ở đây, chúng ta cần gán dữ liệu chủ đề vào ChudeData, không phải value của select
@@ -65,7 +65,7 @@ const AddTourForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:2024/api/test_tour/addtour",
+        "https://api-bookingnodejs.onrender.com/api/test_tour/addtour",
         formDataToSend,
         {
           headers: {

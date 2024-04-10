@@ -32,7 +32,7 @@ const EditTour = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://localhost:2024/api/tour/${id}`)
+        .get(`https://api-bookingnodejs.onrender.com/api/tour/${id}`)
         .then((result) => {
           setTour((prevTour) => ({
             ...prevTour,
@@ -58,7 +58,7 @@ const EditTour = () => {
   const [category, setCategory] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:2024/api/chude")
+      .get("https://api-bookingnodejs.onrender.com/api/chude")
       .then((result) => {
         if (result.data) {
           setCategory(result.data);
@@ -88,7 +88,7 @@ const EditTour = () => {
       };
 
       axios
-        .put(`http://localhost:2024/api/tour/update/${id}`, updatedTour, {
+        .put(`https://api-bookingnodejs.onrender.com/tour/update/${id}`, updatedTour, {
           headers: {
             "Content-Type": "application/json", // Set Content-Type to application/json
           },
