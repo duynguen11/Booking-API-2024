@@ -29,7 +29,7 @@ export default function Tour() {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `https://api-bookingnodejs.onrender.com/tour/delete/${id}`
+        `https://api-bookingnodejs.onrender.com/api/tour/delete/${id}`
       );
       if (response.data.status) {
         alert("ĐÃ XÓA TOUR !");

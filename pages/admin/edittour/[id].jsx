@@ -88,7 +88,7 @@ const EditTour = () => {
       };
 
       axios
-        .put(`https://api-bookingnodejs.onrender.com/tour/update/${id}`, updatedTour, {
+        .put(`https://api-bookingnodejs.onrender.com/api/tour/update/${id}`, updatedTour, {
           headers: {
             "Content-Type": "application/json", // Set Content-Type to application/json
           },
