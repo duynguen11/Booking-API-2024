@@ -511,7 +511,7 @@ const EditTour = () => {
                       objectFit: "cover",
                     }}
                     key={index}
-                    src={`https://api-bookingnodejs.onrender.com/${imageURL.URL}`}
+                    src={`https://api-bookingnodejs.onrender.com${imageURL.URL}`}
                     alt={`Image ${index + 1}`}
                   />
                   <button
