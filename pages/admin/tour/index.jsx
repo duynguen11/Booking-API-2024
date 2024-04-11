@@ -89,7 +89,7 @@ export default function Tour() {
                 <td>
                   <Image
                     style={{ width: "60px" }}
-                    src={`http://localhost:2024/${item.URL}`}
+                    src={`https://api-bookingnodejs.onrender.com/${item.URL}`}
                     alt="hinh anh tour"
                   />
                 </td>
