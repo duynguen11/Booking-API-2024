@@ -17,6 +17,7 @@ export default function Tour() {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://api-bookingnodejs.onrender.com/api/tour");
+        console.log('Danh sách tour:', response.data)
         setTour(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -92,6 +93,7 @@ export default function Tour() {
                     src={`https://api-bookingnodejs.onrender.com/${item.URL}`}
                     alt="hinh anh tour"
                   />
+                  <h4>Link ảnh: {item.URL}</h4>
                 </td>
                 <td>{item.TenTour}</td>
                 <td>{item.GiaTour}</td>
