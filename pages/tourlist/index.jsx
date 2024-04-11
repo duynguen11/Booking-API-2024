@@ -495,7 +495,8 @@ const TourList = () => {
                                 <i className="fa-solid fa-heart"></i>
                               </div>
                               <Image
-                                height={"220px"}
+                                width={'300'}
+                                height={"220"}
                                 src={`http://localhost:2024/${t.URL}`}
                                 className="card-img-top rounded"
                                 alt={t.TenTour}
@@ -585,7 +586,8 @@ const TourList = () => {
                           <i class="fa-solid fa-heart"></i>
                         </div>
                         <Image
-                          height={"220px"}
+                        width={'300'}
+                          height={"220"}
                           src={`http://localhost:2024/${t.URL}`}
                           className="card-img-top rounded"
                           alt={t.TenTour}
@@ -689,7 +691,8 @@ const TourList = () => {
                                 <i class="fa-solid fa-heart"></i>
                               </div>
                               <Image
-                                height={"220px"}
+                              width={'300'}
+                                height={"220"}
                                 src={`http://localhost:2024/${t.URL}`}
                                 className="card-img-top rounded"
                                 alt={t.TenTour}

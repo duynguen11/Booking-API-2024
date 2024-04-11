@@ -33,6 +33,7 @@ const EditTour = () => {
     if (id) {
       axios
         .get(`https://api-bookingnodejs.onrender.com/api/tour/${id}`)
+        //.get(`https://localhost:2024/api/tour/${id}`)
         .then((result) => {
           setTour((prevTour) => ({
             ...prevTour,
@@ -385,7 +386,7 @@ const EditTour = () => {
     const fetchImageURLs = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2024/api/tour/imageExtras/${id}`
+          `https://api-bookingnodejs.onrender.com/api/tour/imageExtras/${id}`
         );
         setImageURLs(response.data.images);
       } catch (error) {
@@ -413,7 +414,7 @@ const EditTour = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:2024/api/tour/uploadExtras/${id}`,
+        `https://api-bookingnodejs.onrender.com/api/tour/uploadExtras/${id}`,
         formData,
         {
           headers: {
@@ -421,7 +422,7 @@ const EditTour = () => {
           },
         }
       );
-      console.log("Images uploaded:", response.data);
+      console.log("Images extra uploaded:", response.data);
       // Xử lý phản hồi nếu cần
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -460,6 +461,8 @@ const EditTour = () => {
           <div className="col-7">
             <div className="mb-3">
               <Image
+                width={'500'}
+                height={'350'}
                 src={`http://localhost:2024/${tour.URL}`}
                 alt="Tour Big Image"
                 className="mr-3 rounded"
@@ -499,6 +502,8 @@ const EditTour = () => {
               {imageURLs.map((imageURL, index) => (
                 <div className="image-wrapper" key={index}>
                   <Image
+                    width={'200'}
+                    height={'200'}
                     className="rounded"
                     style={{
                       width: "200px",
@@ -506,7 +511,7 @@ const EditTour = () => {
                       objectFit: "cover",
                     }}
                     key={index}
-                    src={`http://localhost:2024${imageURL.URL}`}
+                    src={`https://api-bookingnodejs.onrender.com${imageURL.URL}`}
                     alt={`Image ${index + 1}`}
                   />
                   <button
@@ -523,6 +528,8 @@ const EditTour = () => {
                   {images.map((image, index) => (
                     <div key={index}>
                       <Image
+                      width={'200'}
+                      height={'200'}
                         style={{
                           width: "200px",
                           height: "200px",
@@ -748,7 +755,7 @@ const EditTour = () => {
                 style={{ width: "200px", height: "200px" }}
                 className="border rounded"
               >
-                <Image src="" alt="" />
+                <Image width={'200'} height={'200'} src="/avatar/avatar_default.jpg" alt="" />
               </div>
               <div className="mt-2">
                 <div>Họ tên: {hoten}</div>

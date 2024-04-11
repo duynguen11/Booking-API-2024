@@ -16,7 +16,8 @@ export default function Tour() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://api-bookingnodejs.onrender.com/api/tour");
+        //const response = await axios.get("https://api-bookingnodejs.onrender.com/api/tour");
+        const response = await axios.get("http://localhost:2024/api/tour");
         console.log('Danh sách tour:', response.data)
         setTour(response.data);
       } catch (error) {
@@ -89,8 +90,11 @@ export default function Tour() {
               <tr key={index}>
                 <td>
                   <Image
+                  width={'60'}
+                  height={'40'}
                     style={{ width: "60px" }}
                     src={`https://api-bookingnodejs.onrender.com/${item.URL}`}
+                    //src={`https://localhost:2024/${item.URL}`}
                     alt="hinh anh tour"
                   />
                   <h4>Link ảnh: {item.URL}</h4>

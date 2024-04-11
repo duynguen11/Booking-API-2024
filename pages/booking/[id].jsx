@@ -50,12 +50,13 @@ const Booking = () => {
   useEffect(() => {
     const fetchTourInfo = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:2024/api/tour/booking-tour/${id}`
-        );
+        const url = `http://localhost:2024/api/tour/booking-tour/${id}`;
+      console.log("URL:", url); // Log URL trước khi gửi yêu cầu axios
+      const res = await axios.get(url);
         if (res.data && res.data.length > 0) {
           // Kiểm tra xem res.data tồn tại và có ít nhất một phần tử
           const tourData = res.data[0];
+          console.log(tourData)
           setTourInfo(tourData);
         } else {
           console.error("Không có dữ liệu tour được trả về từ server.");
@@ -274,6 +275,8 @@ const Booking = () => {
           <div className="col-4">
             <Image
               className="rounded"
+              width={'400'}
+              height={'200'}
               style={{ width: "100%", height: "100%" }}
               src={`http://localhost:2024/${tourInfo.URL}`}
               alt="Hình ảnh tour"
@@ -395,9 +398,11 @@ const Booking = () => {
             >
               <div className="">
                 <Image
+                  width={'150'}
+                  height={'150'}
                   style={{ width: "150px", height: "150px" }}
                   className="rounded"
-                  src=""
+                  src="/avatar/avatar_default.jpg"
                   alt=""
                 />
                 <p className="m-0">
@@ -436,6 +441,8 @@ const Booking = () => {
                 <div className="d-flex">
                   <div className="me-3">
                     <Image
+                    width={150}
+                    height={100}
                       className="rounded"
                       style={{ width: "150px", height: "100px" }}
                       src={`http://localhost:2024/${tourInfo.URL}`}

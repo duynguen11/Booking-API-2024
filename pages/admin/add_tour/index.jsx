@@ -30,7 +30,8 @@ const AddTourForm = () => {
 
   useEffect(() => {
     axios
-      .get("https://api-bookingnodejs.onrender.com/api/chude")
+      //.get("https://api-bookingnodejs.onrender.com/api/chude")
+      .get("https://localhost:2024/api/chude")
       .then((result) => {
         if (result.data) {
           // Ở đây, chúng ta cần gán dữ liệu chủ đề vào ChudeData, không phải value của select
@@ -65,7 +66,8 @@ const AddTourForm = () => {
 
     try {
       const response = await axios.post(
-        "https://api-bookingnodejs.onrender.com/api/test_tour/addtour",
+        //"https://api-bookingnodejs.onrender.com/api/test_tour/addtour",
+        "http://localhost:2024/api/test_tour/addtour",
         formDataToSend,
         {
           headers: {
@@ -113,6 +115,8 @@ const AddTourForm = () => {
             <div className="">
               {formData.HinhAnh.map((file, index) => (
                 <Image
+                  width={'400'}
+                  height={'350'}
                   className="py-1 rounded"
                   key={index}
                   src={URL.createObjectURL(file)}

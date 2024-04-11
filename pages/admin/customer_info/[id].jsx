@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Image from 'next/image';
+import Image from "next/image";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AdminLayout from "@/components/AdminLayout/AdminLayout";
@@ -10,7 +10,7 @@ const CustomerInfo = () => {
   const router = useRouter();
   const { id } = router.query;
   const [infoCustomer, setInfoCustomer] = useState({
-    MaTaikhoan:'',
+    MaTaikhoan: "",
     TaiKhoan: "",
     MatKhau: "",
     Email: "",
@@ -62,14 +62,17 @@ const CustomerInfo = () => {
   const handleSubmit = async (maTaikhoan) => {
     try {
       // Gọi API để lưu mật khẩu mới và mã tài khoản
-      const response = await axios.post('http://localhost:2024/api/account/khachhang/update-password', {
-        maTaikhoan: maTaikhoan, // Truyền mã tài khoản vào body của yêu cầu
-        matKhauMoi: infoCustomer.MatKhau // Truyền mật khẩu mới vào body của yêu cầu
-      });
-      console.log('Response từ API:', response.data);
+      const response = await axios.post(
+        "http://localhost:2024/api/account/khachhang/update-password",
+        {
+          maTaikhoan: maTaikhoan, // Truyền mã tài khoản vào body của yêu cầu
+          matKhauMoi: infoCustomer.MatKhau, // Truyền mật khẩu mới vào body của yêu cầu
+        }
+      );
+      console.log("Response từ API:", response.data);
       // Xử lý kết quả từ API nếu cần
     } catch (error) {
-      console.error('Lỗi khi gửi yêu cầu:', error);
+      console.error("Lỗi khi gửi yêu cầu:", error);
       // Xử lý lỗi nếu có
     }
   };
@@ -82,7 +85,8 @@ const CustomerInfo = () => {
         <div className="row">
           <div className="col-md-4 d-flex justify-content-center align-items-center">
             <Image
-            className="rounded"
+              width={'200'} height={'200'}
+              className="rounded"
               style={{ width: "200px", height: "200px" }}
               src={`http://localhost:2024/avatars/${infoCustomer.Avatar_url}`}
               alt="image avatar"

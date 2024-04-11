@@ -238,15 +238,19 @@ const ThongtinTour = () => {
               <div className="row mt-3" style={{ height: "100%" }}>
                 <div className="col-8 rounded d-flex justify-content-center align-items-center">
                   <Image
+                    width={700}
+                    height={200}
                     src={`http://localhost:2024/${t.URL}`}
                     className="card-img-top rounded me-1"
                     alt={t.TenTour}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ width: "100%", height: "90%" }}
                   />
                 </div>
                 <div className="col-4 pe-0 ps-0 rounded d-flex flex-column justify-content-center align-items-center">
                   <div className="">
                     <Image
+                      width={500}
+                      height={300}
                       className="rounded mb-2"
                       src="/banner/Banner_2.jpg"
                       alt=""
@@ -255,6 +259,8 @@ const ThongtinTour = () => {
                   </div>
                   <div className="">
                     <Image
+                      width={500}
+                      height={300}
                       className="rounded"
                       src="/banner/Banner_4.jpg"
                       alt=""
@@ -307,8 +313,8 @@ const ThongtinTour = () => {
               >
                 <Image
                   className="rounded mt-2"
-                  width={"300px"}
-                  height={"200px"}
+                  width={"300"}
+                  height={"200"}
                   src={`http://localhost:2024/${item.URL}`}
                   alt={`Ảnh ${index + 1}`}
                 />
@@ -347,7 +353,7 @@ const ThongtinTour = () => {
               </h4>
               {chitiettour.map((c, index) => (
                 <div className="bg-light p-3 rounded" key={index}>
-                  <div className="" >
+                  <div className="">
                     <p>
                       <i class="fa-solid fa-calendar-days me-2"></i>
                       Ngày đi: {format(new Date(c.TTCT_ngaydi), "dd-MM-yyyy")}
@@ -458,7 +464,8 @@ const ThongtinTour = () => {
                 >
                   <div className="shadow p-2 rounded" style={{ width: "100%" }}>
                     <Image
-                      height={"220px"}
+                      width={400}
+                      height={"220"}
                       src={`http://localhost:2024/${item.URL}`}
                       className="card-img-top rounded"
                       alt={item.TenTour}
