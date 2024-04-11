@@ -16,8 +16,8 @@ export default function Tour() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //const response = await axios.get("https://api-bookingnodejs.onrender.com/api/tour");
-        const response = await axios.get("http://localhost:2024/api/tour");
+        const response = await axios.get("https://api-bookingnodejs.onrender.com/api/tour");
+        //const response = await axios.get("http://localhost:2024/api/tour");
         console.log('Danh sách tour:', response.data)
         setTour(response.data);
       } catch (error) {
