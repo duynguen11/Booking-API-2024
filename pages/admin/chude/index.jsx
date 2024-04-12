@@ -21,7 +21,8 @@ const ChuDe = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://api-bookingnodejs.onrender.com/api/chude");
+        //const response = await axios.get("https://api-bookingnodejs.onrender.com/api/chude");
+        const response = await axios.get("http://localhost:2024/api/chude");
         setCategory(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -54,7 +55,8 @@ const ChuDe = () => {
 
     try {
       const response = await axios.post(
-        "https://api-bookingnodejs.onrender.com/api/chude/create",
+        //"https://api-bookingnodejs.onrender.com/api/chude/create",
+        "http://localhost:2024/api/chude/create",
         {
           MaChuDe: categoryCode,
           TenChuDe: categoryName,
@@ -74,7 +76,8 @@ const ChuDe = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `https://api-bookingnodejs.onrender.com/api/chude/delete/${id}`
+        //`https://api-bookingnodejs.onrender.com/api/chude/delete/${id}`
+        `http://localhost:2024/api/chude/delete/${id}`
       );
       if (response.status === 200) {
         alert('ĐÃ XÓA CHỦ ĐỀ !')

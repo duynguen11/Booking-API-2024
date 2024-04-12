@@ -30,6 +30,32 @@ const Booking = () => {
     trangthai: "đang đợi duyệt"
   });
 
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      // Gửi yêu cầu GET đến máy chủ để lấy thông tin của userId
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:2024/api/account/user-info/${userId}`
+          );
+          const userData = response.data;
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            hoTen: userData.userInfo.HoTen,
+            email: userData.userInfo.Email,
+            sdt: userData.userInfo.LienHe,
+            diaChi: userData.userInfo.DiaChi,
+            // Thêm các trường khác nếu cần
+          }));
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      fetchData();
+    }
+  }, []);
+
   function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
@@ -188,9 +214,9 @@ const Booking = () => {
         <div
           style={{ fontSize: "15px" }}
           key={price.MaCTGT}
-          className="d-flex justify-content-between align-items-center"
+          className="d-flex justify-content-between align-items-center bg-light p-2 mt-2 rounded"
         >
-          <p>
+          <p className="m-0">
             {type}: ({price.GiaTourChiTiet} VND x{" "}
             <span className="text-danger fw-bolder">{price.quantity} vé</span>){" "}
             {total} VND
@@ -316,7 +342,7 @@ const Booking = () => {
                   <input
                     className="form-control mt-1"
                     type="text"
-                    placeholder="Nhập Email (email@gmail.com)"
+                    placeholder="Email (email@gmail.com)"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
@@ -470,7 +496,7 @@ const Booking = () => {
               {selectedPrices.length > 0 && (
                 <div className="mb-4">
                   <h5>Thông tin loại giá vé</h5>
-                  <div className="bg-light p-3 rounded">
+                  <div className="rounded">
                     {renderSelectedPrices()}
                   </div>
                   <hr />

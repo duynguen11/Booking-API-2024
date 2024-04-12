@@ -3,6 +3,7 @@ import axios from "axios";
 import { format, parseISO } from "date-fns";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Link from "next/link";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Modal } from "react-bootstrap";
@@ -230,9 +231,11 @@ const ThongtinTour = () => {
                   <h4 className="text-danger fw-bolder">
                     {t.GiaTour.toLocaleString("vi-VN")} VND
                   </h4>
-                  <button className="btn btn-danger py-2 fw-bolder">
-                    ĐẶT VÉ NGAY
-                  </button>
+                  <Link href={`/booking/${t.MaTour}`}>
+                    <button className="btn btn-danger py-2 fw-bolder w-100">
+                      ĐẶT VÉ NGAY
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="row mt-3" style={{ height: "100%" }}>
@@ -325,6 +328,8 @@ const ThongtinTour = () => {
         <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
           <Modal.Body style={{ textAlign: "center" }}>
             <Image
+              width={"700"}
+              height={"500"}
               src={selectedImage}
               alt="Ảnh lớn"
               style={{ width: "100%", height: "500px", objectFit: "cover" }}
@@ -415,9 +420,9 @@ const ThongtinTour = () => {
                 <div className="">
                   <Image
                     className="rounded"
-                    width={"150px"}
-                    height={"150px"}
-                    src=""
+                    width={"150"}
+                    height={"150"}
+                    src="/avatar/avatar_default.jpg"
                     alt=""
                   />
                 </div>

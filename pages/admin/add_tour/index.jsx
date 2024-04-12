@@ -31,7 +31,7 @@ const AddTourForm = () => {
   useEffect(() => {
     axios
       //.get("https://api-bookingnodejs.onrender.com/api/chude")
-      .get("https://localhost:2024/api/chude")
+      .get("http://localhost:2024/api/chude")
       .then((result) => {
         if (result.data) {
           // Ở đây, chúng ta cần gán dữ liệu chủ đề vào ChudeData, không phải value của select

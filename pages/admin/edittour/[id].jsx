@@ -32,8 +32,8 @@ const EditTour = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`https://api-bookingnodejs.onrender.com/api/tour/${id}`)
-        //.get(`https://localhost:2024/api/tour/${id}`)
+        //.get(`https://api-bookingnodejs.onrender.com/api/tour/${id}`)
+        .get(`http://localhost:2024/api/tour/${id}`)
         .then((result) => {
           setTour((prevTour) => ({
             ...prevTour,
@@ -59,7 +59,8 @@ const EditTour = () => {
   const [category, setCategory] = useState([]);
   useEffect(() => {
     axios
-      .get("https://api-bookingnodejs.onrender.com/api/chude")
+      //.get("https://api-bookingnodejs.onrender.com/api/chude")
+      .get("http://localhost:2024/api/chude")
       .then((result) => {
         if (result.data) {
           setCategory(result.data);
@@ -89,7 +90,12 @@ const EditTour = () => {
       };
 
       axios
-        .put(`https://api-bookingnodejs.onrender.com/api/tour/update/${id}`, updatedTour, {
+        /*.put(`https://api-bookingnodejs.onrender.com/api/tour/update/${id}`, updatedTour, {
+          headers: {
+            "Content-Type": "application/json", // Set Content-Type to application/json
+          },
+        })*/
+        .put(`http://localhost:2024/api/tour/update/${id}`, updatedTour, {
           headers: {
             "Content-Type": "application/json", // Set Content-Type to application/json
           },
@@ -463,7 +469,7 @@ const EditTour = () => {
               <Image
                 width={'500'}
                 height={'350'}
-                src={`http://localhost:2024/${tour.URL}`}
+                src={`https://api-bookingnodejs.onrender.com/${tour.URL}`}
                 alt="Tour Big Image"
                 className="mr-3 rounded"
                 style={{ width: "100%" }}

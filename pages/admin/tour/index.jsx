@@ -16,9 +16,12 @@ export default function Tour() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://api-bookingnodejs.onrender.com/api/tour");
-        //const response = await axios.get("http://localhost:2024/api/tour");
-        console.log('Danh sách tour:', response.data)
+        const response = await axios.get(
+          //"https://api-bookingnodejs.onrender.com/api/tour"
+          "http://localhost:2024/api/tour"
+        );
+        
+        console.log("Danh sách tour:", response.data);
         setTour(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -31,7 +34,8 @@ export default function Tour() {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `https://api-bookingnodejs.onrender.com/api/tour/delete/${id}`
+        //`https://api-bookingnodejs.onrender.com/api/tour/delete/${id}`
+        `http://localhost:2024/api/tour/delete/${id}`
       );
       if (response.data.status) {
         alert("ĐÃ XÓA TOUR !");
@@ -90,11 +94,11 @@ export default function Tour() {
               <tr key={index}>
                 <td>
                   <Image
-                  width={'60'}
-                  height={'40'}
+                    width={"60"}
+                    height={"40"}
                     style={{ width: "60px" }}
-                    src={`https://api-bookingnodejs.onrender.com/${item.URL}`}
-                    //src={`https://localhost:2024/${item.URL}`}
+                    //src={`https://api-bookingnodejs.onrender.com/${item.URL}`}
+                    src={`http://localhost:2024/${item.URL}`}
                     alt="hinh anh tour"
                   />
                   <h4>Link ảnh: {item.URL}</h4>

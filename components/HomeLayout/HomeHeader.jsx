@@ -80,7 +80,7 @@ const HomeHeader = () => {
         setIsLoggedIn(true);
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("userName", response.data.userName);
-        window.location.href = "/";
+        router.reload();
       }
     } catch (error) {
       if (error.response.status === 401) {
@@ -97,7 +97,7 @@ const HomeHeader = () => {
     localStorage.removeItem("userName");
 
     // Chuyển hướng người dùng về trang đăng nhập hoặc trang chính
-    window.location.href = "/"; // Điều hướng đến trang đăng nhập
+    router.reload(); // Điều hướng đến trang đăng nhập
     // hoặc
     // window.location.href = "/"; // Điều hướng đến trang chính
   };

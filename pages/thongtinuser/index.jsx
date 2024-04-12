@@ -133,6 +133,8 @@ const ThongtinUser = () => {
               <div className="d-flex align-items-center">
                 <Image
                   className="rounded"
+                  width={'200'}
+                  height={'200'}
                   style={{ width: "200px", height: "200px" }}
                   src={
                     userInfo.Avatar_URL
