@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'], // Thêm các mẫu URL từ xa mà bạn muốn chấp nhận cho hình ảnh
+    domains: ["localhost", 'unsplash.com'], // Thêm các mẫu URL từ xa mà bạn muốn chấp nhận cho hình ảnh
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

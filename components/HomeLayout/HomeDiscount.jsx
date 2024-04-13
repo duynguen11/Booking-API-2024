@@ -34,10 +34,11 @@ const HomeDiscount = () => {
                 <Image
                   width='300'
                   height="250"
-                  src={`http://localhost:2024/${t.URL}`}
+                  src={`${t.URL}`}
                   className="card-img-top rounded"
                   alt={t.TenTour}
                 />
+                <h4>URL image: {t.URL}</h4>
               </div>
               <div style={{width: '70%'}}  className="info-container">
                 <h4 className="card-title fw-bolder">{t.TenTour}</h4>
