@@ -25,6 +25,9 @@ const HomeDiscount = () => {
 
   return (
     <Container className="mt-5">
+      <div>
+        <Image width={200} height={200} src={'https://unsplash.com/fr/photos/lumiere-bokeh-Gc4wAF09JZY'} alt="Anh test"/>
+      </div>
       <h3>GÓI ƯU ĐÃI ĐẶC BIỆT </h3>
       <div className="row mt-3">
         {tour.map((t) => (
@@ -34,7 +37,7 @@ const HomeDiscount = () => {
                 <Image
                   width={300}
                   height={250}
-                  src={`http://localhost:2024/${t.URL}`}
+                  //src={`http://localhost:2024/${t.URL}`}
                   className="card-img-top rounded"
                   alt={t.TenTour}
                 />
