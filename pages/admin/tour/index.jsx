@@ -98,7 +98,7 @@ export default function Tour() {
                     height={"40"}
                     style={{ width: "60px" }}
                     //src={`https://api-bookingnodejs.onrender.com/${item.URL}`}
-                    src={`http://localhost:2024/${item.URL}`}
+                    src={`/uploads/${item.URL}`}
                     alt="hinh anh tour"
                   />
                 </td>
