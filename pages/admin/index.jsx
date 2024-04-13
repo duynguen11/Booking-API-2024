@@ -55,7 +55,7 @@ const AdminPage = () => {
         <div className="d-flex justify-content-between">
           <div className="flex-fill">
             <div
-              style={{ backgroundColor: "#afcfff", color: 'GrayText' }}
+              style={{ backgroundColor: "#afcfff", color: 'GrayText', height: '150px' }}
               className="d-flex align-items-center justify-content-between p-4 rounded me-4"
             >
               <i
@@ -72,7 +72,7 @@ const AdminPage = () => {
           </div>
           <div className="flex-fill">
             <div
-              style={{ backgroundColor: "thistle", color: 'GrayText' }}
+              style={{ backgroundColor: "thistle", color: 'GrayText', height: '150px' }}
               className="d-flex align-items-center justify-content-between p-4 rounded me-4"
             >
               <i
@@ -89,7 +89,7 @@ const AdminPage = () => {
           </div>
           <div className="flex-fill">
             <div
-              style={{ backgroundColor: "beige", color: 'GrayText' }}
+              style={{ backgroundColor: "beige", color: 'GrayText', height: '150px' }}
               className="d-flex align-items-center justify-content-between p-4 rounded me-4"
             >
               <i
@@ -106,7 +106,7 @@ const AdminPage = () => {
           </div>
           <div className="flex-fill">
             <div
-              style={{ backgroundColor: "#f8b7a0", color: 'GrayText' }}
+              style={{ backgroundColor: "#f8b7a0", color: 'GrayText', height: '150px' }}
               className="d-flex align-items-center justify-content-between p-4 rounded me-4"
             >
               <i

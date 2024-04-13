@@ -466,11 +466,11 @@ const EditTour = () => {
           {alertMessage}
         </Alert>
         <div className="row d-flex d-flex justify-content-around w-70 my-3">
-          <div className="col-7">
+          <div className="col-8">
             <div className="mb-3">
               <Image
-                width={'600'}
-                height={'550'}
+                width={'700'}
+                height={'500'}
                 //src={`https://api-bookingnodejs.onrender.com/${tour.URL}`}
                 src={`http://localhost:2024/${tour.URL}`}
                 alt="Tour Big Image"
