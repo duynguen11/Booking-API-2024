@@ -101,7 +101,6 @@ export default function Tour() {
                     src={`http://localhost:2024/${item.URL}`}
                     alt="hinh anh tour"
                   />
-                  <h4>Link ảnh: {item.URL}</h4>
                 </td>
                 <td>{item.TenTour}</td>
                 <td>{item.GiaTour}</td>

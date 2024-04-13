@@ -392,7 +392,8 @@ const EditTour = () => {
     const fetchImageURLs = async () => {
       try {
         const response = await axios.get(
-          `https://api-bookingnodejs.onrender.com/api/tour/imageExtras/${id}`
+          //`https://api-bookingnodejs.onrender.com/api/tour/imageExtras/${id}`
+          `http://localhost:2024/api/tour/imageExtras/${id}`
         );
         setImageURLs(response.data.images);
       } catch (error) {
@@ -420,7 +421,8 @@ const EditTour = () => {
 
     try {
       const response = await axios.post(
-        `https://api-bookingnodejs.onrender.com/api/tour/uploadExtras/${id}`,
+        //`https://api-bookingnodejs.onrender.com/api/tour/uploadExtras/${id}`,
+        `http://localhost:2024/api/tour/uploadExtras/${id}`,
         formData,
         {
           headers: {
@@ -467,12 +469,13 @@ const EditTour = () => {
           <div className="col-7">
             <div className="mb-3">
               <Image
-                width={'500'}
-                height={'350'}
-                src={`https://api-bookingnodejs.onrender.com/${tour.URL}`}
+                width={'600'}
+                height={'550'}
+                //src={`https://api-bookingnodejs.onrender.com/${tour.URL}`}
+                src={`http://localhost:2024/${tour.URL}`}
                 alt="Tour Big Image"
                 className="mr-3 rounded"
-                style={{ width: "100%" }}
+                style={{ width: "100%", objectFit:'cover' }}
               />
               <div className="mt-2">
                 <button
@@ -517,7 +520,8 @@ const EditTour = () => {
                       objectFit: "cover",
                     }}
                     key={index}
-                    src={`https://api-bookingnodejs.onrender.com${imageURL.URL}`}
+                    //src={`https://api-bookingnodejs.onrender.com${imageURL.URL}`}
+                    src={`http://localhost:2024/${imageURL.URL}`}
                     alt={`Image ${index + 1}`}
                   />
                   <button

@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Image from 'next/image'
+import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HomeHeader from "@/components/HomeLayout/HomeHeader";
@@ -133,15 +133,15 @@ const ThongtinUser = () => {
               <div className="d-flex align-items-center">
                 <Image
                   className="rounded"
-                  width={'200'}
-                  height={'200'}
+                  width={"200"}
+                  height={"200"}
                   style={{ width: "200px", height: "200px" }}
                   src={
                     userInfo.Avatar_URL
-                      ? `http://localhost:2024/avatars/${userInfo.Avatar_URL}`
+                      ? `http://localhost:2024/${userInfo.Avatar_URL}`
                       : "/avatar/avatar_default.jpg"
                   }
-                  alt="avatar user"
+                  alt="Avatar user"
                 />
                 {selectedImage && (
                   <div className="d-flex align-items-center ms-2">
@@ -150,6 +150,8 @@ const ThongtinUser = () => {
                       className="fa-solid fa-code-compare"
                     ></i>
                     <Image
+                      width={"200"}
+                      height={"200"}
                       style={{ width: "200px", height: "200px" }}
                       className="rounded border ms-2"
                       src={

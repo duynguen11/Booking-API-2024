@@ -115,8 +115,8 @@ const AddTourForm = () => {
             <div className="">
               {formData.HinhAnh.map((file, index) => (
                 <Image
-                  width={'400'}
-                  height={'350'}
+                  width={'600'}
+                  height={'550'}
                   className="py-1 rounded"
                   key={index}
                   src={URL.createObjectURL(file)}

@@ -88,7 +88,7 @@ const CustomerInfo = () => {
               width={'200'} height={'200'}
               className="rounded"
               style={{ width: "200px", height: "200px" }}
-              src={`http://localhost:2024/avatars/${infoCustomer.Avatar_url}`}
+              src={`http://localhost:2024/${infoCustomer.Avatar_url}`}
               alt="image avatar"
             />
           </div>

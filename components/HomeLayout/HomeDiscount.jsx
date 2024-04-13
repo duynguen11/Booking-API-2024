@@ -71,7 +71,7 @@ const HomeDiscount = () => {
                       }}
                       className="d-flex align-items-center btn btn-secondary me-2"
                     >
-                      <a className="text-decoration-none text-white fw-bolder">
+                      <a href={`/booking/${t.MaTour}`} className="text-decoration-none text-white fw-bolder">
                         Mua vé ngay
                       </a>
                     </div>

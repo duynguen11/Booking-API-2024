@@ -119,8 +119,8 @@ const LienHe = () => {
           <Col xs={12} md={6}>
             <div>
               <Image
-                width={'600'}
-                height={'400'}
+                width={'700'}
+                height={'450'}
                 className="rounded"
                 src="/banner/contact_us.png"
                 alt="Online View"
