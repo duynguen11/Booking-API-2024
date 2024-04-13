@@ -304,7 +304,7 @@ const Booking = () => {
               width={'400'}
               height={'200'}
               style={{ width: "100%", height: "100%" }}
-              src={`http://localhost:2024/${tourInfo.URL}`}
+              src={tourInfo.URL}
               alt="Hình ảnh tour"
             />
           </div>
@@ -428,7 +428,7 @@ const Booking = () => {
                   height={'150'}
                   style={{ width: "150px", height: "150px" }}
                   className="rounded"
-                  src="/avatar/avatar_default.jpg"
+                  src="/avatars/avatar_default.jpg"
                   alt=""
                 />
                 <p className="m-0">
@@ -471,7 +471,7 @@ const Booking = () => {
                     height={100}
                       className="rounded"
                       style={{ width: "150px", height: "100px" }}
-                      src={`http://localhost:2024/${tourInfo.URL}`}
+                      src={tourInfo.URL}
                       alt="Hình ảnh tour"
                     />
                     <p className="m-0">Mã Tour: {tourInfo.MaTour}</p>

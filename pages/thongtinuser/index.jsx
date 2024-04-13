@@ -138,7 +138,7 @@ const ThongtinUser = () => {
                   style={{ width: "200px", height: "200px" }}
                   src={
                     userInfo.Avatar_URL
-                      ? `http://localhost:2024/${userInfo.Avatar_URL}`
+                      ? userInfo.Avatar_URL
                       : "/avatar/avatar_default.jpg"
                   }
                   alt="Avatar user"

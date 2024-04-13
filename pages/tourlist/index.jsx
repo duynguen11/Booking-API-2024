@@ -497,7 +497,7 @@ const TourList = () => {
                               <Image
                                 width={'300'}
                                 height={"220"}
-                                src={`http://localhost:2024/${t.URL}`}
+                                src={t.URL}
                                 className="card-img-top rounded"
                                 alt={t.TenTour}
                               />
@@ -588,7 +588,7 @@ const TourList = () => {
                         <Image
                         width={'300'}
                           height={"220"}
-                          src={`http://localhost:2024/${t.URL}`}
+                          src={t.URL}
                           className="card-img-top rounded"
                           alt={t.TenTour}
                         />
@@ -693,7 +693,7 @@ const TourList = () => {
                               <Image
                               width={'300'}
                                 height={"220"}
-                                src={`http://localhost:2024/${t.URL}`}
+                                src={t.URL}
                                 className="card-img-top rounded"
                                 alt={t.TenTour}
                               />

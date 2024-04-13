@@ -243,7 +243,7 @@ const ThongtinTour = () => {
                   <Image
                     width={700}
                     height={200}
-                    src={`http://localhost:2024/${t.URL}`}
+                    src={t.URL}
                     className="card-img-top rounded me-1"
                     alt={t.TenTour}
                     style={{ width: "100%", height: "90%" }}
@@ -311,14 +311,14 @@ const ThongtinTour = () => {
               <div
                 className="d-flex justify-content-center mb-3"
                 onClick={() =>
-                  handleOpenModal(`http://localhost:2024/${item.URL}`)
+                  handleOpenModal(item.URL)
                 }
               >
                 <Image
                   className="rounded mt-2"
                   width={"300"}
                   height={"200"}
-                  src={`http://localhost:2024/${item.URL}`}
+                  src={item.URL}
                   alt={`Ảnh ${index + 1}`}
                 />
               </div>

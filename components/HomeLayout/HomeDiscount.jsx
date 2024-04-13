@@ -34,7 +34,7 @@ const HomeDiscount = () => {
                 <Image
                   width={300}
                   height={250}
-                  src={`http://localhost:2024/${t.URL}`}
+                  src={t.URL}
                   className="card-img-top rounded"
                   alt={t.TenTour}
                 />
