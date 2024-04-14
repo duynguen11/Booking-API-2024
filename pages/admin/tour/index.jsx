@@ -33,9 +33,23 @@ export default function Tour() {
   const router = useRouter();
   const handleDelete = async (id) => {
     try {
+      // Lấy token từ Local Storage
+      const token = localStorage.getItem("token");
+      // Kiểm tra xem token có tồn tại hay không
+      if (!token) {
+        // Xử lý khi không có token
+        console.error("Token không tồn tại");
+        return;
+      }
+
       const response = await axios.delete(
         //`https://api-bookingnodejs.onrender.com/api/tour/delete/${id}`
-        `http://localhost:2024/api/tour/delete/${id}`
+        `http://localhost:2024/api/tour/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Gửi token trong tiêu đề Authorization
+          },
+        }
       );
       if (response.data.status) {
         alert("ĐÃ XÓA TOUR !");
@@ -44,7 +58,10 @@ export default function Tour() {
         alert("Đang có dữ liệu tour. Không thể xóa !");
       }
     } catch (error) {
-      console.error("Error deleting category:", error);
+      if (error.response && error.response.status === 403) {
+        // Lỗi 403 - Forbidden, không có quyền truy cập
+        alert("Bạn không được cấp quyền thao tác!");
+      }
     }
   };
 
@@ -98,7 +115,7 @@ export default function Tour() {
                     height={"40"}
                     style={{ width: "60px" }}
                     //src={`https://api-bookingnodejs.onrender.com/${item.URL}`}
-                    src={item.URL}
+                    src={`http://localhost:2024/${item.URL}`}
                     alt="hinh anh tour"
                   />
                 </td>

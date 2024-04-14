@@ -34,24 +34,8 @@ const LoginForm = () => {
         "http://localhost:2024/api/account/login",
         formData
       );
-      if (response.status === 200) {
-        // Trích xuất role từ phản hồi
-        const role = response.data.role;
-        // Kiểm tra role và chuyển hướng người dùng đến trang tương ứng
-        if (role === "admin") {
-          router.push("/admin");
-        } else if (role === "nhanvien") {
-          router.push("/employee");
-        } else {
-          router.push("/dashboard");
-        }
-      } else if (response.status === 401) {
-        console.error("Unauthorized access:", response.data.error);
-        alert("Thông tin đăng nhập không chính xác.");
-      } else {
-        console.error("Login failed:", response.data.error);
-        alert("Đăng nhập không thành công !");
-      }
+      localStorage.setItem('token', response.data.token);
+      console.log('Token đã lưu:', response.data.token)
     } catch (error) {
       console.error("Error logging in:", error);
     }

@@ -64,7 +64,7 @@ const ChuDe = () => {
         }
       );
       if (response.data) {
-        router.reload()
+        router.reload();
       } else {
         console.error(response.data.error || "Có lỗi xảy ra khi tạo chủ đề");
       }
@@ -75,22 +75,41 @@ const ChuDe = () => {
 
   const handleDelete = async (id) => {
     try {
+      // Lấy token từ Local Storage
+      const token = localStorage.getItem("token");
+      // Kiểm tra xem token có tồn tại hay không
+      if (!token) {
+        // Xử lý khi không có token
+        console.error("Token không tồn tại");
+        return;
+      }
+
       const response = await axios.delete(
-        //`https://api-bookingnodejs.onrender.com/api/chude/delete/${id}`
-        `http://localhost:2024/api/chude/delete/${id}`
+        `http://localhost:2024/api/chude/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Gửi token trong tiêu đề Authorization
+          },
+        }
       );
       if (response.status === 200) {
-        alert('ĐÃ XÓA CHỦ ĐỀ !')
+        alert("ĐÃ XÓA CHỦ ĐỀ !");
         router.reload();
       } else {
         alert(response.data.error || "Có lỗi xảy ra khi xóa chủ đề");
       }
     } catch (error) {
-      setAlertMessage("Có dữ liệu tour, không được xóa chủ đề này !");
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false)
-      }, 5000)
+      if (error.response && error.response.status === 403) {
+        // Lỗi 403 - Forbidden, không có quyền truy cập
+        alert("Bạn không được cấp quyền thao tác!");
+      } else {
+        // Xử lý các lỗi khác
+        setAlertMessage("Có dữ liệu tour, không được xóa chủ đề này !");
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 5000);
+      }
     }
   };
 
@@ -142,8 +161,11 @@ const ChuDe = () => {
                 <td>{item.TenChuDe}</td>
                 <td>{item.ThongTinChuDe}</td>
                 <td className="d-flex">
-                  <Link className="btn btn-secondary me-1"  href={`/admin/editchude/${item.MaChuDe}`}>
-                      <i className="fa-solid fa-pen-to-square me-1"></i>
+                  <Link
+                    className="btn btn-secondary me-1"
+                    href={`/admin/editchude/${item.MaChuDe}`}
+                  >
+                    <i className="fa-solid fa-pen-to-square me-1"></i>
                   </Link>
                   <Button
                     variant="danger"

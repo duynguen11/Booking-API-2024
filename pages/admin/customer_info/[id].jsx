@@ -30,10 +30,20 @@ const CustomerInfo = () => {
   }
 
   useEffect(() => {
-    if (id) {
+    // Lấy token từ localStorage
+    const token = localStorage.getItem("token");
+
+    // Kiểm tra xem có token hay không và có id không
+    if (token && id) {
       const apiUrl = `http://localhost:2024/api/account/info-khachhang/${id}`;
+
+      // Gửi yêu cầu GET với token trong tiêu đề Authorization
       axios
-        .get(apiUrl)
+        .get(apiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((result) => {
           setInfoCustomer((prevInfoCustomer) => ({
             ...prevInfoCustomer,
@@ -85,7 +95,8 @@ const CustomerInfo = () => {
         <div className="row">
           <div className="col-md-4 d-flex justify-content-center align-items-center">
             <Image
-              width={'200'} height={'200'}
+              width={"200"}
+              height={"200"}
               className="rounded"
               style={{ width: "200px", height: "200px" }}
               src={`http://localhost:2024/${infoCustomer.Avatar_url}`}
@@ -105,23 +116,27 @@ const CustomerInfo = () => {
                 />
               </div>
               <div className="ms-3">
-                <label htmlFor="MatKhau">
-                  Mật khẩu{" "}
-                  <span className="text-danger">(Có thể cập nhật)</span>
-                </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="MatKhau"
-                  value={infoCustomer.MatKhau}
-                  onChange={handleChangePassword}
-                />
-                <button
-                  className="btn btn-success w-100 mt-1"
-                  onClick={() => handleSubmit(infoCustomer.MaTaikhoan)}
-                >
-                  Lưu thay đổi
-                </button>
+                {infoCustomer.MatKhau ? (
+                  <>
+                    <label htmlFor="MatKhau">
+                      Mật khẩu{" "}
+                      <span className="text-danger">(Có thể cập nhật)</span>
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="MatKhau"
+                      value={infoCustomer.MatKhau}
+                      onChange={handleChangePassword}
+                    />
+                    <button
+                      className="btn btn-success w-100 mt-1"
+                      onClick={() => handleSubmit(infoCustomer.MaTaikhoan)}
+                    >
+                      Lưu thay đổi
+                    </button>
+                  </>
+                ) : null}
               </div>
             </div>
             <br />

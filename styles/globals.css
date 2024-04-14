@@ -184,3 +184,26 @@ html, body {
 .image-wrapper:hover .delete-button {
   opacity: 1; /* Hiển thị nút xóa khi hover vào hình ảnh */
 }
+
+.links-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 65px;
+  right: 0;
+  background-color: rgb(255, 255, 255);
+}
+
+.links-container a {
+  color: #000;
+  display: block;
+  text-decoration: none;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.links-container a:hover {
+  background-color: #888;
+  color:#fff;
+}

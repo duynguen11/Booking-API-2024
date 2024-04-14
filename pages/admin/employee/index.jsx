@@ -20,6 +20,7 @@ const Employee = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [inputErrors, setInputErrors] = useState({});
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [userData, setUserData] = useState({
     TaiKhoan: "",
     MatKhau: "",
@@ -57,14 +58,26 @@ const Employee = () => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:2024/api/account/employees")
-      .then((response) => {
-        setEmployees(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const token = localStorage.getItem("token");
+    // Kiểm tra xem token có tồn tại hay không
+    if (token) {
+      // Gửi yêu cầu Axios với token trong header
+      axios
+        .get("http://localhost:2024/api/account/employees", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setEmployees(response.data);
+          setDataLoaded(true);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      console.error("Token không tồn tại");
+    }
   }, []);
 
   const handleShowModal = () => {
@@ -119,43 +132,51 @@ const Employee = () => {
       <div className="main-body">
         <div className="d-flex align-items-center justify-content-between">
           <h4 className="fw-bold">Quản lý nhân viên</h4>
-          <div
-            className="d-flex align-items-center btn btn-secondary"
-            onClick={handleShowModal}
-          >
-            <i className="fa-solid fa-square-plus me-2"></i>
-            <a className="text-decoration-none text-white">Thêm tài khoản</a>
-          </div>
+          {dataLoaded && ( // Kiểm tra nếu dữ liệu đã được tải
+            <div
+              className="d-flex align-items-center btn btn-secondary"
+              onClick={handleShowModal}
+            >
+              <i className="fa-solid fa-square-plus me-2"></i>
+              <a className="text-decoration-none text-white">Thêm tài khoản</a>
+            </div>
+          )}
         </div>
         <Row xs={1} md={2} lg={3} className="g-4 mt-1">
-          {employees.map((employee) => (
-            <Col key={employee.MaTaikhoan}>
-              <Card>
-                <Card.Body>
-                  <Card.Text>
-                    <strong>Tài khoản:</strong> {employee.TaiKhoan}
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>Họ tên:</strong> {employee.HoTen}
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>Liên hệ:</strong> {employee.LienHe}
-                  </Card.Text>
-                  <div className="d-flex flex-column">
-                    <button className="btn btn-secondary mb-2">
-                      Xem thông tin
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => {handleDeleteAccount(employee.MaTaikhoan)}}
-                    >
-                      Khóa tài khoản
-                    </button>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+          {employees.length > 0 ? (
+            employees.map((employee) => (
+              <Col key={employee.MaTaikhoan}>
+                <Card>
+                  <Card.Body>
+                    <Card.Text>
+                      <strong>Tài khoản:</strong> {employee.TaiKhoan}
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Họ tên:</strong> {employee.HoTen}
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Liên hệ:</strong> {employee.LienHe}
+                    </Card.Text>
+                    <div className="d-flex flex-column">
+                      <button className="btn btn-secondary mb-2">
+                        Xem thông tin
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          handleDeleteAccount(employee.MaTaikhoan);
+                        }}
+                      >
+                        Khóa tài khoản
+                      </button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          ) : (
+            <div className="text-danger">KHÔNG THỂ LẤY DỮ LIỆU NHÂN VIÊN</div>
+          )}
         </Row>
       </div>
       <Modal className="mt-5" show={showModal} onHide={handleCloseModal}>
