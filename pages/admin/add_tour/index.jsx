@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Image from 'next/image';
+import Image from "next/image";
 import Link from "next/link";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -65,17 +65,28 @@ const AddTourForm = () => {
     });
 
     try {
-      const response = await axios.post(
-        //"https://api-bookingnodejs.onrender.com/api/test_tour/addtour",
-        "http://localhost:2024/api/test_tour/addtour",
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      if (response.data) {
+      const [response1, response2] = await Promise.all([
+        axios.post(
+          "/api/uploadCateImage",
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        ),
+        axios.post(
+          "http://localhost:2024/api/test_tour/addtour",
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        ),
+      ]);
+
+      if (response1.data && response2.data) {
         router.push("/admin/tour");
       }
     } catch (error) {
@@ -115,12 +126,12 @@ const AddTourForm = () => {
             <div className="">
               {formData.HinhAnh.map((file, index) => (
                 <Image
-                  width={'600'}
-                  height={'550'}
+                  width={"600"}
+                  height={"550"}
                   className="py-1 rounded"
                   key={index}
                   src={URL.createObjectURL(file)}
-                  alt="image"// Tạo đường dẫn URL tạm thời cho hình ảnh
+                  alt="image" // Tạo đường dẫn URL tạm thời cho hình ảnh
                   style={{ width: "100%" }}
                 />
               ))}
