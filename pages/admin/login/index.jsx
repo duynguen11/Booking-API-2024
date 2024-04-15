@@ -34,10 +34,20 @@ const LoginForm = () => {
         "http://localhost:2024/api/account/login",
         formData
       );
-      localStorage.setItem('token', response.data.token);
-      console.log('Token đã lưu:', response.data.token)
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        console.log("Token đã lưu:", response.data.token);
+        // Chuyển hướng người dùng đến trang sau khi đăng nhập thành công
+        router.push("/admin"); // Thay đổi '/dashboard' thành đường dẫn mong muốn
+      } else {
+        console.error("Unexpected status code:", response.status);
+      }
     } catch (error) {
-      console.error("Error logging in:", error);
+      if (error.response && error.response.status === 401) {
+        alert("Tài khoản hoặc mật khẩu không chính xác");
+      } else {
+        console.error("Error logging in:", error);
+      }
     }
   };
 
@@ -47,7 +57,9 @@ const LoginForm = () => {
         <h3 className="text-center mb-4">VUI LÒNG ĐĂNG NHẬP</h3>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-2" controlId="username">
-            <Form.Label>Tên đăng nhập:</Form.Label>
+            <Form.Label>
+              Tên đăng nhập<span className="text-danger"> (*)</span>:
+            </Form.Label>
             <Form.Control
               className={`text-secondary ${
                 inputErrors.TaiKhoan ? "is-invalid" : ""
@@ -64,7 +76,9 @@ const LoginForm = () => {
           </Form.Group>
 
           <Form.Group className="mb-2" controlId="password">
-            <Form.Label>Mật khẩu:</Form.Label>
+            <Form.Label>
+              Mật khẩu<span className="text-danger"> (*)</span>:
+            </Form.Label>
             <Form.Control
               className={`text-secondary ${
                 inputErrors.MatKhau ? "is-invalid" : ""

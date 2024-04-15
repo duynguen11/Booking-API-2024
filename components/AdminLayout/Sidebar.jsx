@@ -4,6 +4,7 @@ import Link from "next/link";
 
 const Sidebar = () => {
   const router = useRouter();
+
   const handleItemClick = useCallback(
     (path) => {
       router.push(path);
@@ -13,15 +14,25 @@ const Sidebar = () => {
 
   const activeItem = useMemo(() => router.pathname, [router.pathname]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    //Xoa token
+    router.push("/admin/login");
+  };
+
   return (
     <div id="sidebar" className="d-flex flex-column justify-content-between">
       <ul className="side-menu">
         <li>
-          <Link href="/admin" className={activeItem === "/admin" ? "active" : ""}>
+          <Link
+            href="/admin"
+            className={activeItem === "/admin" ? "active" : ""}
+          >
             <i className="fas fa-house-user"></i>
             <span className="nav-item">Dashboard</span>
           </Link>
-        </li><hr />
+        </li>
+        <hr />
         <li>
           <Link
             href="/admin/chude"
@@ -41,8 +52,6 @@ const Sidebar = () => {
             <i className="fa-solid"></i>
           </Link>
         </li>
-        <li><Link href="/admin/donhang" className={activeItem === "/admin/donhang" ? "active" : ""}><i className="fa-solid fa-file-invoice"></i>Đơn hàng</Link></li>
-        <hr />
         <li className="dropdown">
           <Link
             href="#"
@@ -59,7 +68,23 @@ const Sidebar = () => {
             <Link href="/admin/customer">Tài khoản khách hàng</Link>
           </div>
         </li>
-        <li><Link href="/admin/hopthu" className={activeItem === "/admin/hopthu" ? "active" : ""}><i className="fa-solid fa-inbox"></i>Hộp thư</Link></li>
+        <hr />
+        <li>
+          <Link
+            href="/admin/donhang"
+            className={activeItem === "/admin/donhang" ? "active" : ""}
+          >
+            <i className="fa-solid fa-file-invoice"></i>Đơn hàng
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/admin/hopthu"
+            className={activeItem === "/admin/hopthu" ? "active" : ""}
+          >
+            <i className="fa-solid fa-inbox"></i>Hộp thư
+          </Link>
+        </li>
         <hr />
         <li>
           <Link href="#">
@@ -75,7 +100,8 @@ const Sidebar = () => {
         </li>
       </ul>
       <div className="p-2">
-        <Link
+        <button
+          onClick={handleLogout}
           href="/admin/login"
           className="d-flex align-items-center btn btn-danger w-100"
         >
@@ -83,7 +109,7 @@ const Sidebar = () => {
           <span style={{ fontSize: ".9rem" }} className="nav-item">
             Đăng xuất
           </span>
-        </Link>
+        </button>
       </div>
     </div>
   );

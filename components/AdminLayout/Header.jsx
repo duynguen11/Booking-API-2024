@@ -17,11 +17,12 @@ const Header = () => {
     if (token) {
       // Giải mã token
       const decodedToken = jwtDecode(token);
-      console.log("Dữ liệu giải mã token:", decodedToken);
       // Lưu thông tin từ token vào trạng thái
       setUserInfo(decodedToken);
+      console.log("Dữ liệu token encode:", decodedToken);
     }
   }, []);
+
   return (
     <div className="header-admin d-flex justify-content-between">
       <div className="logo">
@@ -29,14 +30,14 @@ const Header = () => {
           HỆ THỐNG QUẢN LÝ ADMIN
         </Link>
       </div>
-      {userInfo && (
+      {userInfo && userInfo.role === "nhanvien" && (
         <div className="d-flex justify-content-between align-items-center">
           <p className="m-0 me-3">Mã nhân viên: {userInfo.userId}</p>
           <p className="m-0 me-3">
             Xin chào! <span className="text-danger">{userInfo.userName}</span>
           </p>
           <a className="btn btn-secondary me-3" href="">
-            Tour tham gia
+            <i className="fa-solid fa-layer-group me-2"></i>Tour tham gia
           </a>
           <button
             className="btn btn-outline-secondary"
@@ -48,10 +49,16 @@ const Header = () => {
         </div>
       )}
       {showDropdown && (
-        <div className="links-container border rounded p-2 me-4">
-          <a href="">Thông tin tài khoản</a>
-          <a href="">Tour tham gia</a>
-          <a href="">Lịch sử tour</a>
+        <div className="links-container border rounded p-1 me-4">
+          <a href="/admin/employee_info">
+            <i className="fa fa-user me-2"></i>Thông tin tài khoản
+          </a>
+          <a href="">
+            <i className="fa-solid fa-layer-group me-2"></i>Tour tham gia
+          </a>
+          <a href="">
+            <i class="fa-solid fa-clock-rotate-left me-2"></i>Lịch sử tour
+          </a>
         </div>
       )}
     </div>

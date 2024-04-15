@@ -22,14 +22,30 @@ const Customer = () => {
 
   const handleDeleteAccount = async (id) => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token không tồn tại");
+        return;
+      }
+
       const response = await axios.delete(
-        `http://localhost:2024/api/account/lockAccount/${id}`
+        `http://localhost:2024/api/account/lockAccount/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Gửi token trong tiêu đề Authorization
+          },
+        }
       );
       if (response.status === 200) {
+        alert('Tai khoan da vo hieu hoa !')
         router.reload();
       }
     } catch (err) {
-      console.error("Đã có lỗi xảy ra khi xóa tài khoản:", err);
+      if (err.response && err.response.status === 403) {
+        alert("Bạn không được cấp quyền thao tác!");
+      } else {
+        console.error("Error logging in:", err);
+      }
     }
   };
 

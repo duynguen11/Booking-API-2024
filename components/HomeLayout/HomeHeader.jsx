@@ -98,8 +98,6 @@ const HomeHeader = () => {
 
     // Chuyển hướng người dùng về trang đăng nhập hoặc trang chính
     router.reload(); // Điều hướng đến trang đăng nhập
-    // hoặc
-    // window.location.href = "/"; // Điều hướng đến trang chính
   };
 
   useEffect(() => {
