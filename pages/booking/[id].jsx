@@ -6,6 +6,8 @@ import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Form, InputGroup, Modal, Button, FormControl } from "react-bootstrap";
+import { BsExclamationTriangle } from "react-icons/bs";
 
 const Booking = () => {
   const router = useRouter();
@@ -18,16 +20,26 @@ const Booking = () => {
   const [tourPrices, setTourPrices] = useState([]);
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [selectedTicketTypes, setSelectedTicketTypes] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
 
   const [formData, setFormData] = useState({
     hoTen: "",
     email: "",
     sdt: "",
     diaChi: "",
-    soVe: '',
+    soVe: "",
     tongGia: "",
     MaHDV: "",
-    trangthai: "đang đợi duyệt"
+    trangthai: "đang đợi duyệt",
+  });
+
+  const [errors, setErrors] = useState({
+    hoTen: false,
+    email: false,
+    sdt: false,
   });
 
   useEffect(() => {
@@ -71,18 +83,18 @@ const Booking = () => {
       ...formData,
       [name]: value,
     });
+
+    setErrors({ ...errors, [name]: value.trim() === "" });
   };
 
   useEffect(() => {
     const fetchTourInfo = async () => {
       try {
         const url = `http://localhost:2024/api/tour/booking-tour/${id}`;
-      console.log("URL:", url); // Log URL trước khi gửi yêu cầu axios
-      const res = await axios.get(url);
+        const res = await axios.get(url);
         if (res.data && res.data.length > 0) {
           // Kiểm tra xem res.data tồn tại và có ít nhất một phần tử
           const tourData = res.data[0];
-          console.log(tourData)
           setTourInfo(tourData);
         } else {
           console.error("Không có dữ liệu tour được trả về từ server.");
@@ -95,7 +107,7 @@ const Booking = () => {
     const fetchAllHDVs = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:2024/api/account/employees"
+          "http://localhost:2024/api/account/client/employees"
         );
         if (res.data) {
           setAllHDVs(res.data);
@@ -269,6 +281,19 @@ const Booking = () => {
 
   const handleBookingTour = async () => {
     try {
+      const { hoTen, email, sdt } = formData;
+      if (
+        hoTen.trim() === "" ||
+        email.trim() === "" ||
+        String(sdt).trim() === ""
+      ) {
+        setErrors({
+          hoTen: hoTen.trim() === "",
+          email: email.trim() === "",
+          sdt: String(sdt).trim() === "",
+        });
+        return;
+      }
       // Lấy id tour từ tourData
       const tourId = tourInfo.MaTour;
       // Lấy id tài khoản HDV từ selectedHDV
@@ -279,6 +304,11 @@ const Booking = () => {
       const totalPrice = getTotalPrice();
       const totalTiket = getTotalQuantity();
 
+      if (totalTiket === 0 || totalTiket === null) {
+        // Hiển thị modal
+        handleShowModal();
+        return;
+      }
       const formDataWithHDV = {
         ...formData,
         soVe: totalTiket,
@@ -297,12 +327,23 @@ const Booking = () => {
     <div>
       <HomeHeader />
       <div className="container" style={{ marginTop: "80px" }}>
+        <Modal className="mt-5" show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>HỆ THỐNG PHẢN HỒI</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><span className="fw-bolder text-danger">VUI LÒNG CHỌN ÍT NHẤT 1 VÉ !</span></Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Đóng
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <div className="row border bg-light px-2 py-3 rounded mt-3">
           <div className="col-4">
             <Image
               className="rounded"
-              width={'400'}
-              height={'200'}
+              width={400}
+              height={200}
               style={{ width: "100%", height: "100%" }}
               src={tourInfo.URL}
               alt="Hình ảnh tour"
@@ -318,63 +359,106 @@ const Booking = () => {
           </div>
         </div>
         <div className="row mt-5">
-          <div className="col-7 me-4">
+          <div className="col-6 me-4">
             <h4>THÔNG TIN KHÁCH HÀNG</h4>
-            <div className="border px-3 py-4 rounded">
-              <div className="d-flex">
-                <div className="flex-grow-1">
-                  <label htmlFor="">
-                    Nhập họ tên: <span className="text-danger">(*)</span>
-                  </label>
-                  <input
-                    className="form-control mt-1"
-                    type="text"
-                    placeholder="Họ và tên"
-                    name="hoTen"
-                    value={formData.hoTen}
-                    onChange={handleInputChange}
-                  />
+            <div className="border px-4 py-4 rounded">
+              <Form>
+                {/* Hàng 1 */}
+                <div className="">
+                  <div className="flex-fill">
+                    <Form.Group controlId="formHoTen">
+                      <Form.Label>
+                        Tên khách hàng<span className="text-danger"> (*)</span>
+                      </Form.Label>
+                      <InputGroup hasValidation>
+                        <FormControl
+                          type="text"
+                          placeholder="Nhập họ và tên"
+                          name="hoTen"
+                          value={formData.hoTen}
+                          onChange={handleInputChange}
+                          className={errors.hoTen ? "is-invalid" : ""}
+                        />
+                        {errors.hoTen && (
+                          <InputGroup.Text className="bg-white border border-danger">
+                            <i className="bi bi-exclamation-triangle text-danger"></i>
+                          </InputGroup.Text>
+                        )}
+                        <Form.Control.Feedback type="invalid" className="m-0">
+                          Vui lòng nhập họ và tên
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </div>
+                  <div className="flex-fill">
+                    <Form.Group controlId="formEmail" className="mt-3">
+                      <Form.Label>
+                        Email cá nhân<span className="text-danger"> (*)</span>
+                      </Form.Label>
+                      <InputGroup hasValidation>
+                        <FormControl
+                          type="email"
+                          placeholder="Nhập Email (vd: email@gmail.com)"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className={errors.email ? "is-invalid" : ""}
+                        />
+                        {errors.email && (
+                          <InputGroup.Text className="bg-white border border-danger">
+                            <i className="bi bi-exclamation-triangle text-danger"></i>
+                          </InputGroup.Text>
+                        )}
+                        <Form.Control.Feedback type="invalid" className="m-0">
+                          Vui lòng nhập địa chỉ email
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </div>
                 </div>
-                <div className="flex-grow-1 ms-3">
-                  <label htmlFor="">
-                    Nhập Email: <span className="text-danger">(*)</span>{" "}
-                  </label>
-                  <input
-                    className="form-control mt-1"
-                    type="text"
-                    placeholder="Email (email@gmail.com)"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
+                {/* Hàng 2 */}
+                <div className="">
+                  <div className="flex-fill">
+                    <Form.Group controlId="formSdt" className="mt-3">
+                      <Form.Label>
+                        Số điện thoại<span className="text-danger"> (*)</span>
+                      </Form.Label>
+                      <InputGroup hasValidation>
+                        <FormControl
+                          type="text"
+                          placeholder="Số điện thoại"
+                          name="sdt"
+                          value={formData.sdt}
+                          onChange={handleInputChange}
+                          className={errors.sdt ? "is-invalid" : ""}
+                        />
+                        {errors.sdt && (
+                          <InputGroup.Text className="bg-white border border-danger">
+                            <i className="bi bi-exclamation-triangle text-danger"></i>
+                          </InputGroup.Text>
+                        )}
+                        <Form.Control.Feedback type="invalid" className="m-0">
+                          Vui lòng nhập số điện thoại
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </div>
+                  <div className="flex-fill">
+                    <Form.Group controlId="formDiaChi" className="mt-3">
+                      <Form.Label>Địa chỉ liên hệ</Form.Label>
+                      <InputGroup hasValidation>
+                        <FormControl
+                          type="text"
+                          placeholder="Nhập địa chỉ"
+                          name="diaChi"
+                          value={formData.diaChi}
+                          onChange={handleInputChange}
+                        />
+                      </InputGroup>
+                    </Form.Group>
+                  </div>
                 </div>
-              </div>
-              <div className="d-flex mt-3">
-                <div className="flex-grow-1">
-                  <label htmlFor="">
-                    Nhập SĐT: <span className="text-danger">(*)</span>
-                  </label>
-                  <input
-                    className="form-control mt-1"
-                    type="text"
-                    placeholder="SĐT liên hệ"
-                    name="sdt"
-                    value={formData.sdt}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="flex-grow-1 ms-3">
-                  <label htmlFor="">Nhập địa chỉ:</label>
-                  <input
-                    className="form-control mt-1"
-                    type="text"
-                    placeholder="Địa chỉ"
-                    name="diaChi"
-                    value={formData.diaChi}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
+              </Form>
             </div>
             <div>
               <h4 className="mt-5">BẢNG GIÁ TOUR CHI TIẾT</h4>
@@ -383,7 +467,9 @@ const Booking = () => {
                   <tr>
                     <th>Loại khách hàng</th>
                     <th>Giá vé (VND)</th>
-                    <th className="text-center">Vui lòng chọn vé <span className="text-danger">(*)</span></th>
+                    <th className="text-center">
+                      Vui lòng chọn vé <span className="text-danger">(*)</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -424,8 +510,8 @@ const Booking = () => {
             >
               <div className="">
                 <Image
-                  width={'150'}
-                  height={'150'}
+                  width={150}
+                  height={150}
                   style={{ width: "150px", height: "150px" }}
                   className="rounded"
                   src="/avatars/avatar_default.jpg"
@@ -467,8 +553,8 @@ const Booking = () => {
                 <div className="d-flex">
                   <div className="me-3">
                     <Image
-                    width={150}
-                    height={100}
+                      width={150}
+                      height={100}
                       className="rounded"
                       style={{ width: "150px", height: "100px" }}
                       src={tourInfo.URL}
@@ -479,10 +565,13 @@ const Booking = () => {
                   <div>
                     <p>Dịch vụ du lịch: {tourInfo.TenChuDe}</p>
                     <p>Phương tiện di chuyển: {tourInfo.PhuongTien}</p>
-                    <p className="m-0">Thời gian tham quan: {tourInfo.ThoiGian}</p>
+                    <p className="m-0">
+                      Thời gian tham quan: {tourInfo.ThoiGian}
+                    </p>
                   </div>
                 </div>
-              </div><hr />
+              </div>
+              <hr />
 
               <div>
                 <h5>Lịch chi tiết chuyến đi</h5>
@@ -492,13 +581,12 @@ const Booking = () => {
                   <p>Địa điểm tham quan: {tourInfo.TTCT_diemden}</p>
                   <p>Ngày về: {formatDate(tourInfo.TTCT_ngayve)}</p>
                 </div>
-              </div><hr />
+              </div>
+              <hr />
               {selectedPrices.length > 0 && (
                 <div className="mb-4">
                   <h5>Thông tin loại giá vé</h5>
-                  <div className="rounded">
-                    {renderSelectedPrices()}
-                  </div>
+                  <div className="rounded">{renderSelectedPrices()}</div>
                   <hr />
                   <h5>
                     Tổng thanh toán:{" "}

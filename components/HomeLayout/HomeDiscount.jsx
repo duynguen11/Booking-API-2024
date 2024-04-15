@@ -14,7 +14,6 @@ const HomeDiscount = () => {
         const response = await axios.get(
           "http://localhost:2024/api/tour/category/tour_uudai"
         );
-        console.log(response.data);
         setTour(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);

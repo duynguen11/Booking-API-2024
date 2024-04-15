@@ -278,7 +278,7 @@ const TourList = () => {
     const year = date.getFullYear();
 
     // Return formatted date string in dd-mm-yyyy format
-    return `${day}-${month}-${year}`;
+    return `${year}-${month}-${day}`;
   }
 
   const handleDateChange = (e) => {
@@ -300,7 +300,7 @@ const TourList = () => {
   }
 
   const filteredTours = tour.filter((tourItem) => {
-    const formattedSelectedDate = formatToDisplay(selectedDate);
+    const formattedSelectedDate = selectedDate;
     const formattedTourDate = formatToDisplay(tourItem.NgayKhoiHanh);
 
     const isDateFiltered =
@@ -317,10 +317,10 @@ const TourList = () => {
       <HomeLayout />
       <Modal className="mt-5" show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Phản hồi từ hệ thống</Modal.Title>
+          <Modal.Title>HỆ THỐNG PHẢN HỒI</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-danger fw-bolder">
-          Vui lòng đăng nhập để sử dụng tính năng này.
+          VUI LÒNG ĐĂNG NHẬP TÀI KHOẢN !
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
@@ -417,9 +417,6 @@ const TourList = () => {
                   value={formatToDisplay(selectedDate)}
                   onChange={handleDateChange}
                 />
-                {selectedDate && (
-                  <p className="mt-2">{formatToDisplay(selectedDate)}</p>
-                )}
               </div>
               <div className="">
                 <Form>
@@ -524,7 +521,7 @@ const TourList = () => {
                                     Điểm đến: {t.DiemDen}
                                   </p>
                                   <p className="card-title">
-                                    Ngày di chuyển: {t.NgayKhoiHanh}
+                                    Ngày di chuyển: {formatDate(t.NgayKhoiHanh)}
                                   </p>
                                   <p className="card-title">
                                     Thời gian tham quan: {t.ThoiGian}
@@ -616,7 +613,7 @@ const TourList = () => {
                               Thời gian tham quan: {t.ThoiGian}
                             </p>
                             <p className="card-title">
-                              Ngày di chuyển: {t.NgayKhoiHanh}
+                              Ngày di chuyển: {formatDate(t.NgayKhoiHanh)}
                             </p>
                             <p className="card-text mb-0">
                               Giá vé:{" "}
