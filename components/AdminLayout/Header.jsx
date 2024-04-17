@@ -50,15 +50,15 @@ const Header = () => {
       )}
       {showDropdown && (
         <div className="links-container border rounded p-1 me-4">
-          <a href="/admin/employee_info">
+          <Link href="/admin/employee_info">
             <i className="fa fa-user me-2"></i>Thông tin tài khoản
-          </a>
-          <a href="">
+          </Link>
+          <Link href="">
             <i className="fa-solid fa-layer-group me-2"></i>Tour tham gia
-          </a>
-          <a href="">
+          </Link>
+          <Link href="">
             <i class="fa-solid fa-clock-rotate-left me-2"></i>Lịch sử tour
-          </a>
+          </Link>
         </div>
       )}
     </div>

@@ -212,6 +212,7 @@ const Confirmbooking = () => {
                       src={"/avatars/avatar_default.jpg"}
                       width={150}
                       height={150}
+                      alt="HDV-picture"
                     />
                     <p className="mb-0">Mã nhân viên: {dataHDV.MaTaikhoan}</p>
                   </div>
