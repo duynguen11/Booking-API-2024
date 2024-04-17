@@ -319,8 +319,19 @@ const TourList = () => {
         <Modal.Header closeButton>
           <Modal.Title>HỆ THỐNG PHẢN HỒI</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-danger fw-bolder">
-          VUI LÒNG ĐĂNG NHẬP TÀI KHOẢN !
+        <Modal.Body className="text-center d-flex flex-column align-items-center">
+          <div
+            style={{ width: "fit-content" }}
+            className="bg-light p-4 rounded mb-3"
+          >
+            <i
+              style={{ fontSize: "50px" }}
+              className="fa-solid fa-user-lock"
+            ></i>
+          </div>
+          <span className="fw-bolder text-danger">
+            VUI LÒNG ĐĂNG NHẬP TÀI KHOẢN !
+          </span>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
@@ -492,7 +503,7 @@ const TourList = () => {
                                 <i className="fa-solid fa-heart"></i>
                               </div>
                               <Image
-                                width={'300'}
+                                width={"300"}
                                 height={"220"}
                                 src={t.URL}
                                 className="card-img-top rounded"
@@ -583,7 +594,7 @@ const TourList = () => {
                           <i class="fa-solid fa-heart"></i>
                         </div>
                         <Image
-                        width={'300'}
+                          width={"300"}
                           height={"220"}
                           src={t.URL}
                           className="card-img-top rounded"
@@ -688,7 +699,7 @@ const TourList = () => {
                                 <i class="fa-solid fa-heart"></i>
                               </div>
                               <Image
-                              width={'300'}
+                                width={"300"}
                                 height={"220"}
                                 src={t.URL}
                                 className="card-img-top rounded"

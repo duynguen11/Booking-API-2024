@@ -7,7 +7,6 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Form, InputGroup, Modal, Button, FormControl } from "react-bootstrap";
-import { BsExclamationTriangle } from "react-icons/bs";
 
 const Booking = () => {
   const router = useRouter();
@@ -26,20 +25,17 @@ const Booking = () => {
   const handleShowModal = () => setShowModal(true);
 
   const [formData, setFormData] = useState({
-    hoTen: "",
-    email: "",
-    sdt: "",
-    diaChi: "",
-    soVe: "",
-    tongGia: "",
-    MaHDV: "",
-    trangthai: "đang đợi duyệt",
-  });
-
-  const [errors, setErrors] = useState({
-    hoTen: false,
-    email: false,
-    sdt: false,
+    MaTour: "",
+    MaTaikhoan_KH: "",
+    HoTen: "",
+    Email: "",
+    LienHe: "",
+    DiaChi: "",
+    SoCho: "",
+    TongGia: "",
+    MaTaikhoan_HDV: "",
+    ThoiGianDat: new Date(),
+    TrangThai: "đang đợi duyệt",
   });
 
   useEffect(() => {
@@ -54,10 +50,10 @@ const Booking = () => {
           const userData = response.data;
           setFormData((prevFormData) => ({
             ...prevFormData,
-            hoTen: userData.userInfo.HoTen,
-            email: userData.userInfo.Email,
-            sdt: userData.userInfo.LienHe,
-            diaChi: userData.userInfo.DiaChi,
+            HoTen: userData.userInfo.HoTen,
+            Email: userData.userInfo.Email,
+            LienHe: userData.userInfo.LienHe,
+            DiaChi: userData.userInfo.DiaChi,
             // Thêm các trường khác nếu cần
           }));
         } catch (error) {
@@ -83,8 +79,6 @@ const Booking = () => {
       ...formData,
       [name]: value,
     });
-
-    setErrors({ ...errors, [name]: value.trim() === "" });
   };
 
   useEffect(() => {
@@ -281,26 +275,13 @@ const Booking = () => {
 
   const handleBookingTour = async () => {
     try {
-      const { hoTen, email, sdt } = formData;
-      if (
-        hoTen.trim() === "" ||
-        email.trim() === "" ||
-        String(sdt).trim() === ""
-      ) {
-        setErrors({
-          hoTen: hoTen.trim() === "",
-          email: email.trim() === "",
-          sdt: String(sdt).trim() === "",
-        });
-        return;
-      }
       // Lấy id tour từ tourData
       const tourId = tourInfo.MaTour;
+      // Lấy id user từ token
+      const userId = localStorage.getItem("userId");
       // Lấy id tài khoản HDV từ selectedHDV
       const hdvId = parseInt(selectedHDV) || tourInfo.MaTaikhoan;
       // Gửi yêu cầu đặt tour
-      console.log("Mã tour được đặt:", tourId);
-
       const totalPrice = getTotalPrice();
       const totalTiket = getTotalQuantity();
 
@@ -309,15 +290,19 @@ const Booking = () => {
         handleShowModal();
         return;
       }
-      const formDataWithHDV = {
+      const formDataBooking = {
         ...formData,
-        soVe: totalTiket,
-        tongGia: totalPrice,
-        MaHDV: hdvId,
+        MaTour: tourId,
+        MaTaikhoan_KH: parseInt(userId) || "",
+        SoCho: totalTiket,
+        TongGia: totalPrice,
+        MaTaikhoan_HDV: hdvId,
       };
 
-      console.log("Thông tin đặt tour:", formDataWithHDV);
+      console.log("Thông tin đặt tour:", formDataBooking);
       // Thực hiện các hành động khác sau khi đặt tour thành công (nếu cần)
+      localStorage.setItem("formDataBooking", JSON.stringify(formDataBooking));
+      router.push("/confirm-booking");
     } catch (err) {
       console.error("Đã xảy ra lỗi khi đặt tour:", err);
     }
@@ -331,7 +316,17 @@ const Booking = () => {
           <Modal.Header closeButton>
             <Modal.Title>HỆ THỐNG PHẢN HỒI</Modal.Title>
           </Modal.Header>
-          <Modal.Body><span className="fw-bolder text-danger">VUI LÒNG CHỌN ÍT NHẤT 1 VÉ !</span></Modal.Body>
+          <Modal.Body className="text-center d-flex flex-column align-items-center">
+            <div
+              style={{ width: "fit-content" }}
+              className="bg-light p-4 rounded mb-3"
+            >
+              <i style={{ fontSize: "50px" }} className="fa-solid fa-ban"></i>
+            </div>
+            <span className="fw-bolder text-danger">
+              VUI LÒNG CHỌN ÍT NHẤT 1 VÉ !
+            </span>
+          </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>
               Đóng
@@ -363,7 +358,6 @@ const Booking = () => {
             <h4>THÔNG TIN KHÁCH HÀNG</h4>
             <div className="border px-4 py-4 rounded">
               <Form>
-                {/* Hàng 1 */}
                 <div className="">
                   <div className="flex-fill">
                     <Form.Group controlId="formHoTen">
@@ -374,19 +368,10 @@ const Booking = () => {
                         <FormControl
                           type="text"
                           placeholder="Nhập họ và tên"
-                          name="hoTen"
-                          value={formData.hoTen}
+                          name="HoTen"
+                          value={formData.HoTen}
                           onChange={handleInputChange}
-                          className={errors.hoTen ? "is-invalid" : ""}
                         />
-                        {errors.hoTen && (
-                          <InputGroup.Text className="bg-white border border-danger">
-                            <i className="bi bi-exclamation-triangle text-danger"></i>
-                          </InputGroup.Text>
-                        )}
-                        <Form.Control.Feedback type="invalid" className="m-0">
-                          Vui lòng nhập họ và tên
-                        </Form.Control.Feedback>
                       </InputGroup>
                     </Form.Group>
                   </div>
@@ -399,24 +384,14 @@ const Booking = () => {
                         <FormControl
                           type="email"
                           placeholder="Nhập Email (vd: email@gmail.com)"
-                          name="email"
-                          value={formData.email}
+                          name="Email"
+                          value={formData.Email}
                           onChange={handleInputChange}
-                          className={errors.email ? "is-invalid" : ""}
                         />
-                        {errors.email && (
-                          <InputGroup.Text className="bg-white border border-danger">
-                            <i className="bi bi-exclamation-triangle text-danger"></i>
-                          </InputGroup.Text>
-                        )}
-                        <Form.Control.Feedback type="invalid" className="m-0">
-                          Vui lòng nhập địa chỉ email
-                        </Form.Control.Feedback>
                       </InputGroup>
                     </Form.Group>
                   </div>
                 </div>
-                {/* Hàng 2 */}
                 <div className="">
                   <div className="flex-fill">
                     <Form.Group controlId="formSdt" className="mt-3">
@@ -427,19 +402,10 @@ const Booking = () => {
                         <FormControl
                           type="text"
                           placeholder="Số điện thoại"
-                          name="sdt"
-                          value={formData.sdt}
+                          name="LienHe"
+                          value={formData.LienHe}
                           onChange={handleInputChange}
-                          className={errors.sdt ? "is-invalid" : ""}
                         />
-                        {errors.sdt && (
-                          <InputGroup.Text className="bg-white border border-danger">
-                            <i className="bi bi-exclamation-triangle text-danger"></i>
-                          </InputGroup.Text>
-                        )}
-                        <Form.Control.Feedback type="invalid" className="m-0">
-                          Vui lòng nhập số điện thoại
-                        </Form.Control.Feedback>
                       </InputGroup>
                     </Form.Group>
                   </div>
@@ -450,8 +416,8 @@ const Booking = () => {
                         <FormControl
                           type="text"
                           placeholder="Nhập địa chỉ"
-                          name="diaChi"
-                          value={formData.diaChi}
+                          name="DiaChi"
+                          value={formData.DiaChi}
                           onChange={handleInputChange}
                         />
                       </InputGroup>
