@@ -35,7 +35,7 @@ const Booking = () => {
     TongGia: "",
     MaTaikhoan_HDV: "",
     ThoiGianDat: new Date(),
-    TrangThai: "đang đợi duyệt",
+    TrangThai: "Đang đợi duyệt",
   });
 
   useEffect(() => {

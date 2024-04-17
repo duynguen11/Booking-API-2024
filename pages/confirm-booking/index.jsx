@@ -22,17 +22,17 @@ const Confirmbooking = () => {
     if (selectedPaymentMethod !== method) {
       setSelectedPaymentMethod(method);
       switch (method) {
-        case "cash":
+        case "Tiền mặt":
           setShowCashModal(true);
           setShowMomoModal(false);
           setShowBankTransferModal(false);
           break;
-        case "momo":
+        case "Momo pay":
           setShowCashModal(false);
           setShowMomoModal(true);
           setShowBankTransferModal(false);
           break;
-        case "bankTransfer":
+        case "Chuyển khoản":
           setShowCashModal(false);
           setShowMomoModal(false);
           setShowBankTransferModal(true);
@@ -106,7 +106,6 @@ const Confirmbooking = () => {
         const response = await axios.get(
           `http://localhost:2024/api/tour/booking-tour/${maTour}`
         );
-        console.log("Dữ liệu tour:", response.data);
         setDataTour(response.data);
 
         const response1 = await axios.get(
@@ -122,6 +121,30 @@ const Confirmbooking = () => {
     // Gọi function fetchDataTour
     fetchDataTour();
   }, []);
+
+  const handleSubmitBooking = async () => {
+    try {
+      let formSubmitBooking = JSON.parse(
+        localStorage.getItem("formDataBooking")
+      );
+      formSubmitBooking = {
+        ...formSubmitBooking,
+        ThanhToan: selectedPaymentMethod,
+      };
+
+      // Gửi dữ liệu lên server API
+      const response = await axios.post(
+        "http://localhost:2024/api/chitietdattour/submitBooking ",
+        formSubmitBooking
+      );
+
+      console.log("Dữ liệu đã được gửi:", response.data);
+      // Xử lý kết quả từ server (nếu cần)
+    } catch (error) {
+      console.error("Đã có lỗi xảy ra khi gửi dữ liệu:", error);
+      // Xử lý lỗi (nếu cần)
+    }
+  };
 
   return (
     <>
@@ -288,8 +311,10 @@ const Confirmbooking = () => {
                               <Form.Check
                                 type="checkbox"
                                 style={{ fontSize: "25px" }}
-                                checked={selectedPaymentMethod === "cash"}
-                                onChange={() => handleCheckboxChange("cash")}
+                                checked={selectedPaymentMethod === "Tiền mặt"}
+                                onChange={() =>
+                                  handleCheckboxChange("Tiền mặt")
+                                }
                               />
                             </div>
 
@@ -307,10 +332,10 @@ const Confirmbooking = () => {
                                 type="checkbox"
                                 style={{ fontSize: "25px" }}
                                 checked={
-                                  selectedPaymentMethod === "bankTransfer"
+                                  selectedPaymentMethod === "Chuyển khoản"
                                 }
                                 onChange={() =>
-                                  handleCheckboxChange("bankTransfer")
+                                  handleCheckboxChange("Chuyển khoản")
                                 }
                               />
                             </div>
@@ -329,12 +354,17 @@ const Confirmbooking = () => {
                               <Form.Check
                                 type="checkbox"
                                 style={{ fontSize: "25px" }}
-                                checked={selectedPaymentMethod === "momo"}
-                                onChange={() => handleCheckboxChange("momo")}
+                                checked={selectedPaymentMethod === "Momo pay"}
+                                onChange={() =>
+                                  handleCheckboxChange("Momo pay")
+                                }
                               />
                             </div>
                             <hr />
-                            <button className="btn btn-danger w-100 py-3 fw-bolder">
+                            <button
+                              className="btn btn-danger w-100 py-3 fw-bolder"
+                              onClick={handleSubmitBooking}
+                            >
                               XÁC NHẬN BOOKING
                             </button>
                           </div>
