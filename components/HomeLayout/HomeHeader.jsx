@@ -251,10 +251,10 @@ const HomeHeader = () => {
                       lưu
                     </Link>
                     <hr className="m-2" />
-                    <a href="" className="nav-link">
+                    <Link href="/history-booking" className="nav-link">
                       <i className="fa-solid fa-business-time me-2"></i>Lịch sử
                       thanh toán
-                    </a>
+                    </Link>
                     <hr className="m-2" />
                     <button
                       className="btn btn-danger p-1 w-100"

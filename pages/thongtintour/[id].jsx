@@ -202,7 +202,6 @@ const ThongtinTour = () => {
           <i class="fa-solid fa-magnifying-glass fw-bolder"></i>
         </a>
       </ul>
-      <div></div>
       <div className="px-5" style={{ marginTop: "130px" }}>
         {tour.map((t, index) => (
           <div

@@ -53,7 +53,7 @@ const LienHe = () => {
       [name]: value,
     }));
 
-    if (name === "lienhe" && value.trim() === "") {
+    if (name === "lienhe" && value === "") {
       setLienheError("Vui lòng nhập số điện thoại.");
     } else {
       setLienheError("");
@@ -68,7 +68,7 @@ const LienHe = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (messData.lienhe.trim() === "") {
+    if (messData.lienhe === "") {
       setLienheError("Vui lòng nhập số điện thoại.");
       return;
     }

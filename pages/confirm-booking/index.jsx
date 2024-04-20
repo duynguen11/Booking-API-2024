@@ -5,7 +5,7 @@ import HomeHeader from "@/components/HomeLayout/HomeHeader";
 import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import axios from "axios";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import { Form, InputGroup, Modal, Button, FormControl } from "react-bootstrap";
 
 const Confirmbooking = () => {
@@ -17,6 +17,21 @@ const Confirmbooking = () => {
   const [showCashModal, setShowCashModal] = useState(false);
   const [showMomoModal, setShowMomoModal] = useState(false);
   const [showBankTransferModal, setShowBankTransferModal] = useState(false);
+
+  const [showSuccessModal, setSuccessModal] = useState(false);
+  const [isModalClosed, setIsModalClosed] = useState(false);
+
+  const router = useRouter();
+
+  const handleCloseModal = () => {
+    setSuccessModal(false);
+    setIsModalClosed(true);
+    // Thực hiện các thao tác khác sau khi đóng modal
+  };
+
+  if (isModalClosed) {
+    router.push("/tourlist");
+  }
 
   const handleCheckboxChange = (method) => {
     if (selectedPaymentMethod !== method) {
@@ -100,7 +115,6 @@ const Confirmbooking = () => {
         );
         const maTour = formDataBooking.MaTour;
         const hdvId = formDataBooking.MaTaikhoan_HDV;
-        console.log("Id_HDV", hdvId);
 
         // Gửi yêu cầu API
         const response = await axios.get(
@@ -111,7 +125,6 @@ const Confirmbooking = () => {
         const response1 = await axios.get(
           `http://localhost:2024/api/account/info-HDV/${hdvId}`
         );
-        console.log("Dữ liệu HDV", response1.data.userInfo);
         setDataHDV(response1.data.userInfo);
       } catch (error) {
         console.error("Error fetching tour data:", error);
@@ -137,8 +150,12 @@ const Confirmbooking = () => {
         "http://localhost:2024/api/chitietdattour/submitBooking ",
         formSubmitBooking
       );
-
-      console.log("Dữ liệu đã được gửi:", response.data);
+      if (response.status === 200) {
+        // Nếu mã trạng thái là 200, hiển thị cảnh báo đặt tour thành công
+        setSuccessModal(true);
+        //Xóa thong tin booking localstorage
+        localStorage.removeItem("formDataBooking");
+      }
       // Xử lý kết quả từ server (nếu cần)
     } catch (error) {
       console.error("Đã có lỗi xảy ra khi gửi dữ liệu:", error);
@@ -454,6 +471,35 @@ const Confirmbooking = () => {
               <p>Ngân hàng : Vietinbank - Chi nhánh 7 Hồ Chí Minh.</p>
             </span>
           </Modal.Body>
+        </Modal>
+        {/* Modal for Success booking */}
+        <Modal
+          className="mt-5"
+          show={showSuccessModal}
+          onHide={handleCloseModal}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>HỆ THỐNG PHẢN HỒI</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="text-center d-flex flex-column align-items-center">
+            <div
+              style={{ width: "fit-content" }}
+              className="bg-light p-4 rounded mb-3"
+            >
+              <i
+                style={{ fontSize: "50px" }}
+                className="fa-solid fa-clipboard-check text-success"
+              ></i>
+            </div>
+            <span className="fw-bolder text-success">
+              ĐẶT TOUR THÀNH CÔNG !
+            </span>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Đóng
+            </Button>
+          </Modal.Footer>
         </Modal>
       </div>
       <HomeFooter />
