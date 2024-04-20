@@ -6,6 +6,7 @@ import HomeContent from "@/components/HomeLayout/HomeContent";
 import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import HomeIcon from "@/components/HomeLayout/HomeIcon";
 import HomeDiscount from "@/components/HomeLayout/HomeDiscount";
+import HomeArea from "@/components/HomeLayout/HomeArea";
 import ScrollToTop from "@/components/HomeLayout/ScrollToTop";
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
       <HomeContent/>
       <HomeIcon/>
       <HomeDiscount/>
+      <HomeArea/>
       <ScrollToTop/>
       <HomeFooter/>
     </div>

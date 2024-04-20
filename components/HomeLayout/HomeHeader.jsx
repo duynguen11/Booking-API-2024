@@ -46,12 +46,12 @@ const HomeHeader = () => {
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
-    setUsernameEmpty(e.target.value.trim() === '');
+    setUsernameEmpty(e.target.value.trim() === "");
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    setPasswordEmpty(e.target.value.trim() === '');
+    setPasswordEmpty(e.target.value.trim() === "");
   };
 
   const handleLogin = async () => {
@@ -151,7 +151,7 @@ const HomeHeader = () => {
           className="navbar-brand fw-bolder text-logo"
           href="/"
         >
-          <i className="fa-solid fa-dice-d20"></i> TOUR & TRAVEL
+          <i className="fa-solid fa-dice-d20"></i> NEXT BOOKING
         </Link>
         <button
           className="navbar-toggler"
@@ -267,18 +267,25 @@ const HomeHeader = () => {
                 )}
               </div>
             ) : (
-              <a
-                style={{ backgroundColor: "rgba(40, 67, 135, 1)" }}
-                className="nav-link py-2 px-3 text-white rounded"
-                href="#"
-                onClick={handleShow}
-              >
-                Tài khoản
-                <i className="fa fa-user ms-2"></i>
-              </a>
+              <div className="d-flex align-items-center">
+                <a
+                  className="p-2 btn btn-info text-white fw-bolder me-1"
+                  href="/register"
+                >
+                  Đăng ký
+                </a>
+                <a
+                  style={{ backgroundColor: "rgba(40, 67, 135, 1)" }}
+                  className="nav-link p-2 text-white rounded "
+                  href="#"
+                  onClick={handleShow}
+                >
+                  Đăng Nhập
+                  <i className="fa fa-user ms-2"></i>
+                </a>
+              </div>
             )}
           </div>
-
           <Modal
             className="pt-5 fw-bolder"
             show={showModal}
@@ -297,7 +304,7 @@ const HomeHeader = () => {
                     value={username}
                     onChange={handleUsernameChange}
                     isInvalid={usernameEmpty}
-                    className={username !== '' && !usernameEmpty ? '' : ''}
+                    className={username !== "" && !usernameEmpty ? "" : ""}
                   />
                   {usernameEmpty && (
                     <Form.Text className="text-danger">
@@ -313,7 +320,7 @@ const HomeHeader = () => {
                     value={password}
                     onChange={handlePasswordChange}
                     isInvalid={passwordEmpty}
-                    className={password !== '' && !passwordEmpty ? '' : ''}
+                    className={password !== "" && !passwordEmpty ? "" : ""}
                   />
                   {passwordEmpty && (
                     <Form.Text className="text-danger">

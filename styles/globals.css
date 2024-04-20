@@ -212,3 +212,8 @@ html, body {
 .form-control:valid + span {
   display: none !important;
 }
+
+.title_homeArea {
+  display: flex;
+  justify-content: space-between;
+}
