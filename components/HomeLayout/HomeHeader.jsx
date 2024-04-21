@@ -269,12 +269,12 @@ const HomeHeader = () => {
               </div>
             ) : (
               <div className="d-flex align-items-center">
-                <a
+                <Link
                   className="p-2 btn btn-info text-white fw-bolder me-1"
                   href="/register"
                 >
                   Đăng ký
-                </a>
+                </Link>
                 <a
                   style={{ backgroundColor: "rgba(40, 67, 135, 1)" }}
                   className="nav-link p-2 text-white rounded "

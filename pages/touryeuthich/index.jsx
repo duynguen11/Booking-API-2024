@@ -61,10 +61,10 @@ const TourYeuthich = () => {
                 </Link>
               </li>
               <li>
-                <a href="/history-booking">
+                <Link href="/history-booking">
                   <i className="fa-solid fa-business-time me-2"></i>Lịch sử
                   thanh toán
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/phanhoi">
