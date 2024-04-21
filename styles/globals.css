@@ -6,7 +6,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -52,7 +53,6 @@ html, body {
   top: 60px;
   left: 265px;
   padding: 1rem;
-
 }
 
 @keyframes fadeInUp {
@@ -152,7 +152,7 @@ html, body {
 .save-button i {
   color: rgb(224, 224, 224);
 }
-.save-button:hover i{
+.save-button:hover i {
   color: rgb(228, 47, 59);
 }
 
@@ -205,7 +205,7 @@ html, body {
 
 .links-container a:hover {
   background-color: #888;
-  color:#fff;
+  color: #fff;
 }
 
 .form-control:invalid + span,
@@ -216,4 +216,29 @@ html, body {
 .title_homeArea {
   display: flex;
   justify-content: space-between;
+}
+
+.content_menu_link {
+}
+
+.content_menu_link li {
+  padding: 1rem;
+  background-color: #999999;
+  margin-right: 9px;
+  border-radius: 2rem;
+}
+
+.content_menu_link li i{
+  color: rgb(127, 214, 255);
+  font-size: 20px;
+}
+
+.content_menu_link .link-content {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+.logo-bg i {
+  font-size: 30px;
 }

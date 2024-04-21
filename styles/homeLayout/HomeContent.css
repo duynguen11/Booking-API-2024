@@ -38,7 +38,6 @@
 }
 
 .input-container {
-  margin-top: 100px;
   display: flex;
   justify-content: center; /* Canh giữa ngang */
   align-items: center;

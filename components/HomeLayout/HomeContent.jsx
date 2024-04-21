@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Link from "next/link";
 
 const HomeContent = () => {
   const [searchData, setSearchData] = useState({
@@ -30,16 +31,53 @@ const HomeContent = () => {
     <div className="px-3">
       <div style={{ marginTop: "75px" }} className="Banner-content rounded">
         <div className="text-center text-content">
-          <h3 className="text-title pt-5">
-            Khám phá - Trải nghiệm - Kỷ niệm với chúng tôi!
+          <h3 className="text-title p-4">
+            Khám Phá - Trải Nghiệm - Kỷ Niệm Với Chúng Tôi!
           </h3>
-          <div className="input-container">
+          <div className="px-5">
+            <ul className="d-flex align-items-center justify-content-center content_menu_link">
+              <li>
+                <Link href={"/"} className="link-content">
+                  <i className="fa-solid fa-plane me-2"></i>Vé máy bay
+                </Link>
+              </li>
+              <li>
+                <Link href={"/"} className="link-content">
+                  <i className="fa-solid fa-hotel me-2"></i>Khách sạn
+                </Link>
+              </li>
+              <li>
+                <Link href={"/"} className="link-content">
+                  <i className="fa-solid fa-caravan me-2"></i>Vé xe khách
+                </Link>
+              </li>
+              <li>
+                <Link href={"/"} className="link-content">
+                  <i className="fa-solid fa-truck-ramp-box me-2"></i>Đưa đón sân
+                  bay
+                </Link>
+              </li>
+              <li>
+                <Link href={"/"} className="link-content">
+                  <i className="fa-solid fa-taxi me-2"></i>Thuê xe du lịch
+                </Link>
+              </li>
+              <li>
+                <Link href={"/"} className="link-content">
+                  <i className="fa-solid fa-champagne-glasses me-2"></i>Hoạt
+                  động vui chơi
+                </Link>
+              </li>
+            </ul>
+            <hr />
+          </div>
+          <div className="input-container mt-5">
             <div className="bg-light border d-flex rounded align-items-center p-1">
               <div className="input-field-container">
                 <i
                   style={{ fontSize: "20px" }}
-                  className="fa-solid fa-plane-departure text-info mx-2">
-                </i>
+                  className="fa-solid fa-plane-departure text-info mx-2"
+                ></i>
                 <select className="input-field">
                   <option value="vitri">Điểm xuất phát</option>
                   <option value="hanoi">Hà Nội</option>
@@ -54,10 +92,10 @@ const HomeContent = () => {
                 ></i>
               </div>
               <div className="input-field-container me-2">
-              <i
+                <i
                   style={{ fontSize: "20px" }}
-                  className="fa-solid fa-plane-arrival text-info me-2">
-                </i>
+                  className="fa-solid fa-plane-arrival text-info me-2"
+                ></i>
                 <select className="input-field">
                   <option value="dichvu">Điểm đến</option>
                   <option value="tour">Tour</option>
@@ -65,7 +103,7 @@ const HomeContent = () => {
                   <option value="thueoto">Thuê ô tô</option>
                 </select>
               </div>
-              <div className="input-field-container">
+              <div className="input-field-container ms-3">
                 <input
                   type="datetime-local"
                   className="input-field"
@@ -74,13 +112,31 @@ const HomeContent = () => {
                 />
               </div>
             </div>
-            <div className="bg-light p-1 rounded ms-2">
+            <div className="bg-light p-1 rounded ms-3">
               <button className="btn-booking">
                 <i
                   style={{ fontSize: "25px" }}
                   className="fa-solid fa-magnifying-glass text-white"
                 ></i>
               </button>
+            </div>
+          </div>
+          <div className="d-flex align-items-center justify-content-end logo-bg p-5">
+            <span className="fw-bolder">Trusted By</span>
+            <div>
+              <i className="fa-brands fa-square-pied-piper ms-3"></i>
+            </div>
+            <div>
+              <i class="fa-brands fa-pied-piper-pp ms-3"></i>
+            </div>
+            <div>
+              <i class="fa-solid fa-square-nfi ms-3"></i>
+            </div>
+            <div>
+              <i class="fa-brands fa-blogger ms-3"></i>
+            </div>
+            <div>
+              <i class="fa-brands fa-algolia ms-3"></i>
             </div>
           </div>
         </div>

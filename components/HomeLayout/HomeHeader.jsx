@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import Image from "next/image";
 import { Modal, Button, Form, Toast } from "react-bootstrap";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -287,17 +288,19 @@ const HomeHeader = () => {
             )}
           </div>
           <Modal
-            className="pt-5 fw-bolder"
+            className="mt-5 fw-bolder"
             show={showModal}
             onHide={handleClose}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Đăng nhập</Modal.Title>
+              <Modal.Title>Vui Lòng Đăng Nhập Tài Khoản</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form>
                 <Form.Group controlId="formUsername">
-                  <Form.Label>Tài khoản</Form.Label>
+                  <Form.Label className="d-flex align-items-center">
+                    <i className="fa-regular fa-user me-2"></i>Tài khoản
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Nhập tên đăng nhập"
@@ -312,8 +315,10 @@ const HomeHeader = () => {
                     </Form.Text>
                   )}
                 </Form.Group>
-                <Form.Group className="mt-2 pb-2" controlId="formPassword">
-                  <Form.Label>Mật khẩu</Form.Label>
+                <Form.Group className="mt-3" controlId="formPassword">
+                  <Form.Label>
+                    <i className="fa-solid fa-unlock-keyhole me-2"></i>Mật khẩu
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="Nhập mật khẩu"
@@ -328,14 +333,38 @@ const HomeHeader = () => {
                     </Form.Text>
                   )}
                 </Form.Group>
+                <div className="py-3">
+                  Hoặc
+                  <div className="rounded border mt-2 p-1">
+                    <Image
+                      className="rounded me-2"
+                      width={40}
+                      height={40}
+                      src={"/banner/Banner_10.jpg"}
+                      alt="logo-login"
+                    />
+                    Đăng nhập với google
+                  </div>
+                  <div className="rounded border mt-2 p-1">
+                    <Image
+                      className="rounded me-2"
+                      width={40}
+                      height={40}
+                      src={"/banner/Banner_11.jpg"}
+                      alt="logo-login"
+                    />
+                    Đăng nhập với facebook
+                  </div>
+                </div>
                 <Link href="/register">Bạn đã có tài khoản? Đăng ký.</Link>
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Đóng
-              </Button>
-              <Button variant="primary" onClick={handleLogin}>
+              <Button
+                className="fw-bolder w-100 py-2"
+                variant="primary"
+                onClick={handleLogin}
+              >
                 Đăng nhập
               </Button>
             </Modal.Footer>
