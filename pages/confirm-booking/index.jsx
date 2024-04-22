@@ -5,6 +5,8 @@ import HomeHeader from "@/components/HomeLayout/HomeHeader";
 import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import axios from "axios";
 import Image from "next/image";
+import { RingLoader } from "react-spinners";
+import { ToastContainer, toast } from "react-toastify";
 import { Router, useRouter } from "next/router";
 import { Form, InputGroup, Modal, Button, FormControl } from "react-bootstrap";
 
@@ -20,8 +22,18 @@ const Confirmbooking = () => {
 
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [isModalClosed, setIsModalClosed] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
+
+  useEffect(() => {
+    // Giả lập thời gian load
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // Thời gian delay là 2 giây
+    // Xóa timeout khi component bị unmount
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleCloseModal = () => {
     setSuccessModal(false);
@@ -137,19 +149,23 @@ const Confirmbooking = () => {
 
   const handleSubmitBooking = async () => {
     try {
-      let formSubmitBooking = JSON.parse(
-        localStorage.getItem("formDataBooking")
-      );
-      formSubmitBooking = {
-        ...formSubmitBooking,
-        ThanhToan: selectedPaymentMethod,
-      };
+      if (!selectedPaymentMethod) {
+        toast.error("Vui lòng chọn phương thức thanh toán !");
+      } else {
+        let formSubmitBooking = JSON.parse(
+          localStorage.getItem("formDataBooking")
+        );
+        formSubmitBooking = {
+          ...formSubmitBooking,
+          ThanhToan: selectedPaymentMethod,
+        };
 
-      // Gửi dữ liệu lên server API
-      const response = await axios.post(
-        "http://localhost:2024/api/chitietdattour/submitBooking ",
-        formSubmitBooking
-      );
+        // Gửi dữ liệu lên server API
+        const response = await axios.post(
+          "http://localhost:2024/api/chitietdattour/submitBooking ",
+          formSubmitBooking
+        );
+      }
       if (response.status === 200) {
         // Nếu mã trạng thái là 200, hiển thị cảnh báo đặt tour thành công
         setSuccessModal(true);
@@ -167,234 +183,249 @@ const Confirmbooking = () => {
     <>
       <HomeHeader />
       <div className="container" style={{ marginTop: "80px" }}>
-        <div className="row mt-5">
-          <div className="col-7">
-            <h4>THÔNG TIN CHI TIẾT ĐẶT TOUR</h4>
-            {bookingData && (
-              <>
-                <div className="border p-4 rounded">
-                  <h4 className="text-danger">Thông tin khách hàng</h4>
-                  <hr />
-                  <div className="d-flex row mb-2">
-                    <p className="col">
-                      Họ Tên :{" "}
-                      <span className="fw-bolder">{bookingData.HoTen}</span>
-                    </p>
-                    <p className="col">
-                      Số điện thoại :{" "}
-                      <span className="fw-bolder">{bookingData.LienHe}</span>
-                    </p>
-                  </div>
-                  <p className="mb-4">
-                    Email :{" "}
-                    <span className="fw-bolder">{bookingData.Email}</span>
-                  </p>
-                  <p className="mt-4 mb-0">
-                    Địa chỉ :{" "}
-                    <span className="fw-bolder">{bookingData.DiaChi}</span>
-                  </p>
-                </div>
-                <div className="border p-4 rounded mt-4">
-                  <h4 className="text-danger">Chi tiết booking</h4>
-                  <hr />
-                  <p className="mb-4">Số vé đã đặt : {bookingData.SoCho} vé</p>
-                  <p className="mb-4">
-                    Tổng số tiền thanh toán :{" "}
-                    <span className="text-danger fw-bolder">
-                      {formatCurrency(bookingData.TongGia)} VND
-                    </span>
-                  </p>
-                  <p className="mb-4">
-                    Thời gian đăng ký tour :{" "}
-                    {formatDateTime(bookingData.ThoiGianDat)}
-                  </p>
-                  <p className="m-0">
-                    Trạng thái đơn hàng : Thông tin đặt tour{" "}
-                    <span className="fw-bolder">đang đợi xét duyệt</span>
-                  </p>
-                </div>
-              </>
-            )}
-            <div
-              style={{ width: "fit-content" }}
-              className="border p-4 rounded mt-4"
-            >
-              <h4>Thông tin hướng dẫn viên</h4>
-              <hr />
-              {dataHDV && (
-                <div className="d-flex">
-                  <div>
-                    <Image
-                      className="rounded"
-                      src={"/avatars/avatar_default.jpg"}
-                      width={150}
-                      height={150}
-                      alt="HDV-picture"
-                    />
-                    <p className="mb-0">Mã nhân viên: {dataHDV.MaTaikhoan}</p>
-                  </div>
-                  <div className="ms-4">
-                    <p>Họ tên : {dataHDV.HoTen}</p>
-                    <p>Số điện thoại : {dataHDV.LienHe}</p>
-                    <p>Email liên hệ : {dataHDV.Email}</p>
-                    <p>Thời gian làm việc : {dataHDV.NgayTao}</p>
-                  </div>
-                </div>
-              )}
-            </div>
+        {loading ? (
+          <div className="loading">
+            <RingLoader
+              color="rgba(40, 67, 135, 1)"
+              loading={true}
+              size={100}
+            />
+            <h4 className="text-center">Vui lòng chờ ...</h4>
           </div>
-          <div className="col ms-2">
-            <h4>PHIẾU XÁC NHẬN BOOKING</h4>
-            <div className="border p-4 rounded">
-              <h4 className="text-danger">Thông tin tour chi tiết</h4>
-              <hr />
-              {dataTour && (
+        ) : (
+          <div className="row mt-5">
+            <div className="col-7">
+              <h4>THÔNG TIN CHI TIẾT ĐẶT TOUR</h4>
+              {bookingData && (
                 <>
-                  <div className="">
-                    {dataTour.map((tour, index) => (
-                      <div key={index}>
-                        <div className="d-flex">
-                          <div className="ms-2">
-                            <Image
-                              className="rounded"
-                              width={150}
-                              height={100}
-                              src={tour.URL}
-                              alt="Hinh-tour"
-                            />
-                            <p className="mb-0">Mã Tour: {tour.MaTour}</p>
-                          </div>
-                          <div className="ms-5 text-end">
-                            <p>Tên Tour: {tour.TenTour}</p>
-                            <p>Chủ Đề: {tour.TenChuDe}</p>
-                            <p>
-                              Ngày Khởi Hành:{" "}
-                              {formatDateTime(tour.NgayKhoiHanh)}
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <hr />
-                          <div className="row">
-                            <p className="col fw-bolder">
-                              Phương tiện di chuyển :{" "}
-                            </p>
-                            <span className="col text-end">
-                              {tour.PhuongTien}
-                            </span>
-                          </div>
-                          <div className="row">
-                            <p className="col fw-bolder">
-                              Thời gian tham quan :{" "}
-                            </p>
-                            <span className="col text-end">
-                              {tour.ThoiGian}
-                            </span>
-                          </div>
-                          <div className="row">
-                            <p className="col fw-bolder">Địa điểm đến : </p>
-                            <span className="col text-end">
-                              {tour.TTCT_diemden}
-                            </span>
-                          </div>
-                          <div className="row">
-                            <p className="col fw-bolder">Nơi tập trung : </p>
-                            <span className="col text-end">
-                              {tour.TTCT_taptrung}
-                            </span>
-                          </div>
-                          <div className="row">
-                            <p className="col fw-bolder">Ngày di chuyển : </p>
-                            <span className="col text-end">
-                              {formatDate(tour.TTCT_ngaydi)}
-                            </span>
-                          </div>
-                          <div className="row">
-                            <p className="col fw-bolder mb-0">Ngày về : </p>
-                            <span className="col text-end">
-                              {formatDate(tour.TTCT_ngayve)}
-                            </span>
-                          </div>
-                          <hr />
-                          <div className="">
-                            <h4>Chọn hình thức thanh toán</h4>
-                            <div className="bg-light d-flex align-items-center justify-content-between p-3 rounded">
-                              <div className="bg-light d-flex align-items-center">
-                                <i
-                                  style={{ fontSize: "35px" }}
-                                  className="fa-solid fa-money-bill-transfer"
-                                ></i>
-                                <span className="fw-bolder ms-2">Tiền mặt</span>
-                              </div>
-                              <Form.Check
-                                type="checkbox"
-                                style={{ fontSize: "25px" }}
-                                checked={selectedPaymentMethod === "Tiền mặt"}
-                                onChange={() =>
-                                  handleCheckboxChange("Tiền mặt")
-                                }
-                              />
-                            </div>
-
-                            <div className="bg-light d-flex align-items-center justify-content-between p-3 rounded mt-1">
-                              <div className="bg-light d-flex align-items-center">
-                                <i
-                                  style={{ fontSize: "35px" }}
-                                  className="fa-solid fa-house-signal"
-                                ></i>
-                                <span className="fw-bolder ms-2">
-                                  Chuyển khoản
-                                </span>
-                              </div>
-                              <Form.Check
-                                type="checkbox"
-                                style={{ fontSize: "25px" }}
-                                checked={
-                                  selectedPaymentMethod === "Chuyển khoản"
-                                }
-                                onChange={() =>
-                                  handleCheckboxChange("Chuyển khoản")
-                                }
-                              />
-                            </div>
-                            <div className="bg-light d-flex align-items-center justify-content-between p-3 rounded mt-1">
-                              <div className="bg-light d-flex align-items-center">
-                                <Image
-                                  width={40}
-                                  height={40}
-                                  src={"/banner/momo_logo.webp"}
-                                  alt="momo-logo"
-                                />
-                                <span className="fw-bolder ms-2">
-                                  Ví điện tử Momo
-                                </span>
-                              </div>
-                              <Form.Check
-                                type="checkbox"
-                                style={{ fontSize: "25px" }}
-                                checked={selectedPaymentMethod === "Momo pay"}
-                                onChange={() =>
-                                  handleCheckboxChange("Momo pay")
-                                }
-                              />
-                            </div>
-                            <hr />
-                            <button
-                              className="btn btn-danger w-100 py-3 fw-bolder"
-                              onClick={handleSubmitBooking}
-                            >
-                              XÁC NHẬN BOOKING
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="border p-4 rounded">
+                    <h4 className="text-danger">Thông tin khách hàng</h4>
+                    <hr />
+                    <div className="d-flex row mb-2">
+                      <p className="col">
+                        Họ Tên :{" "}
+                        <span className="fw-bolder">{bookingData.HoTen}</span>
+                      </p>
+                      <p className="col">
+                        Số điện thoại :{" "}
+                        <span className="fw-bolder">{bookingData.LienHe}</span>
+                      </p>
+                    </div>
+                    <p className="mb-4">
+                      Email :{" "}
+                      <span className="fw-bolder">{bookingData.Email}</span>
+                    </p>
+                    <p className="mt-4 mb-0">
+                      Địa chỉ :{" "}
+                      <span className="fw-bolder">{bookingData.DiaChi}</span>
+                    </p>
+                  </div>
+                  <div className="border p-4 rounded mt-4">
+                    <h4 className="text-danger">Chi tiết booking</h4>
+                    <hr />
+                    <p className="mb-4">
+                      Số vé đã đặt : {bookingData.SoCho} vé
+                    </p>
+                    <p className="mb-4">
+                      Tổng số tiền thanh toán :{" "}
+                      <span className="text-danger fw-bolder">
+                        {formatCurrency(bookingData.TongGia)} VND
+                      </span>
+                    </p>
+                    <p className="mb-4">
+                      Thời gian đăng ký tour :{" "}
+                      {formatDateTime(bookingData.ThoiGianDat)}
+                    </p>
+                    <p className="m-0">
+                      Trạng thái đơn hàng : Thông tin đặt tour{" "}
+                      <span className="fw-bolder">đang đợi xét duyệt</span>
+                    </p>
                   </div>
                 </>
               )}
+              <div
+                style={{ width: "fit-content" }}
+                className="border p-4 rounded mt-4"
+              >
+                <h4>Thông tin hướng dẫn viên</h4>
+                <hr />
+                {dataHDV && (
+                  <div className="d-flex">
+                    <div>
+                      <Image
+                        className="rounded"
+                        src={"/avatars/avatar_default.jpg"}
+                        width={150}
+                        height={150}
+                        alt="HDV-picture"
+                      />
+                      <p className="mb-0">Mã nhân viên: {dataHDV.MaTaikhoan}</p>
+                    </div>
+                    <div className="ms-4">
+                      <p>Họ tên : {dataHDV.HoTen}</p>
+                      <p>Số điện thoại : {dataHDV.LienHe}</p>
+                      <p>Email liên hệ : {dataHDV.Email}</p>
+                      <p>Thời gian làm việc : {dataHDV.NgayTao}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="col ms-2">
+              <h4>PHIẾU XÁC NHẬN BOOKING</h4>
+              <div className="border p-4 rounded">
+                <h4 className="text-danger">Thông tin tour chi tiết</h4>
+                <hr />
+                {dataTour && (
+                  <>
+                    <div className="">
+                      {dataTour.map((tour, index) => (
+                        <div key={index}>
+                          <div className="d-flex">
+                            <div className="ms-2">
+                              <Image
+                                className="rounded"
+                                width={150}
+                                height={100}
+                                src={tour.URL}
+                                alt="Hinh-tour"
+                              />
+                              <p className="mb-0">Mã Tour: {tour.MaTour}</p>
+                            </div>
+                            <div className="ms-5 text-end">
+                              <p>Tên Tour: {tour.TenTour}</p>
+                              <p>Chủ Đề: {tour.TenChuDe}</p>
+                              <p>
+                                Ngày Khởi Hành:{" "}
+                                {formatDateTime(tour.NgayKhoiHanh)}
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <hr />
+                            <div className="row">
+                              <p className="col fw-bolder">
+                                Phương tiện di chuyển :{" "}
+                              </p>
+                              <span className="col text-end">
+                                {tour.PhuongTien}
+                              </span>
+                            </div>
+                            <div className="row">
+                              <p className="col fw-bolder">
+                                Thời gian tham quan :{" "}
+                              </p>
+                              <span className="col text-end">
+                                {tour.ThoiGian}
+                              </span>
+                            </div>
+                            <div className="row">
+                              <p className="col fw-bolder">Địa điểm đến : </p>
+                              <span className="col text-end">
+                                {tour.TTCT_diemden}
+                              </span>
+                            </div>
+                            <div className="row">
+                              <p className="col fw-bolder">Nơi tập trung : </p>
+                              <span className="col text-end">
+                                {tour.TTCT_taptrung}
+                              </span>
+                            </div>
+                            <div className="row">
+                              <p className="col fw-bolder">Ngày di chuyển : </p>
+                              <span className="col text-end">
+                                {formatDate(tour.TTCT_ngaydi)}
+                              </span>
+                            </div>
+                            <div className="row">
+                              <p className="col fw-bolder mb-0">Ngày về : </p>
+                              <span className="col text-end">
+                                {formatDate(tour.TTCT_ngayve)}
+                              </span>
+                            </div>
+                            <hr />
+                            <div className="">
+                              <h4>Chọn hình thức thanh toán</h4>
+                              <div className="bg-light d-flex align-items-center justify-content-between p-3 rounded">
+                                <div className="bg-light d-flex align-items-center">
+                                  <i
+                                    style={{ fontSize: "35px" }}
+                                    className="fa-solid fa-money-bill-transfer"
+                                  ></i>
+                                  <span className="fw-bolder ms-2">
+                                    Tiền mặt
+                                  </span>
+                                </div>
+                                <Form.Check
+                                  type="checkbox"
+                                  style={{ fontSize: "25px" }}
+                                  checked={selectedPaymentMethod === "Tiền mặt"}
+                                  onChange={() =>
+                                    handleCheckboxChange("Tiền mặt")
+                                  }
+                                />
+                              </div>
+
+                              <div className="bg-light d-flex align-items-center justify-content-between p-3 rounded mt-1">
+                                <div className="bg-light d-flex align-items-center">
+                                  <i
+                                    style={{ fontSize: "35px" }}
+                                    className="fa-solid fa-house-signal"
+                                  ></i>
+                                  <span className="fw-bolder ms-2">
+                                    Chuyển khoản
+                                  </span>
+                                </div>
+                                <Form.Check
+                                  type="checkbox"
+                                  style={{ fontSize: "25px" }}
+                                  checked={
+                                    selectedPaymentMethod === "Chuyển khoản"
+                                  }
+                                  onChange={() =>
+                                    handleCheckboxChange("Chuyển khoản")
+                                  }
+                                />
+                              </div>
+                              <div className="bg-light d-flex align-items-center justify-content-between p-3 rounded mt-1">
+                                <div className="bg-light d-flex align-items-center">
+                                  <Image
+                                    width={40}
+                                    height={40}
+                                    src={"/banner/momo_logo.webp"}
+                                    alt="momo-logo"
+                                  />
+                                  <span className="fw-bolder ms-2">
+                                    Ví điện tử Momo
+                                  </span>
+                                </div>
+                                <Form.Check
+                                  type="checkbox"
+                                  style={{ fontSize: "25px" }}
+                                  checked={selectedPaymentMethod === "Momo pay"}
+                                  onChange={() =>
+                                    handleCheckboxChange("Momo pay")
+                                  }
+                                />
+                              </div>
+                              <hr />
+                              <button
+                                className="btn btn-danger w-100 py-3 fw-bolder"
+                                onClick={handleSubmitBooking}
+                              >
+                                XÁC NHẬN BOOKING
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
         {/* Modal for Cash */}
         <Modal
           className="mt-5"
@@ -502,6 +533,7 @@ const Confirmbooking = () => {
           </Modal.Footer>
         </Modal>
       </div>
+      <ToastContainer />
       <HomeFooter />
     </>
   );

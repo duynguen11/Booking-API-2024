@@ -158,7 +158,7 @@ const TourList = () => {
     // Giả lập thời gian load
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 1111); // Thời gian delay là 2 giây
+    }, 1000); // Thời gian delay là 2 giây
     // Xóa timeout khi component bị unmount
     return () => clearTimeout(timeout);
   }, []);
@@ -223,21 +223,6 @@ const TourList = () => {
     const selectedArea = e.target.value;
     setSelectedArea(selectedArea); // Cập nhật giá trị địa điểm được chọn
   };
-
-  // Hàm useEffect để sắp xếp dữ liệu khi sortType thay đổi
-  /*useEffect(() => {
-    if (sortType === "price-desc") {
-      const sortedTour = [...tour].sort((a, b) => b.GiaTour - a.GiaTour);
-      setTour(sortedTour);
-    } else if (sortType === "price-asc") {
-      const sortedTour = [...tour].sort((a, b) => a.GiaTour - b.GiaTour);
-      setTour(sortedTour);
-    } else {
-      // Reset lại state `tour` về dữ liệu ban đầu
-      setTour(initialTour);
-    }
-  }, [sortType, initialTour]);*/
-  // Dùng tour ở đây để đảm bảo useEffect cập nhật khi tour thay đổi
 
   useEffect(() => {
     if (sortType === "price-desc") {
@@ -342,6 +327,7 @@ const TourList = () => {
       {loading ? (
         <div className="loading">
           <RingLoader color="rgba(40, 67, 135, 1)" loading={true} size={100} />
+          <h4 className="text-center">Vui lòng chờ ...</h4>
         </div>
       ) : (
         <div style={{ marginTop: "100px" }} className="container">

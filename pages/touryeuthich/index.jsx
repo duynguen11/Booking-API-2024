@@ -74,8 +74,19 @@ const TourYeuthich = () => {
               </li>
             </ul>
           </div>
-          <div className="col-md-9">
-            <h4>DANH SÁCH TOUR YÊU THÍCH</h4>
+          <div className="col-md-9 pe-5">
+            <div className="d-flex align-items-center justify-content-between">
+              <h4>DANH SÁCH TOUR YÊU THÍCH</h4>
+              <div>
+              <i className="fa-solid fa-filter me-1"></i><span className="fw-bolder">Xắp sếp</span>
+                <select className="ms-3">
+                  <option value="newItem">Tour mới nhất</option>
+                  <option value="lowToHigh">Giá thấp đến cao</option>
+                  <option value="highToLow">Giá cao đến thấp</option>
+                  <option value="highToLow">A - Z</option>
+                </select>
+              </div>
+            </div>
             <div>
               <Table
                 style={{ fontSize: "14px" }}

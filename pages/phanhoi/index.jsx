@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import Link from 'next/link'
+import Link from "next/link";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeHeader from "@/components/HomeLayout/HomeHeader";
@@ -73,40 +73,42 @@ const Phanhoi = () => {
               </li>
             </ul>
           </div>
-          <div className="col-md">
+          <div className="col-md mt-4 ">
             <h4>Hộp thư đã gửi</h4>
-            {phanhoi.map((message, index) => (
-              <div key={index} className="message-box px-4 mt-3">
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                  className="mb-4"
-                >
-                  <div style={{ marginRight: "10px" }}>
-                    <label>
-                      <strong>Người gửi:</strong> {message.hoten}
-                    </label>
-                    <p
-                      style={{ width: "fit-content" }}
-                      className="border rounded bg-light-grey p-3 mt-2"
-                    >
-                      <strong>Tin nhắn:</strong> {message.tinnhan}
-                    </p>
-                    <span>{formatTime(message.thoigiangui)}</span>
-                  </div>
+            <div className="border rounded mt-3 me-5">
+              {phanhoi.map((message, index) => (
+                <div key={index} className="message-box px-4 mt-3">
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                    className="mb-4"
+                  >
+                    <div style={{ marginRight: "10px" }}>
+                      <label>
+                        <strong>Người gửi:</strong> <span className="text-danger">{message.hoten}</span>
+                      </label>
+                      <p
+                        style={{ width: "fit-content" }}
+                        className="border rounded text-white bg-info p-3 mb-0 mt-2"
+                      >
+                        <strong>Tin nhắn:</strong> {message.tinnhan}
+                      </p>
+                      <span>{formatTime(message.thoigiangui)}</span>
+                    </div>
 
-                  <div className="mt-5 pt-5">
-                    <strong>Hệ thống phản hồi:</strong>
-                    <p
-                      style={{ width: "fit-content" }}
-                      className="border rounded bg-light-grey p-3 mt-2"
-                    >
-                      {message.noidung}
-                    </p>
-                    <span>{formatTime(message.thoigianphanhoi)}</span>
+                    <div className="mt-5 pt-5">
+                      <strong className="text-primary">Hệ thống phản hồi:</strong>
+                      <p
+                        style={{ width: "fit-content" }}
+                        className="border rounded bg-light p-3 mb-0 mt-2"
+                      >
+                        {message.noidung}
+                      </p>
+                      <span>{formatTime(message.thoigianphanhoi)}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

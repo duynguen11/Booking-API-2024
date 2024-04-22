@@ -86,7 +86,19 @@ const HistoryBooking = () => {
             </ul>
           </div>
           <div className="col">
-            <h4>LỊCH SỬ ĐẶT TOUR</h4>
+            <div className="d-flex align-items-center justify-content-between me-5">
+              <h4>LỊCH SỬ THANH TOÁN</h4>
+              <div>
+                <i className="fa-solid fa-filter me-1"></i>
+                <span className="fw-bolder">Xắp sếp</span>
+                <select className="ms-3">
+                  <option value="newItem">Ngày gần đây</option>
+                  <option value="lowToHigh">Giá thấp đến cao</option>
+                  <option value="highToLow">Giá cao đến thấp</option>
+                  <option value="highToLow">A - Z</option>
+                </select>
+              </div>
+            </div>
             <Row className="me-4 mt-3">
               {hisBooking.map((item) => (
                 <Col key={item.MaDatTour} sm="4">
@@ -100,14 +112,32 @@ const HistoryBooking = () => {
                     <CardBody>
                       <CardText>
                         <p>Mã đặt tour: {item.MaDatTour}</p>
-                        <p>Số vé mua: <span className="fw-bolder">{item.SoCho} vé</span></p>
-                        <p>Hình thức thanh toán: {item.ThanhToan}</p>
-                        <p>Tổng tiền: <span className="text-danger">{formatCurrency(item.TongGia)} VND</span></p>
-                        <p className="">Thời gian đặt: {formatDateTime(item.ThoiGianDat)}</p><hr className="m-0"/>
+                        <p>
+                          Số vé mua:{" "}
+                          <span className="fw-bolder">{item.SoCho} vé</span>
+                        </p>
+                        <p>
+                          Hình thức thanh toán:{" "}
+                          <span className="fw-bolder text-info">
+                            {item.ThanhToan}
+                          </span>
+                        </p>
+                        <p>
+                          Tổng tiền:{" "}
+                          <span className="text-danger">
+                            {formatCurrency(item.TongGia)} VND
+                          </span>
+                        </p>
+                        <p className="">
+                          Thời gian đặt: {formatDateTime(item.ThoiGianDat)}
+                        </p>
+                        <hr className="m-0" />
                       </CardText>
                     </CardBody>
                     <CardBody className="d-flex justify-content-between pt-0 mb-0">
-                      <span className="bg-light rounded p-2">{item.TrangThai}</span>
+                      <span className="bg-light rounded p-2">
+                        {item.TrangThai}
+                      </span>
                       <span className="btn btn-danger">Hủy đơn</span>
                     </CardBody>
                   </Card>

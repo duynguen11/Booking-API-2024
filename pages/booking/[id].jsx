@@ -6,7 +6,15 @@ import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Form, InputGroup, Modal, Button, FormControl } from "react-bootstrap";
+import {
+  Form,
+  InputGroup,
+  Modal,
+  Button,
+  FormControl,
+  Alert,
+} from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
 const Booking = () => {
   const router = useRouter();
@@ -20,6 +28,7 @@ const Booking = () => {
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [selectedTicketTypes, setSelectedTicketTypes] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
@@ -275,6 +284,7 @@ const Booking = () => {
 
   const handleBookingTour = async () => {
     try {
+      setSubmitted(true);
       // Lấy id tour từ tourData
       const tourId = tourInfo.MaTour;
       // Lấy id user từ token
@@ -284,6 +294,16 @@ const Booking = () => {
       // Gửi yêu cầu đặt tour
       const totalPrice = getTotalPrice();
       const totalTiket = getTotalQuantity();
+
+      const requiredFields = ["HoTen", "Email", "LienHe"];
+      const emptyFields = requiredFields.filter(
+        (field) => formData[field].trim() === ""
+      );
+      if (emptyFields.length > 0) {
+        // Hiển thị thông báo hoặc thực hiện các xử lý khác khi có trường rỗng
+        toast.error("Vui lòng điền đầy đủ thông tin !");
+        return;
+      }
 
       if (totalTiket === 0 || totalTiket === null) {
         // Hiển thị modal
@@ -299,7 +319,6 @@ const Booking = () => {
         MaTaikhoan_HDV: hdvId,
       };
 
-      console.log("Thông tin đặt tour:", formDataBooking);
       // Thực hiện các hành động khác sau khi đặt tour thành công (nếu cần)
       localStorage.setItem("formDataBooking", JSON.stringify(formDataBooking));
       router.push("/confirm-booking");
@@ -360,8 +379,8 @@ const Booking = () => {
               <Form>
                 <div className="">
                   <div className="flex-fill">
-                    <Form.Group controlId="formHoTen">
-                      <Form.Label>
+                    <Form.Group controlId="HoTen">
+                      <Form.Label className="fw-bolder">
                         Tên khách hàng<span className="text-danger"> (*)</span>
                       </Form.Label>
                       <InputGroup hasValidation>
@@ -371,13 +390,23 @@ const Booking = () => {
                           name="HoTen"
                           value={formData.HoTen}
                           onChange={handleInputChange}
+                          className={
+                            submitted && !formData.HoTen.trim()
+                              ? "border-danger"
+                              : ""
+                          }
                         />
                       </InputGroup>
                     </Form.Group>
+                    {submitted && !formData.HoTen.trim() && (
+                      <span className="text-danger fw-bolder">
+                        Vui lòng nhập họ và tên
+                      </span>
+                    )}
                   </div>
                   <div className="flex-fill">
-                    <Form.Group controlId="formEmail" className="mt-3">
-                      <Form.Label>
+                    <Form.Group controlId="Email" className="mt-3">
+                      <Form.Label className="fw-bolder">
                         Email cá nhân<span className="text-danger"> (*)</span>
                       </Form.Label>
                       <InputGroup hasValidation>
@@ -387,15 +416,23 @@ const Booking = () => {
                           name="Email"
                           value={formData.Email}
                           onChange={handleInputChange}
+                          className={
+                            submitted && !formData.Email.trim()
+                              ? "border-danger"
+                              : ""
+                          }
                         />
                       </InputGroup>
                     </Form.Group>
+                    {submitted && !formData.Email.trim() && (
+                      <span className="text-danger fw-bolder">Vui lòng nhập email</span>
+                    )}
                   </div>
                 </div>
                 <div className="">
                   <div className="flex-fill">
-                    <Form.Group controlId="formSdt" className="mt-3">
-                      <Form.Label>
+                    <Form.Group controlId="LienHe" className="mt-3">
+                      <Form.Label className="fw-bolder">
                         Số điện thoại<span className="text-danger"> (*)</span>
                       </Form.Label>
                       <InputGroup hasValidation>
@@ -405,13 +442,25 @@ const Booking = () => {
                           name="LienHe"
                           value={formData.LienHe}
                           onChange={handleInputChange}
+                          className={
+                            submitted && !formData.LienHe.trim()
+                              ? "border-danger"
+                              : ""
+                          }
                         />
                       </InputGroup>
                     </Form.Group>
+                    {submitted && !formData.LienHe.trim() && (
+                      <span className="text-danger fw-bolder">
+                        Vui lòng nhập số điện thoại
+                      </span>
+                    )}
                   </div>
                   <div className="flex-fill">
                     <Form.Group controlId="formDiaChi" className="mt-3">
-                      <Form.Label>Địa chỉ liên hệ</Form.Label>
+                      <Form.Label className="fw-bolder">
+                        Địa chỉ liên hệ
+                      </Form.Label>
                       <InputGroup hasValidation>
                         <FormControl
                           type="text"
@@ -507,7 +556,7 @@ const Booking = () => {
                   Giới tính: {selectedHDVInfo.GioiTinh || tourInfo.GioiTinh}
                 </p>
                 <p>SĐT liên hệ: {selectedHDVInfo.LienHe || tourInfo.LienHe}</p>
-                <p>Email liên hệ: {selectedHDVInfo.Email || tourInfo.Email}</p>
+                <p className="mb-0">Email liên hệ: {selectedHDVInfo.Email || tourInfo.Email}</p>
               </div>
             </div>
           </div>
@@ -570,6 +619,7 @@ const Booking = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
       <HomeFooter />
     </div>
   );

@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -27,6 +28,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(e.target)
     setFormData({
       ...formData,
       [name]: value,
@@ -57,6 +59,7 @@ const Register = () => {
     }
 
     try {
+      console.log('Tài khoản đăng ký:', formData)
       const response = await axios.post(
         "http://localhost:2024/api/account/register",
         formData
@@ -77,100 +80,122 @@ const Register = () => {
   return (
     <div>
       <HomeHeader />
-      <Container className="px-5" style={{ marginTop: "100px" }}>
-        <Row className="justify-content-center py-3">
-          <h3 className="text-center fw-bolder mb-4">
-            VUI LÒNG ĐIỀN THÔNG TIN ĐĂNG KÝ
+      <Container className="" style={{ marginTop: "100px" }}>
+        <Row className="justify-content-center">
+          <h3 className="text-center text-danger fw-bolder mb-4">
+            ĐĂNG KÝ HỘI VIÊN NEXTBOOKING NHẬN NGAY ƯU ĐÃI
           </h3>
-          <Col md={6} className="p-5 rounded shadow">
-            <Form className="fw-bolder" onSubmit={handleSubmit}>
-              <Form.Group controlId="username">
-                <Form.Label>Tài khoản đăng nhập<span className="text-danger"> (*)</span></Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Chọn tên tài khoản"
-                  name="TaiKhoan"
-                  value={formData.TaiKhoan}
-                  onChange={handleChange}
-                  className={
-                    formData.TaiKhoan.trim() === "" && submitted
-                      ? "is-invalid"
-                      : ""
-                  }
-                />
-                {formData.TaiKhoan.trim() === "" && submitted && (
-                  <div className="invalid-feedback">
-                    Vui lòng nhập tên tài khoản
-                  </div>
-                )}
-              </Form.Group>
-
-              <Form.Group controlId="email"  className="mt-2">
-                <Form.Label className="">Địa chỉ Email<span className="text-danger"> (*)</span></Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Điền địa chỉ email"
-                  name="Email"
-                  value={formData.Email}
-                  onChange={handleChange}
-                  className={
-                    formData.Email.trim() === "" && submitted
-                      ? "is-invalid"
-                      : ""
-                  }
-                />
-                {formData.Email.trim() === "" && submitted && (
-                  <div className="invalid-feedback">Vui lòng nhập email</div>
-                )}
-              </Form.Group>
-
-              <Form.Group controlId="password" className="mt-2">
-                <Form.Label className="">Mật khẩu<span className="text-danger"> (*)</span></Form.Label>
-                <InputGroup>
+          <div className="d-flex justify-content-center">
+            <Col md={6} className="p-5 rounded shadow">
+              <h4 className="text-center fw-bolder">Thông tin đăng ký tài khoản</h4>
+              <Form className="fw-bolder mt-4" onSubmit={handleSubmit}>
+                <Form.Group controlId="username">
+                  <Form.Label>
+                  <i className="fa-regular fa-user me-1"></i>Tài khoản đăng nhập<span className="text-danger"> (*)</span>
+                  </Form.Label>
                   <Form.Control
-                    type="password"
-                    placeholder="Nhập mật khẩu"
-                    name="MatKhau"
-                    value={formData.MatKhau}
+                    type="text"
+                    placeholder="Nhập tên tài khoản"
+                    name="TaiKhoan"
+                    value={formData.TaiKhoan}
                     onChange={handleChange}
                     className={
-                      formData.MatKhau.trim() === "" && submitted
+                      formData.TaiKhoan.trim() === "" && submitted
                         ? "is-invalid"
                         : ""
                     }
                   />
-                  {formData.MatKhau.trim() === "" && submitted && (
-                    <div className="invalid-feedback">Vui lòng nhập mật khẩu</div>
+                  {formData.TaiKhoan.trim() === "" && submitted && (
+                    <div className="invalid-feedback">
+                      Vui lòng nhập tên tài khoản
+                    </div>
                   )}
-                </InputGroup>
-              </Form.Group>
+                </Form.Group>
 
-              <Form.Group controlId="confirmPassword" className="mt-2">
-                <Form.Label className="">Xác nhận mật khẩu<span className="text-danger"> (*)</span></Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Xác nhận lại mật khẩu"
-                  name="confirmMatKhau"
-                  value={formData.confirmMatKhau}
-                  onChange={handleChange}
-                />
-                {passwordError && (
-                  <span className="mt-1" style={{ color: "red" }}>
-                    {passwordError}
-                  </span>
-                )}
-              </Form.Group>
+                <Form.Group controlId="email" className="mt-3">
+                  <Form.Label className="">
+                  <i className="fa-regular fa-envelope me-1"></i>Email đăng ký<span className="text-danger"> (*)</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Nhập địa chỉ email"
+                    name="Email"
+                    value={formData.Email}
+                    onChange={handleChange}
+                    className={
+                      formData.Email.trim() === "" && submitted
+                        ? "is-invalid"
+                        : ""
+                    }
+                  />
+                  {formData.Email.trim() === "" && submitted && (
+                    <div className="invalid-feedback">Vui lòng nhập email</div>
+                  )}
+                </Form.Group>
 
-              <Button
-                className="mt-4 w-100 py-2"
-                variant="primary"
-                type="submit"
-              >
-                ĐĂNG KÝ TÀI KHOẢN
-              </Button>
-              <ToastContainer />
-            </Form>
-          </Col>
+                <Form.Group controlId="password" className="mt-3">
+                  <Form.Label className="">
+                  <i className="fa-solid fa-unlock-keyhole me-1"></i>Mật khẩu<span className="text-danger"> (*)</span>
+                  </Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      type="password"
+                      placeholder="Nhập mật khẩu"
+                      name="MatKhau"
+                      value={formData.MatKhau}
+                      onChange={handleChange}
+                      className={
+                        formData.MatKhau.trim() === "" && submitted
+                          ? "is-invalid"
+                          : ""
+                      }
+                    />
+                    {formData.MatKhau.trim() === "" && submitted && (
+                      <div className="invalid-feedback">
+                        Vui lòng nhập mật khẩu
+                      </div>
+                    )}
+                  </InputGroup>
+                </Form.Group>
+
+                <Form.Group controlId="confirmPassword" className="mt-3">
+                  <Form.Label className="">
+                  <i className="fa-regular fa-circle-check me-1"></i>Xác nhận mật khẩu<span className="text-danger"> (*)</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Xác nhận lại mật khẩu"
+                    name="confirmMatKhau"
+                    value={formData.confirmMatKhau}
+                    onChange={handleChange}
+                  />
+                  {passwordError && (
+                    <span className="mt-1" style={{ color: "red" }}>
+                      {passwordError}
+                    </span>
+                  )}
+                </Form.Group>
+
+                <Button
+                  className="mt-4 w-100 py-2"
+                  variant="primary"
+                  type="submit"
+                >
+                  XÁC NHẬN ĐĂNG KÝ
+                </Button>
+                <ToastContainer />
+              </Form>
+            </Col>
+            <div className="">
+              <Image
+                className="rounded"
+                width={350}
+                height={550}
+                src={"/banner/Banner_5.jpg"}
+                alt="register-mage"
+              />
+            </div>
+          </div>
         </Row>
         <h4 className="mt-5">ĐIỀU KHOẢN ĐĂNG KÝ HỘI VIÊN</h4>
         <div style={{ textAlign: "justify" }}>

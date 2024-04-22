@@ -293,7 +293,7 @@ const HomeHeader = () => {
             onHide={handleClose}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Vui Lòng Đăng Nhập Tài Khoản</Modal.Title>
+              <Modal.Title className="fw-bolder">Vui Lòng Đăng Nhập Tài Khoản</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form>

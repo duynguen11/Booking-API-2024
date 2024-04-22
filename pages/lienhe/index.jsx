@@ -3,7 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
-import Image from 'next/image'
+import Image from "next/image";
 import HomeHeader from "@/components/HomeLayout/HomeHeader";
 import HomeFooter from "@/components/HomeLayout/HomeFooter";
 import { ToastContainer, toast } from "react-toastify";
@@ -42,7 +42,6 @@ const LienHe = () => {
     }
   }, []);
 
-  
   const [lienheError, setLienheError] = useState("");
   const [tinnhanError, setTinnhanError] = useState("");
 
@@ -52,29 +51,20 @@ const LienHe = () => {
       ...prevState,
       [name]: value,
     }));
-
-    if (name === "lienhe" && value === "") {
-      setLienheError("Vui lòng nhập số điện thoại.");
-    } else {
-      setLienheError("");
-    }
-    if (name === "tinnhan" && value.trim() === "") {
-      setTinnhanError("Vui lòng nhập tin nhắn.");
-    } else {
-      setTinnhanError("");
-    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (messData.lienhe === "") {
       setLienheError("Vui lòng nhập số điện thoại.");
+      toast.error("Vui lòng điền đầy đủ thông tin !");
       return;
     }
 
     if (messData.tinnhan.trim() === "") {
       setTinnhanError("Vui lòng nhập tin nhắn.");
+      toast.error("Vui lòng điền đầy đủ thông tin !");
       return;
     }
 
@@ -119,8 +109,8 @@ const LienHe = () => {
           <Col xs={12} md={6}>
             <div>
               <Image
-                width={'700'}
-                height={'450'}
+                width={"700"}
+                height={"450"}
                 className="rounded"
                 src="/banner/contact_us.png"
                 alt="Online View"
@@ -173,7 +163,9 @@ const LienHe = () => {
                 />
               </Form.Group>
               <Form.Group className="mt-2 mb-3" controlId="formMessage">
-                <Form.Label>Đặt câu hỏi <span className="text-danger">(*)</span></Form.Label>
+                <Form.Label>
+                  Đặt câu hỏi <span className="text-danger">(*)</span>
+                </Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={5}
