@@ -127,9 +127,9 @@ const ChuDe = () => {
       <AdminLayout />
       <div className="main-body">
         <div className="d-flex align-items-center justify-content-between">
-          <h4 className="fw-bold">Quản lý danh mục</h4>
+          <h4 className="fw-bold">QUẢN LÝ DANH MỤC</h4>
           <div
-            className="d-flex align-items-center btn btn-secondary"
+            className="d-flex align-items-center btn btn-success"
             onClick={handleShowModal}
           >
             <i className="fa-solid fa-square-plus me-2"></i>

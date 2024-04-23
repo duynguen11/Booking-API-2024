@@ -5,12 +5,14 @@ import Image from "next/image";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AdminLayout from "@/components/AdminLayout/AdminLayout";
+import Employee_info from "../employee_info";
 
-const CustomerInfo = () => {
+const Employee_account = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [hisBooking, setHisBooking] = useState([]);
-  const [infoCustomer, setInfoCustomer] = useState({
+  const [hisJoinning, setHisJoinning] = useState([]);
+
+  const [infoEmployee, setInfoEmployee] = useState({
     MaTaikhoan: "",
     TaiKhoan: "",
     MatKhau: "",
@@ -40,58 +42,18 @@ const CustomerInfo = () => {
       .padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
   };
 
-  const formatCurrency = (amount) => {
-    const formattedAmount = new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount);
-    return formattedAmount.replace(/\s₫/g, "");
-  };
-
-  useEffect(() => {
-    // Lấy token từ localStorage
-    const token = localStorage.getItem("token");
-
-    // Kiểm tra xem có token hay không và có id không
-    if (token && id) {
-      const apiUrl = `http://localhost:2024/api/account/info-khachhang/${id}`;
-
-      // Gửi yêu cầu GET với token trong tiêu đề Authorization
-      axios
-        .get(apiUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((result) => {
-          setInfoCustomer((prevInfoCustomer) => ({
-            ...prevInfoCustomer,
-            Avatar_url: result.data.userInfo.Avatar_URL,
-            MaTaikhoan: result.data.userInfo.MaTaikhoan,
-            TaiKhoan: result.data.userInfo.TaiKhoan,
-            MatKhau: result.data.userInfo.MatKhau,
-            Email: result.data.userInfo.Email,
-            HoTen: result.data.userInfo.HoTen,
-            NgaySinh: result.data.userInfo.NgaySinh,
-            GioiTinh: result.data.userInfo.GioiTinh,
-            DiaChi: result.data.userInfo.DiaChi,
-          }));
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [id]);
-
   useEffect(() => {
     try {
       const fetchHistory = async () => {
+        console.log("ID HDV", id);
         const response = await axios.post(
-          `http://localhost:2024/api/chitietdattour/historyBooking`,
+          `http://localhost:2024/api/chitietdattour/historyJoinning`,
           {
-            MaTaikhoan_KH: id,
+            MaTaikhoan_HDV: id,
           }
         );
         console.log("Dữ liệu history", response.data);
-        setHisBooking(response.data);
+        setHisJoinning(response.data);
       };
       fetchHistory();
     } catch (err) {
@@ -99,9 +61,39 @@ const CustomerInfo = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Kiểm tra xem có id không
+        if (id) {
+          const apiUrl = `http://localhost:2024/api/account/info-employee/${id}`;
+          // Gửi yêu cầu GET với token trong tiêu đề Authorization
+          const response = await axios.get(apiUrl);
+          const result = response.data;
+          setInfoEmployee((prevInfoCustomer) => ({
+            ...prevInfoCustomer,
+            Avatar_url: result.data[0].Avatar_URL,
+            MaTaikhoan: result.data[0].MaTaikhoan,
+            TaiKhoan: result.data[0].TaiKhoan,
+            MatKhau: result.data[0].MatKhau,
+            Email: result.data[0].Email,
+            HoTen: result.data[0].HoTen,
+            NgaySinh: result.data[0].NgaySinh,
+            GioiTinh: result.data[0].GioiTinh,
+            DiaChi: result.data[0].DiaChi,
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching employee data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
   const handleChangePassword = (e) => {
-    setInfoCustomer({
-      ...infoCustomer,
+    setInfoEmployee({
+      ...infoEmployee,
       MatKhau: e.target.value,
     });
   };
@@ -113,7 +105,7 @@ const CustomerInfo = () => {
         "http://localhost:2024/api/account/khachhang/update-password",
         {
           maTaikhoan: maTaikhoan, // Truyền mã tài khoản vào body của yêu cầu
-          matKhauMoi: infoCustomer.MatKhau, // Truyền mật khẩu mới vào body của yêu cầu
+          matKhauMoi: infoEmployee.MatKhau, // Truyền mật khẩu mới vào body của yêu cầu
         }
       );
       // Xử lý kết quả từ API nếu cần
@@ -127,14 +119,19 @@ const CustomerInfo = () => {
     <>
       <AdminLayout />
       <div className="main-body">
-        <h4 className="fw-bolder">THÔNG TIN THÀNH VIÊN</h4>
+        <h4 className="fw-bolder">THÔNG TIN NHÂN VIÊN</h4>
         <div className="row">
           <div className="col-md-4 d-flex justify-content-center align-items-center">
             <Image
-              width={200}
-              height={200}
+              width={"200"}
+              height={"200"}
               className="rounded"
-              src={`http://localhost:2024/${infoCustomer.Avatar_url}`}
+              style={{ width: "200px", height: "200px" }}
+              src={
+                infoEmployee.Avatar_url
+                  ? `http://localhost:2024/${infoEmployee.Avatar_url}`
+                  : "/avatars/avatar_default.jpg"
+              }
               alt="image avatar"
             />
           </div>
@@ -146,32 +143,28 @@ const CustomerInfo = () => {
                   className="form-control"
                   type="text"
                   name="TaiKhoan"
-                  value={infoCustomer.TaiKhoan}
+                  value={infoEmployee.TaiKhoan}
                   disabled
                 />
               </div>
               <div className="ms-3">
-                {infoCustomer.MatKhau ? (
-                  <>
-                    <label htmlFor="MatKhau">
-                      Mật khẩu{" "}
-                      <span className="text-danger">(Có thể cập nhật)</span>
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="MatKhau"
-                      value={infoCustomer.MatKhau}
-                      onChange={handleChangePassword}
-                    />
-                    <button
-                      className="btn btn-success w-100 mt-1"
-                      onClick={() => handleSubmit(infoCustomer.MaTaikhoan)}
-                    >
-                      Lưu thay đổi
-                    </button>
-                  </>
-                ) : null}
+                <label htmlFor="MatKhau">
+                  Mật khẩu{" "}
+                  <span className="text-danger">(Có thể cập nhật)</span>
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="MatKhau"
+                  value={infoEmployee.MatKhau}
+                  onChange={handleChangePassword}
+                />
+                <button
+                  className="btn btn-success w-100 mt-1"
+                  onClick={() => handleSubmit(infoEmployee.MaTaikhoan)}
+                >
+                  Lưu thay đổi
+                </button>
               </div>
             </div>
             <br />
@@ -182,7 +175,7 @@ const CustomerInfo = () => {
                   className="form-control"
                   type="text"
                   name="Email"
-                  value={infoCustomer.Email}
+                  value={infoEmployee.Email}
                   disabled
                 />
               </div>
@@ -192,7 +185,7 @@ const CustomerInfo = () => {
                   className="form-control"
                   type="text"
                   name="HoTen"
-                  value={infoCustomer.HoTen}
+                  value={infoEmployee.HoTen}
                   disabled
                 />
               </div>
@@ -205,7 +198,7 @@ const CustomerInfo = () => {
                   className="form-control"
                   type="text"
                   name="NgaySinh"
-                  value={formatDate(infoCustomer.NgaySinh)}
+                  value={formatDate(infoEmployee.NgaySinh)}
                   disabled
                 />
               </div>
@@ -215,7 +208,7 @@ const CustomerInfo = () => {
                   className="form-control"
                   type="text"
                   name="GioiTinh"
-                  value={infoCustomer.GioiTinh}
+                  value={infoEmployee.GioiTinh}
                   disabled
                 />
               </div>
@@ -227,32 +220,42 @@ const CustomerInfo = () => {
                 className="form-control w-75"
                 type="text"
                 name="DiaChi"
-                value={infoCustomer.DiaChi}
+                value={infoEmployee.DiaChi}
                 disabled
               />
             </div>
           </div>
         </div>
-        <h4 className="mt-5 fw-bolder">LỊCH SỬ THANH TOÁN</h4>
+        <h4 className="mt-5 fw-bolder">LỊCH SỬ HOẠT ĐỘNG</h4>
         <div className="table-responsive mt-3">
           <table className="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>Mã đặt tour</th>
-                <th>Số vé</th>
-                <th>Tổng thanh toán</th>
-                <th>Phương thức thanh toán</th>
-                <th>Thời gian đặt</th>
+                <th>Mã tour</th>
+                <th>Tour </th>
+                <th>Khách hàng</th>
+                <th>Liên hệ</th>
+                <th>Số khách nhận</th>
+                <th>Thời gian tham gia</th>
                 <th>Trạng thái</th>
               </tr>
             </thead>
             <tbody>
-              {hisBooking.map((item) => (
-                <tr key={item.MaDatTour}>
-                  <td>{item.MaDatTour}</td>
-                  <td>{item.SoCho}</td>
-                  <td>{formatCurrency(item.TongGia)} VND</td>
-                  <td>{item.ThanhToan}</td>
+              {hisJoinning.map((item) => (
+                <tr key={item.MaTour}>
+                  <td>{item.MaTour}</td>
+                  <td>
+                    <Image
+                      width={100}
+                      height={100}
+                      className="rounded"
+                      src={`http://localhost:2024/${item.URL}`}
+                      alt="image avatar"
+                    />
+                  </td>
+                  <td>{item.HoTen}</td>
+                  <td>{item.LienHe}</td>
+                  <td>{item.SoCho} khách</td>
                   <td>{formatDateTime(item.ThoiGianDat)}</td>
                   <td>{item.TrangThai}</td>
                 </tr>
@@ -265,4 +268,4 @@ const CustomerInfo = () => {
   );
 };
 
-export default CustomerInfo;
+export default Employee_account;

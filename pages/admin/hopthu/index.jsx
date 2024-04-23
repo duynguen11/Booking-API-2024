@@ -27,13 +27,13 @@ const Hopthu = () => {
 
   const handleSendReply = async () => {
     try {
-      console.log("Gửi phản hồi cho ID:", idHopthuForReply);
-      console.log("Nội dung phản hồi mới:", replyMessage);
-
-      const response = await axios.post("http://localhost:2024/api/hopthu/reply", {
-        mahopthu: idHopthuForReply,
-        noidung: replyMessage,
-      });
+      const response = await axios.post(
+        "http://localhost:2024/api/hopthu/reply",
+        {
+          mahopthu: idHopthuForReply,
+          noidung: replyMessage,
+        }
+      );
       console.log("Phản hồi đã được gửi:", response.data);
     } catch (error) {
       console.error("Lỗi khi gửi phản hồi:", error);
@@ -98,7 +98,30 @@ const Hopthu = () => {
     <>
       <AdminLayout />
       <div className="main-body">
-        <h4 className="fw-bolder">Hộp thư khách hàng</h4>
+        <h4 className="fw-bolder">DANH SÁCH HỘP THƯ</h4>
+        <div className="d-flex align-items-center justify-content-between mt-2">
+          <div className="d-flex align-items-center">
+            <input
+              placeholder="Tìm kiếm ..."
+              id="search-input-item"
+              className=" form-control me-1"
+              type="text"
+            />
+            <button className="btn btn-primary">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+          <div>
+            <i className="fa-solid fa-filter me-1"></i>
+            <span className="fw-bolder">Xắp sếp</span>
+            <select className="ms-3">
+              <option value="newItem">Ngày gần đây</option>
+              <option value="lowToHigh">Giá thấp đến cao</option>
+              <option value="highToLow">Giá cao đến thấp</option>
+              <option value="highToLow">A - Z</option>
+            </select>
+          </div>
+        </div>
         <div className="table-responsive mt-4">
           <table className="table table-bordered">
             <thead>

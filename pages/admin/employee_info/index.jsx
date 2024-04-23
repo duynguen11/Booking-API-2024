@@ -109,8 +109,8 @@ const Employee_info = () => {
                   style={{ width: "200px", height: "200px" }}
                   src={
                     employeeInfo.Avatar_URL
-                      ? employeeInfo.Avatar_URL
-                      : "/avatar/avatar_default.jpg"
+                      ? `http://localhost:2024/${employeeInfo.Avatar_URL}`
+                      : "/avatars/avatar_default.jpg"
                   }
                   alt="Avatar user"
                 />

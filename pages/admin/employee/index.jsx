@@ -12,9 +12,11 @@ import {
   Alert,
 } from "react-bootstrap";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AdminLayout from "@/components/AdminLayout/AdminLayout";
+import Link from "next/link";
 
 const Employee = () => {
   const [employees, setEmployees] = useState([]);
@@ -69,6 +71,7 @@ const Employee = () => {
           },
         })
         .then((response) => {
+          console.log("Danh sách nhân viên:", response.data);
           setEmployees(response.data);
           setDataLoaded(true);
         })
@@ -131,10 +134,10 @@ const Employee = () => {
       <AdminLayout />
       <div className="main-body">
         <div className="d-flex align-items-center justify-content-between">
-          <h4 className="fw-bold">Quản lý nhân viên</h4>
+          <h4 className="fw-bold">QUẢN LÝ NHÂN VIÊN</h4>
           {dataLoaded && ( // Kiểm tra nếu dữ liệu đã được tải
             <div
-              className="d-flex align-items-center btn btn-secondary"
+              className="d-flex align-items-center btn btn-success"
               onClick={handleShowModal}
             >
               <i className="fa-solid fa-square-plus me-2"></i>
@@ -142,25 +145,65 @@ const Employee = () => {
             </div>
           )}
         </div>
+        <div className="d-flex align-items-center justify-content-between mt-2">
+          <div className="d-flex align-items-center">
+            <input
+              placeholder="Tìm kiếm ..."
+              id="search-input-item"
+              className=" form-control me-1"
+              type="text"
+            />
+            <button className="btn btn-primary">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+          <div>
+            <i className="fa-solid fa-filter me-1"></i>
+            <span className="fw-bolder">Xắp sếp</span>
+            <select className="ms-3">
+              <option value="newItem">Ngày gần đây</option>
+              <option value="lowToHigh">Giá thấp đến cao</option>
+              <option value="highToLow">Giá cao đến thấp</option>
+              <option value="highToLow">A - Z</option>
+            </select>
+          </div>
+        </div>
         <Row xs={1} md={2} lg={3} className="g-4 mt-1">
           {employees.length > 0 ? (
             employees.map((employee) => (
-              <Col key={employee.MaTaikhoan}>
+              <Col key={employee.MaTaikhoan} className="text-center">
                 <Card>
                   <Card.Body>
-                    <Card.Text>
+                    <div>
+                      <Image
+                        className="rounded"
+                        width={200}
+                        height={200}
+                        src={
+                          employee.Avatar_URL
+                            ? `http://localhost:2024/${employee.Avatar_URL}`
+                            : "/avatars/avatar_default.jpg"
+                        }
+                        alt="employee-avatar"
+                      />
+                    </div>
+                    <hr />
+                    <Card.Text className="mt-2">
                       <strong>Tài khoản:</strong> {employee.TaiKhoan}
                     </Card.Text>
-                    <Card.Text>
+                    <Card.Text className="m-0">
                       <strong>Họ tên:</strong> {employee.HoTen}
                     </Card.Text>
-                    <Card.Text>
+                    <Card.Text className="m-0">
                       <strong>Liên hệ:</strong> {employee.LienHe}
                     </Card.Text>
-                    <div className="d-flex flex-column">
-                      <button className="btn btn-secondary mb-2">
+                    <div className="d-flex flex-column mt-2">
+                      <Link
+                        href={`/admin/employee_account/${employee.MaTaikhoan}`}
+                        className="btn btn-secondary mb-2"
+                      >
                         Xem thông tin
-                      </button>
+                      </Link>
                       <button
                         className="btn btn-danger"
                         onClick={() => {

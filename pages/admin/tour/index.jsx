@@ -20,7 +20,7 @@ export default function Tour() {
           //"https://api-bookingnodejs.onrender.com/api/tour"
           "http://localhost:2024/api/tour"
         );
-        
+
         console.log("Danh sách tour:", response.data);
         setTour(response.data);
       } catch (error) {
@@ -82,16 +82,39 @@ export default function Tour() {
       <AdminLayout />
       <div className="main-body">
         <div className="d-flex align-items-center justify-content-between">
-          <h4 className="fw-bold">Quản lý tour</h4>
+          <h4 className="fw-bold">QUẢN LÝ TOUR</h4>
           <div
             onClick={handleReload}
-            className="d-flex align-items-center btn btn-secondary"
+            className="d-flex align-items-center btn btn-success"
           >
             <i className="fa-solid fa-square-plus me-2"></i>
             <a className="text-decoration-none text-white">Thêm tour mới</a>
           </div>
         </div>
-        <Table style={{ fontSize: "14px" }} className="mt-3" responsive striped>
+        <div className="d-flex align-items-center justify-content-between mt-2">
+          <div className="d-flex align-items-center">
+            <input
+            placeholder="Tìm kiếm ..."
+              id="search-input-item"
+              className=" form-control me-1"
+              type="text"
+            />
+            <button className="btn btn-primary">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+          <div>
+            <i className="fa-solid fa-filter me-1"></i>
+            <span className="fw-bolder">Xắp sếp</span>
+            <select className="ms-3">
+              <option value="newItem">Ngày gần đây</option>
+              <option value="lowToHigh">Giá thấp đến cao</option>
+              <option value="highToLow">Giá cao đến thấp</option>
+              <option value="highToLow">A - Z</option>
+            </select>
+          </div>
+        </div>
+        <Table style={{ fontSize: "14px" }} className="mt-2" responsive striped>
           <thead>
             <tr>
               <th>Ảnh tour</th>
