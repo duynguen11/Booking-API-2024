@@ -33,7 +33,6 @@ const HistoryBooking = () => {
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
-    console.log("ID tài khoản KH", userId);
     try {
       const fetchHistory = async () => {
         const response = await axios.post(
@@ -43,13 +42,41 @@ const HistoryBooking = () => {
           }
         );
         console.log("Dữ liệu history", response.data);
-        setHisBooking(response.data);
+        // Kiểm tra response.data có phải là mảng không trước khi set state
+        if (Array.isArray(response.data)) {
+          setHisBooking(response.data);
+        }
       };
       fetchHistory();
     } catch (err) {
       console.error("Error fetching history !", err);
     }
   }, []);
+
+  const handleUpdateStatus = async (MaDatTour) => {
+    try {
+      // Gọi API để cập nhật trạng thái của tour
+      const response = await axios.put(
+        "http://localhost:2024/api/chitietdattour/updateBookingStatus",
+        {
+          TrangThai: "Tour đã bị hủy",
+          MaDatTour: MaDatTour, // Trạng thái mới
+        }
+      );
+
+      // Kiểm tra xem cập nhật trạng thái có thành công hay không
+      if (response.status === 200) {
+        const updatedDataBooking = hisBooking.map((booking) =>
+          booking.MaDatTour === MaDatTour
+            ? { ...booking, TrangThai: "Tour đã bị hủy" }
+            : booking
+        );
+        setHisBooking(updatedDataBooking);
+      }
+    } catch (error) {
+      console.error("Đã có lỗi xảy ra khi cập nhật trạng thái:", error);
+    }
+  };
 
   return (
     <div>
@@ -138,7 +165,16 @@ const HistoryBooking = () => {
                       <span className="bg-light rounded p-2">
                         {item.TrangThai}
                       </span>
-                      <span className="btn btn-danger">Hủy đơn</span>
+                      {/* Kiểm tra trạng thái của từng đơn hàng */}
+                      {(item.TrangThai === "Đang đợi duyệt" ||
+                        item.TrangThai === "HDV đã xác nhận") && (
+                        <button
+                          onClick={() => handleUpdateStatus(item.MaDatTour)}
+                          className="btn btn-danger"
+                        >
+                          Hủy đơn
+                        </button>
+                      )}
                     </CardBody>
                   </Card>
                 </Col>

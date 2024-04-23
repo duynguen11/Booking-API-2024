@@ -149,6 +149,8 @@ const Confirmbooking = () => {
 
   const handleSubmitBooking = async () => {
     try {
+      let response; // Định nghĩa biến response ở đây để sử dụng ngoài khối try-catch
+
       if (!selectedPaymentMethod) {
         toast.error("Vui lòng chọn phương thức thanh toán !");
       } else {
@@ -161,16 +163,17 @@ const Confirmbooking = () => {
         };
 
         // Gửi dữ liệu lên server API
-        const response = await axios.post(
+        response = await axios.post(
           "http://localhost:2024/api/chitietdattour/submitBooking ",
           formSubmitBooking
         );
-      }
-      if (response.status === 200) {
-        // Nếu mã trạng thái là 200, hiển thị cảnh báo đặt tour thành công
-        setSuccessModal(true);
-        //Xóa thong tin booking localstorage
-        localStorage.removeItem("formDataBooking");
+
+        if (response.status === 200) {
+          // Nếu mã trạng thái là 200, hiển thị cảnh báo đặt tour thành công
+          setSuccessModal(true);
+          // Xóa thông tin booking từ local storage
+          localStorage.removeItem("formDataBooking");
+        }
       }
       // Xử lý kết quả từ server (nếu cần)
     } catch (error) {

@@ -52,7 +52,6 @@ const TourList = () => {
           MaTaikhoan: userId,
         }
       );
-      console.log("Response:", response.data);
       if (response.status === 200) {
         toast.success("Đã lưu vào danh sách yêu thích.");
         // Xử lý thành công, có thể thực hiện các hành động khác ở đây nếu cần
@@ -491,7 +490,7 @@ const TourList = () => {
                               <Image
                                 width={"300"}
                                 height={"220"}
-                                src={t.URL}
+                                src={`http://localhost:2024/${t.URL}`}
                                 className="card-img-top rounded"
                                 alt={t.TenTour}
                               />
@@ -582,7 +581,7 @@ const TourList = () => {
                         <Image
                           width={"300"}
                           height={"220"}
-                          src={t.URL}
+                          src={`http://localhost:2024/${t.URL}`}
                           className="card-img-top rounded"
                           alt={t.TenTour}
                         />
@@ -687,7 +686,7 @@ const TourList = () => {
                               <Image
                                 width={"300"}
                                 height={"220"}
-                                src={t.URL}
+                                src={`http://localhost:2024/${t.URL}`}
                                 className="card-img-top rounded"
                                 alt={t.TenTour}
                               />

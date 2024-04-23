@@ -36,7 +36,7 @@ const Header = () => {
           <p className="m-0 me-3">
             Xin chào! <span className="text-danger">{userInfo.userName}</span>
           </p>
-          <Link className="btn btn-secondary me-3" href="">
+          <Link className="btn btn-secondary me-3" href="/admin/employee_joining">
             <i className="fa-solid fa-layer-group me-2"></i>Tour tham gia
           </Link>
           <button

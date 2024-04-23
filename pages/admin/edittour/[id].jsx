@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import AdminLayout from "@/components/AdminLayout/AdminLayout";
 import axios from "axios";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -148,7 +148,6 @@ const EditTour = () => {
           `http://localhost:2024/api/tour/update-schedule/${id}`,
           { NgayThamQuan, DiaDiem, NoiDung }
         );
-        console.log("Response:", response.data);
         // Đoạn mã xử lý phản hồi từ máy chủ ở đây (nếu cần)
       } catch (error) {
         console.error("Error:", error);
@@ -201,20 +200,66 @@ const EditTour = () => {
     fetchData();
   }, [id]);
 
+  const [employees, setEmployees] = useState([]);
+  const [selectedMaTaikhoan, setSelectedMaTaikhoan] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Gửi yêu cầu Axios không cần token
+        const response = await axios.get(
+          "http://localhost:2024/api/account/client/employees"
+        );
+
+        console.log("Danh sách nhân viên:", response.data);
+        setEmployees(response.data);
+        if (!selectedMaTaikhoan && response.data.length > 0) {
+          setSelectedMaTaikhoan(response.data[0].MaTaikhoan);
+        }
+        setDataLoaded(true);
+      } catch (error) {
+        console.error("Đã có lỗi xảy ra khi gửi yêu cầu:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleInsert = async () => {
     const requestData = {
       TTCT_ngaydi: formatDateTTCT(ngayDi),
       TTCT_ngayve: formatDateTTCT(ngayVe),
       TTCT_taptrung: tapTrung,
       TTCT_diemden: diemDen_ttct,
+      MaTaikhoan: parseInt(selectedMaTaikhoan),
     };
 
     try {
       const apiUrl = `http://localhost:2024/api/tour/ttct_tourInsert/${id}`;
+      console.log("Data to be sent:", requestData);
 
       const response = await axios.post(apiUrl, requestData);
-      console.log("Insertion success:", response.data);
       // Thực hiện các công việc cần thiết sau khi thêm mới thành công
+    } catch (error) {
+      console.error("Error:", error);
+      // Xử lý lỗi nếu có
+    }
+  };
+
+  const handleUpdate = async (id) => {
+    try {
+      const apiUrl = `http://localhost:2024/api/tour/ttct_tourUpdate/${id}`;
+      const requestData = {
+        TTCT_ngaydi: formatDateTTCT(ngayDi),
+        TTCT_ngayve: formatDateTTCT(ngayVe),
+        TTCT_taptrung: tapTrung,
+        TTCT_diemden: diemDen_ttct,
+        MaTaikhoan: parseInt(selectedMaTaikhoan),
+      };
+
+      const response = await axios.put(apiUrl, requestData);
+      console.log("Data to be update:", requestData);
+
+      // Thực hiện các công việc cần thiết sau khi cập nhật thành công
     } catch (error) {
       console.error("Error:", error);
       // Xử lý lỗi nếu có
@@ -244,32 +289,10 @@ const EditTour = () => {
           },
         }
       );
-      if (response.status === 200) {
-        toast.success("Cập nhật thông tin thành công .");
-      }
       // Cập nhật giao diện hoặc thông báo thành công tùy ý
     } catch (error) {
       console.error("Lỗi khi cập nhật ảnh đại diện:", error.message);
       // Xử lý lỗi hoặc hiển thị thông báo lỗi tùy ý
-    }
-  };
-
-  const handleUpdate = async (id) => {
-    try {
-      const apiUrl = `http://localhost:2024/api/tour/ttct_tourUpdate/${id}`;
-      const requestData = {
-        TTCT_ngaydi: formatDateTTCT(ngayDi),
-        TTCT_ngayve: formatDateTTCT(ngayVe),
-        TTCT_taptrung: tapTrung,
-        TTCT_diemden: diemDen_ttct,
-      };
-
-      const response = await axios.put(apiUrl, requestData);
-      console.log("Update success:", response.data);
-      // Thực hiện các công việc cần thiết sau khi cập nhật thành công
-    } catch (error) {
-      console.error("Error:", error);
-      // Xử lý lỗi nếu có
     }
   };
 
@@ -335,7 +358,7 @@ const EditTour = () => {
           `http://localhost:2024/api/chitietgiatour/ctgt/${id}`
         );
         const data = response.data;
-        console.log('Dữ liệu giá tour:', data)
+        console.log("Dữ liệu giá tour:", data);
         // Cập nhật dữ liệu từ URL vào state formData
         const filteredData = {};
         data.forEach((item) => {
@@ -379,7 +402,6 @@ const EditTour = () => {
     try {
       const apiURL = "http://localhost:2024/api/chitietgiatour/createctgt";
       const response = await axios.post(apiURL, dataCTGT);
-      console.log("Yêu cầu đã được gửi thành công:", response.data); // Thông báo thành công
     } catch (err) {
       console.error("Đã có lỗi xảy ra khi gửi yêu cầu:", err.message); // Thông báo lỗi
     }
@@ -430,7 +452,6 @@ const EditTour = () => {
           },
         }
       );
-      console.log("Images extra uploaded:", response.data);
       // Xử lý phản hồi nếu cần
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -469,13 +490,13 @@ const EditTour = () => {
           <div className="col-8">
             <div className="mb-3">
               <Image
-                width={'700'}
-                height={'500'}
+                width={"700"}
+                height={"500"}
                 //src={`https://api-bookingnodejs.onrender.com/${tour.URL}`}
                 src={`http://localhost:2024/${tour.URL}`}
                 alt="Tour Big Image"
                 className="mr-3 rounded"
-                style={{ width: "100%", objectFit:'cover' }}
+                style={{ width: "100%", objectFit: "cover" }}
               />
               <div className="mt-2">
                 <button
@@ -511,8 +532,8 @@ const EditTour = () => {
               {imageURLs.map((imageURL, index) => (
                 <div className="image-wrapper" key={index}>
                   <Image
-                    width={'200'}
-                    height={'200'}
+                    width={"200"}
+                    height={"200"}
                     className="rounded"
                     style={{
                       width: "200px",
@@ -538,8 +559,8 @@ const EditTour = () => {
                   {images.map((image, index) => (
                     <div key={index}>
                       <Image
-                      width={'200'}
-                      height={'200'}
+                        width={"200"}
+                        height={"200"}
                         style={{
                           width: "200px",
                           height: "200px",
@@ -728,7 +749,11 @@ const EditTour = () => {
                     }
                   >
                     {category.map((c) => {
-                      return <option key={c.MaChuDe} value={c.MaChuDe}>{c.TenChuDe}</option>;
+                      return (
+                        <option key={c.MaChuDe} value={c.MaChuDe}>
+                          {c.TenChuDe}
+                        </option>
+                      );
                     })}
                   </select>
                 </div>
@@ -758,14 +783,32 @@ const EditTour = () => {
         </div>
 
         <div className="d-flex justify-content-around">
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1 }} className="pe-5">
             <h4 className="fw-bolder">Thông tin hướng dẫn viên</h4>
+              <label htmlFor="ttct_hdv">Chọn hướng dẫn viên</label>
+              <select style={{width: 'fit-content'}}
+                id="ttct_hdv"
+                className="form-select mb-4"
+                value={selectedMaTaikhoan} // Sử dụng selectedMaTaikhoan để đồng bộ giá trị đã chọn với state
+                onChange={(e) => setSelectedMaTaikhoan(e.target.value)} // Cập nhật giá trị khi có sự thay đổi
+              >
+                {employees.map((c) => (
+                  <option key={c.MaTaikhoan} value={c.MaTaikhoan}>
+                    {c.HoTen}
+                  </option>
+                ))}
+              </select>
             <div className="ps-3 mt-3">
               <div
                 style={{ width: "200px", height: "200px" }}
                 className="border rounded"
               >
-                <Image width={'200'} height={'200'} src="/avatar/avatar_default.jpg" alt="" />
+                <Image
+                  width={"200"}
+                  height={"200"}
+                  src="/avatar/avatar_default.jpg"
+                  alt=""
+                />
               </div>
               <div className="mt-2">
                 <div>Họ tên: {hoten}</div>
@@ -813,144 +856,148 @@ const EditTour = () => {
               value={diemDen_ttct}
               onChange={(e) => setDiemDen_ttct(e.target.value)}
             />
-            <div className="mt-2">
-              <button className="btn btn-secondary me-2" onClick={handleInsert}>
-                <i className="fa-solid fa-circle-down"></i>
-              </button>
-              <button
-                className="btn btn-secondary"
-                onClick={() => handleUpdate(id)}
-              >
-                Cập nhật
-              </button>
-            </div>
+
+            <button className="btn btn-secondary me-2" onClick={handleInsert}>
+              <i className="fa-solid fa-circle-down"></i>
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => handleUpdate(id)}
+            >
+              Cập nhật
+            </button>
           </div>
         </div>
 
-        <h4 className="fw-bolder mt-5">Thông tin lịch trình chi tiết</h4>
         <div>
-          <h5 className="fw-bolder mt-3">Danh sách lịch đã tạo</h5>
-          {lichtrinh.map((item, index) => {
-            return (
+          <h4 className="fw-bolder mt-5">Thông tin lịch trình chi tiết</h4>
+          <div>
+            <h5 className="fw-bolder mt-3">Danh sách lịch đã tạo</h5>
+            {lichtrinh.map((item, index) => {
+              return (
+                <div key={index}>
+                  <div className="d-flex justify-content-between">
+                    <input
+                      className="form-control me-5"
+                      type="text"
+                      placeholder="Ngày Thăm Quan"
+                      value={item.NgayThamQuan}
+                      onChange={(e) => {
+                        const updatedLichtrinh = [...lichtrinh];
+                        updatedLichtrinh[index].NgayThamQuan = e.target.value;
+                        setLichtrinh(updatedLichtrinh);
+                      }}
+                    />
+                    <input
+                      className="form-control"
+                      type="text"
+                      placeholder="Địa Điểm"
+                      value={item.DiaDiem}
+                      onChange={(e) => {
+                        const updatedLichtrinh = [...lichtrinh];
+                        updatedLichtrinh[index].DiaDiem = e.target.value;
+                        setLichtrinh(updatedLichtrinh);
+                      }}
+                    />
+                  </div>
+                  <label className="mt-3" htmlFor="NoiDung">
+                    Lịch trình di chuyển trong ngày:
+                  </label>
+                  <textarea
+                    className="form-control"
+                    cols="30"
+                    rows="5"
+                    placeholder="Nội Dung"
+                    value={item.NoiDung}
+                    onChange={(e) => {
+                      const updatedLichtrinh = [...lichtrinh];
+                      updatedLichtrinh[index].NoiDung = e.target.value;
+                      setLichtrinh(updatedLichtrinh);
+                    }}
+                  ></textarea>
+                  <div className="d-flex justify-content-end mt-2">
+                    <button
+                      className="btn btn-danger me-2"
+                      onClick={() => handleDeleteSchedule(item.MaLichtrinh)}
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() =>
+                        handleUpdateSchedule(item.MaLichtrinh, {
+                          NgayThamQuan: item.NgayThamQuan,
+                          DiaDiem: item.DiaDiem,
+                          NoiDung: item.NoiDung,
+                        })
+                      }
+                    >
+                      <i className="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  </div>
+                  <hr />
+                </div>
+              );
+            })}
+          </div>
+          <div>
+            {schedules.map((schedule, index) => (
               <div key={index}>
-                <div className="d-flex justify-content-between">
-                  <input
-                    className="form-control me-5"
-                    type="text"
-                    placeholder="Ngày Thăm Quan"
-                    value={item.NgayThamQuan}
-                    onChange={(e) => {
-                      const updatedLichtrinh = [...lichtrinh];
-                      updatedLichtrinh[index].NgayThamQuan = e.target.value;
-                      setLichtrinh(updatedLichtrinh);
-                    }}
-                  />
-                  <input
+                <h5 className="fw-bolder mt-4">
+                  Thêm lịch trình di chuyển mới
+                </h5>
+                <form onSubmit={handleSubmit_TTCT}>
+                  <div className="d-flex justify-content-between">
+                    <input
+                      className="form-control me-5"
+                      type="text"
+                      placeholder="Ngày Thăm Quan"
+                      name="NgayThamQuan"
+                      value={schedule.NgayThamQuan}
+                      onChange={(e) => handleChangeLichtrinh(e, index)}
+                    />
+                    <input
+                      className="form-control"
+                      type="text"
+                      placeholder="Địa Điểm"
+                      name="DiaDiem"
+                      value={schedule.DiaDiem}
+                      onChange={(e) => handleChangeLichtrinh(e, index)}
+                    />
+                  </div>
+                  <label className="mt-3" htmlFor="NoiDung">
+                    Lịch trình di chuyển trong ngày:
+                  </label>
+                  <textarea
                     className="form-control"
-                    type="text"
-                    placeholder="Địa Điểm"
-                    value={item.DiaDiem}
-                    onChange={(e) => {
-                      const updatedLichtrinh = [...lichtrinh];
-                      updatedLichtrinh[index].DiaDiem = e.target.value;
-                      setLichtrinh(updatedLichtrinh);
-                    }}
-                  />
-                </div>
-                <label className="mt-3" htmlFor="NoiDung">
-                  Lịch trình di chuyển trong ngày:
-                </label>
-                <textarea
-                  className="form-control"
-                  cols="30"
-                  rows="5"
-                  placeholder="Nội Dung"
-                  value={item.NoiDung}
-                  onChange={(e) => {
-                    const updatedLichtrinh = [...lichtrinh];
-                    updatedLichtrinh[index].NoiDung = e.target.value;
-                    setLichtrinh(updatedLichtrinh);
-                  }}
-                ></textarea>
-                <div className="d-flex justify-content-end mt-2">
-                  <button
-                    className="btn btn-danger me-2"
-                    onClick={() => handleDeleteSchedule(item.MaLichtrinh)}
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() =>
-                      handleUpdateSchedule(item.MaLichtrinh, {
-                        NgayThamQuan: item.NgayThamQuan,
-                        DiaDiem: item.DiaDiem,
-                        NoiDung: item.NoiDung,
-                      })
-                    }
-                  >
-                    <i className="fa-solid fa-pen-to-square"></i>
-                  </button>
-                </div>
-                <hr />
+                    cols="30"
+                    rows="5"
+                    placeholder="Nội Dung"
+                    name="NoiDung"
+                    value={schedule.NoiDung}
+                    onChange={(e) => handleChangeLichtrinh(e, index)}
+                  ></textarea>
+                  <hr />
+                </form>
               </div>
-            );
-          })}
-        </div>
-        <div>
-          {schedules.map((schedule, index) => (
-            <div key={index}>
-              <h5 className="fw-bolder mt-4">Thêm lịch trình di chuyển mới</h5>
-              <form onSubmit={handleSubmit_TTCT}>
-                <div className="d-flex justify-content-between">
-                  <input
-                    className="form-control me-5"
-                    type="text"
-                    placeholder="Ngày Thăm Quan"
-                    name="NgayThamQuan"
-                    value={schedule.NgayThamQuan}
-                    onChange={(e) => handleChangeLichtrinh(e, index)}
-                  />
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder="Địa Điểm"
-                    name="DiaDiem"
-                    value={schedule.DiaDiem}
-                    onChange={(e) => handleChangeLichtrinh(e, index)}
-                  />
-                </div>
-                <label className="mt-3" htmlFor="NoiDung">
-                  Lịch trình di chuyển trong ngày:
-                </label>
-                <textarea
-                  className="form-control"
-                  cols="30"
-                  rows="5"
-                  placeholder="Nội Dung"
-                  name="NoiDung"
-                  value={schedule.NoiDung}
-                  onChange={(e) => handleChangeLichtrinh(e, index)}
-                ></textarea>
-                <hr />
-              </form>
-            </div>
-          ))}
-        </div>
-        <div className="d-flex justify-content-between">
-          <button
-            className="btn btn-secondary"
-            onClick={handleCreateAnotherSchedule}
-          >
-            Tạo thêm lịch
-          </button>
-          <button
-            className="btn btn-success"
-            type="submit"
-            onClick={handleSubmit_TTCT}
-          >
-            <i className="fa-solid fa-arrow-up-from-bracket"></i>
-          </button>
+            ))}
+          </div>
+
+          <div className="d-flex justify-content-between">
+            <button
+              className="btn btn-secondary"
+              onClick={handleCreateAnotherSchedule}
+            >
+              Tạo thêm lịch
+            </button>
+            <button
+              className="btn btn-success"
+              type="submit"
+              onClick={handleSubmit_TTCT}
+            >
+              <i className="fa-solid fa-arrow-up-from-bracket"></i>
+            </button>
+          </div>
         </div>
       </div>
     </>

@@ -28,7 +28,6 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target)
     setFormData({
       ...formData,
       [name]: value,
@@ -52,6 +51,10 @@ const Register = () => {
       document.getElementById("password").classList.add("is-invalid");
       return;
     }
+    if (!formData.confirmMatKhau) {
+      document.getElementById("confirmPassword").classList.add("is-invalid");
+      return;
+    }
 
     if (formData.MatKhau !== formData.confirmMatKhau) {
       setPasswordError("Mật khẩu và xác nhận mật khẩu không khớp");
@@ -59,7 +62,7 @@ const Register = () => {
     }
 
     try {
-      console.log('Tài khoản đăng ký:', formData)
+      console.log("Tài khoản đăng ký:", formData);
       const response = await axios.post(
         "http://localhost:2024/api/account/register",
         formData
@@ -87,11 +90,14 @@ const Register = () => {
           </h3>
           <div className="d-flex justify-content-center">
             <Col md={6} className="p-5 rounded shadow">
-              <h4 className="text-center fw-bolder">Thông tin đăng ký tài khoản</h4>
+              <h4 className="text-center fw-bolder">
+                Thông tin đăng ký tài khoản
+              </h4>
               <Form className="fw-bolder mt-4" onSubmit={handleSubmit}>
                 <Form.Group controlId="username">
                   <Form.Label>
-                  <i className="fa-regular fa-user me-1"></i>Tài khoản đăng nhập<span className="text-danger"> (*)</span>
+                    <i className="fa-regular fa-user me-1"></i>Tài khoản đăng
+                    nhập<span className="text-danger"> (*)</span>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -114,7 +120,8 @@ const Register = () => {
 
                 <Form.Group controlId="email" className="mt-3">
                   <Form.Label className="">
-                  <i className="fa-regular fa-envelope me-1"></i>Email đăng ký<span className="text-danger"> (*)</span>
+                    <i className="fa-regular fa-envelope me-1"></i>Email đăng ký
+                    <span className="text-danger"> (*)</span>
                   </Form.Label>
                   <Form.Control
                     type="email"
@@ -135,7 +142,8 @@ const Register = () => {
 
                 <Form.Group controlId="password" className="mt-3">
                   <Form.Label className="">
-                  <i className="fa-solid fa-unlock-keyhole me-1"></i>Mật khẩu<span className="text-danger"> (*)</span>
+                    <i className="fa-solid fa-unlock-keyhole me-1"></i>Mật khẩu
+                    <span className="text-danger"> (*)</span>
                   </Form.Label>
                   <InputGroup>
                     <Form.Control
@@ -160,7 +168,8 @@ const Register = () => {
 
                 <Form.Group controlId="confirmPassword" className="mt-3">
                   <Form.Label className="">
-                  <i className="fa-regular fa-circle-check me-1"></i>Xác nhận mật khẩu<span className="text-danger"> (*)</span>
+                    <i className="fa-regular fa-circle-check me-1"></i>Xác nhận
+                    mật khẩu<span className="text-danger"> (*)</span>
                   </Form.Label>
                   <Form.Control
                     type="password"
@@ -168,16 +177,23 @@ const Register = () => {
                     name="confirmMatKhau"
                     value={formData.confirmMatKhau}
                     onChange={handleChange}
+                    className={
+                      formData.confirmMatKhau.trim() === "" && submitted
+                        ? "is-invalid"
+                        : ""
+                    }
                   />
-                  {passwordError && (
-                    <span className="mt-1" style={{ color: "red" }}>
-                      {passwordError}
-                    </span>
+                  {formData.confirmMatKhau.trim() === "" && submitted && (
+                    <div className="invalid-feedback">
+                      Xác nhận lại mật khẩu
+                    </div>
                   )}
                 </Form.Group>
-
+                {passwordError && (
+                  <span style={{ color: "red" }}>{passwordError}</span>
+                )}
                 <Button
-                  className="mt-4 w-100 py-2"
+                  className="mt-3 w-100 py-2"
                   variant="primary"
                   type="submit"
                 >

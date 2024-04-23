@@ -78,6 +78,7 @@ const ThongtinTour = () => {
           `http://localhost:2024/api/tour/chitiettour/${id}`
         ); // Thay đổi endpoint để lấy lịch trình của từng tour
         setChitiettour(response.data);
+        console.log('Dữ liệu TTCT:', response.data)
       } catch (error) {
         console.error("Error fetching lich trinh data:", error);
       }
@@ -242,7 +243,7 @@ const ThongtinTour = () => {
                   <Image
                     width={700}
                     height={200}
-                    src={t.URL}
+                    src={`http://localhost:2024/${t.URL}`}
                     className="card-img-top rounded me-1"
                     alt={t.TenTour}
                     style={{ width: "100%", height: "90%" }}
@@ -317,7 +318,7 @@ const ThongtinTour = () => {
                   className="rounded mt-2"
                   width={"300"}
                   height={"200"}
-                  src={item.URL}
+                  src={`http://localhost:2024/${item.URL}`}
                   alt={`Ảnh ${index + 1}`}
                 />
               </div>
@@ -421,7 +422,11 @@ const ThongtinTour = () => {
                     className="rounded"
                     width={"150"}
                     height={"150"}
-                    src="/avatar/avatar_default.jpg"
+                    src={
+                      c.Avatar_URL
+                        ? `http://localhost:2024/${c.Avatar_URL}`
+                        : "/avatars/avatar_default.jpg"
+                    }
                     alt=""
                   />
                 </div>

@@ -296,9 +296,13 @@ const Booking = () => {
       const totalTiket = getTotalQuantity();
 
       const requiredFields = ["HoTen", "Email", "LienHe"];
-      const emptyFields = requiredFields.filter(
-        (field) => formData[field].trim() === ""
-      );
+      const emptyFields = requiredFields.filter((field) => {
+        if (field === "LienHe") {
+          return !formData[field]; // Kiểm tra xem giá trị của LienHe có tồn tại không
+        } else {
+          return formData[field].trim() === ""; // Kiểm tra các trường khác như thông thường
+        }
+      });
       if (emptyFields.length > 0) {
         // Hiển thị thông báo hoặc thực hiện các xử lý khác khi có trường rỗng
         toast.error("Vui lòng điền đầy đủ thông tin !");
@@ -313,7 +317,7 @@ const Booking = () => {
       const formDataBooking = {
         ...formData,
         MaTour: tourId,
-        MaTaikhoan_KH: parseInt(userId) || "",
+        MaTaikhoan_KH: userId ? parseInt(userId) : undefined,
         SoCho: totalTiket,
         TongGia: totalPrice,
         MaTaikhoan_HDV: hdvId,
@@ -359,7 +363,7 @@ const Booking = () => {
               width={400}
               height={200}
               style={{ width: "100%", height: "100%" }}
-              src={tourInfo.URL}
+              src={`http://localhost:2024/${tourInfo.URL}`}
               alt="Hình ảnh tour"
             />
           </div>
@@ -425,7 +429,9 @@ const Booking = () => {
                       </InputGroup>
                     </Form.Group>
                     {submitted && !formData.Email.trim() && (
-                      <span className="text-danger fw-bolder">Vui lòng nhập email</span>
+                      <span className="text-danger fw-bolder">
+                        Vui lòng nhập email
+                      </span>
                     )}
                   </div>
                 </div>
@@ -443,14 +449,12 @@ const Booking = () => {
                           value={formData.LienHe}
                           onChange={handleInputChange}
                           className={
-                            submitted && !formData.LienHe.trim()
-                              ? "border-danger"
-                              : ""
+                            submitted && !formData.LienHe ? "border-danger" : ""
                           }
                         />
                       </InputGroup>
                     </Form.Group>
-                    {submitted && !formData.LienHe.trim() && (
+                    {submitted && !formData.LienHe && (
                       <span className="text-danger fw-bolder">
                         Vui lòng nhập số điện thoại
                       </span>
@@ -529,8 +533,12 @@ const Booking = () => {
                   height={150}
                   style={{ width: "150px", height: "150px" }}
                   className="rounded"
-                  src="/avatars/avatar_default.jpg"
-                  alt=""
+                  src={`http://localhost:2024/${
+                    selectedHDVInfo.Avatar_URL ||
+                    tourInfo.Avatar_URL ||
+                    "/avatars/avatar_default.jpg"
+                  }`}
+                  alt="avatar-HDV"
                 />
                 <p className="m-0">
                   Mã HDV: {selectedHDVInfo.MaTaikhoan || tourInfo.MaTaikhoan}
@@ -556,7 +564,9 @@ const Booking = () => {
                   Giới tính: {selectedHDVInfo.GioiTinh || tourInfo.GioiTinh}
                 </p>
                 <p>SĐT liên hệ: {selectedHDVInfo.LienHe || tourInfo.LienHe}</p>
-                <p className="mb-0">Email liên hệ: {selectedHDVInfo.Email || tourInfo.Email}</p>
+                <p className="mb-0">
+                  Email liên hệ: {selectedHDVInfo.Email || tourInfo.Email}
+                </p>
               </div>
             </div>
           </div>
@@ -572,7 +582,7 @@ const Booking = () => {
                       height={100}
                       className="rounded"
                       style={{ width: "150px", height: "100px" }}
-                      src={tourInfo.URL}
+                      src={`http://localhost:2024/${tourInfo.URL}`}
                       alt="Hình ảnh tour"
                     />
                     <p className="m-0">Mã Tour: {tourInfo.MaTour}</p>

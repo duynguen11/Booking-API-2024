@@ -45,7 +45,6 @@ const Employee_account = () => {
   useEffect(() => {
     try {
       const fetchHistory = async () => {
-        console.log("ID HDV", id);
         const response = await axios.post(
           `http://localhost:2024/api/chitietdattour/historyJoinning`,
           {

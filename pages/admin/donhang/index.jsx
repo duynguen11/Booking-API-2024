@@ -4,8 +4,10 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Donhang = () => {
+  const router = useRouter();
   const [dataBooking, setDataBooking] = useState([]);
 
   const formatCurrency = (amount) => {
@@ -31,6 +33,31 @@ const Donhang = () => {
 
     fetchDataBooking();
   }, []);
+
+  const handleUpdateStatus = async (MaDatTour) => {
+    try {
+      // Gọi API để cập nhật trạng thái của tour
+      const response = await axios.put(
+        "http://localhost:2024/api/chitietdattour/updateBookingStatus",
+        {
+          TrangThai: "Tour đã được duyệt",
+          MaDatTour: MaDatTour, // Trạng thái mới
+        }
+      );
+
+      // Kiểm tra xem cập nhật trạng thái có thành công hay không
+      if (response.status === 200) {
+        const updatedDataBooking = dataBooking.map((booking) =>
+          booking.MaDatTour === MaDatTour
+            ? { ...booking, TrangThai: "Tour đã được duyệt" }
+            : booking
+        );
+        setDataBooking(updatedDataBooking);
+      }
+    } catch (error) {
+      console.error("Đã có lỗi xảy ra khi cập nhật trạng thái:", error);
+    }
+  };
 
   return (
     <>
@@ -78,6 +105,7 @@ const Donhang = () => {
               <th>Thời gian đặt</th>
               <th>Tổng giá</th>
               <th>Trạng thái</th>
+              <th>Thao tác</th>
             </tr>
           </thead>
           <tbody>
@@ -91,7 +119,7 @@ const Donhang = () => {
                 <td>
                   <Image
                     width={70}
-                    height={70}
+                    height={50}
                     src={`http://localhost:2024${booking.HinhAnhTour}`}
                   />
                 </td>
@@ -100,6 +128,16 @@ const Donhang = () => {
                 <td>{new Date(booking.ThoiGianDat).toLocaleString()}</td>
                 <td>{formatCurrency(booking.TongGia)} VND</td>
                 <td>{booking.TrangThai}</td>
+                {booking.TrangThai === "HDV đã xác nhận" && (
+                  <td>
+                    <button
+                      onClick={() => handleUpdateStatus(booking.MaDatTour)}
+                      className="btn btn-success"
+                    >
+                      Phê duyệt
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

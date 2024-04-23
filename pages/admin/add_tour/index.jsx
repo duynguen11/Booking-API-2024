@@ -86,7 +86,7 @@ const AddTourForm = () => {
         ),
       ]);
 
-      if (response1.data && response2.data) {
+      if (response2.data) {
         router.push("/admin/tour");
       }
     } catch (error) {
@@ -115,19 +115,19 @@ const AddTourForm = () => {
       <div className="main-body">
         <h4 className="fw-bold">Tạo tour mới</h4>
         <form
-          className="row d-flex justify-content-around w-70 my-4"
+          className="row d-flex justify-content-around w-70 my-3"
           onSubmit={handleSubmit}
         >
           <div
             style={{ marginLeft: "1rem" }}
             className="col-7 rounded bg-white"
           >
-            <label className="mt-3">Hình ảnh tour:</label>
+            <label className="">Hình ảnh tour:</label>
             <div className="">
               {formData.HinhAnh.map((file, index) => (
                 <Image
                   width={"600"}
-                  height={"550"}
+                  height={"500"}
                   className="py-1 rounded"
                   key={index}
                   src={URL.createObjectURL(file)}
