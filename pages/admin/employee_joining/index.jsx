@@ -7,6 +7,8 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EmployJoining = () => {
   const YourContext = createContext("HDV đã xác nhận");
@@ -77,6 +79,7 @@ const EmployJoining = () => {
             ? { ...booking, TrangThai: "HDV đã xác nhận" }
             : booking
         );
+        toast.success("Xác nhận tham gia tour");
         setHisJoinning(updatedDataBooking);
       }
     } catch (error) {
@@ -88,6 +91,7 @@ const EmployJoining = () => {
   return (
     <>
       <AdminLayout />
+      <ToastContainer />
       <div className="main-body">
         <h4 className="fw-bolder">TOUR ĐANG THAM GIA</h4>
         <div className="d-flex align-items-center justify-content-between mt-2">
@@ -139,19 +143,29 @@ const EmployJoining = () => {
                       <hr className="m-0" />
                     </CardText>
                   </CardBody>
-                  <CardBody className="d-flex justify-content-between pt-0 mb-0">
-                    <span className="bg-light rounded p-2">
-                      {item.TrangThai}
-                    </span>
-                    {item.TrangThai === "Đang đợi duyệt" && (
-                      <button
-                        onClick={() => handleSubmit(item.MaDatTour)}
-                        className="btn btn-success"
-                      >
-                        Tham gia
-                      </button>
-                    )}
-                  </CardBody>
+                  <div className="d-flex flex-wrap">
+                    <CardBody className="d-flex pt-0 mb-0">
+                      <span className="bg-light rounded p-1">
+                        {item.TrangThai}
+                      </span>
+                      {item.TrangThai === "Đang đợi duyệt" && (
+                        <button
+                          onClick={() => handleSubmit(item.MaDatTour)}
+                          className="btn btn-success"
+                        >
+                          Xác nhận tham gia
+                        </button>
+                      )}
+                      {item.TrangThai === "Tour đã được duyệt" && (
+                        <button
+                          className="btn btn-info"
+                          disabled={true} // Optionally disable the button when already joined
+                        >
+                          Đã tham gia
+                        </button>
+                      )}
+                    </CardBody>
+                  </div>
                 </Card>
               </Col>
             ))}

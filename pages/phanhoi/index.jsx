@@ -77,14 +77,15 @@ const Phanhoi = () => {
             <h4>Hộp thư đã gửi</h4>
             <div className="border rounded mt-3 me-5">
               {phanhoi.map((message, index) => (
-                <div key={index} className="message-box px-4 mt-3">
+                <div key={index} className="message-box px-4 my-4">
                   <div
                     style={{ display: "flex", justifyContent: "space-between" }}
                     className="mb-4"
                   >
                     <div style={{ marginRight: "10px" }}>
                       <label>
-                        <strong>Người gửi:</strong> <span className="text-danger">{message.hoten}</span>
+                        <strong>Người gửi:</strong>{" "}
+                        <span className="text-danger">{message.hoten}</span>
                       </label>
                       <p
                         style={{ width: "fit-content" }}
@@ -96,7 +97,9 @@ const Phanhoi = () => {
                     </div>
 
                     <div className="mt-5 pt-5">
-                      <strong className="text-primary">Hệ thống phản hồi:</strong>
+                      <strong className="text-primary">
+                        Hệ thống phản hồi:
+                      </strong>
                       <p
                         style={{ width: "fit-content" }}
                         className="border rounded bg-light p-3 mb-0 mt-2"
@@ -108,6 +111,32 @@ const Phanhoi = () => {
                   </div>
                 </div>
               ))}
+              <div className="bg-light rounded p-3 row">
+                <div className="d-flex align-items-center col">
+                  <i
+                    style={{ fontSize: "20px" }}
+                    className="fa-regular fa-face-smile-wink me-3"
+                  ></i>
+                  <i
+                    style={{ fontSize: "20px" }}
+                    className="fa-solid fa-paperclip me-4"
+                  ></i>
+                  <input
+                    className="form-control py-3"
+                    type="text"
+                    placeholder="Viết tin nhắn ..."
+                  />
+                </div>
+                <div className="d-flex align-items-center col-1">
+                  <i
+                    style={{ fontSize: "20px" }}
+                    class="fa-solid fa-microphone-lines me-3"
+                  ></i>
+                  <div className="btn btn-info">
+                    <i className="fa-solid fa-paper-plane"></i>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

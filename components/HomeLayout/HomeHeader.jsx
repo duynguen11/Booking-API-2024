@@ -229,11 +229,16 @@ const HomeHeader = () => {
           <div className="d-flex align-items-center rounded fw-bolder">
             {localUserName ? (
               <div style={{ position: "relative" }}>
-                <div style={{ cursor: "pointer" }} onClick={handleToggleModal}>
+                <div style={{ cursor: "pointer" }} >
                   <p className="m-0 d-flex justify-content-between align-items-center">
-                    <i className="fa-regular fa-face-smile me-1"></i>Xin chào,{" "}
+                    <Link href={'/phanhoi'} className="btn btn-primary">
+                      <i class="fa-regular fa-message"></i>
+                    </Link>
+                    <Link href={'/touryeuthich'} className="btn btn-danger mx-2">
+                      <i class="fa-regular fa-heart fw-bolder"></i>
+                    </Link>
                     <span className="text-danger ms-1"> {localUserName}</span>
-                    <div className="py-1 px-2 ms-3 border rounded">
+                    <div onClick={handleToggleModal} className="py-1 px-2 ms-3 border rounded">
                       <i className="fa-solid fa-bars"></i>
                     </div>{" "}
                   </p>
@@ -293,7 +298,9 @@ const HomeHeader = () => {
             onHide={handleClose}
           >
             <Modal.Header closeButton>
-              <Modal.Title className="fw-bolder">Vui Lòng Đăng Nhập Tài Khoản</Modal.Title>
+              <Modal.Title className="fw-bolder">
+                Vui Lòng Đăng Nhập Tài Khoản
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form>

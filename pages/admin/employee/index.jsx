@@ -71,7 +71,6 @@ const Employee = () => {
           },
         })
         .then((response) => {
-          console.log("Danh sách nhân viên:", response.data);
           setEmployees(response.data);
           setDataLoaded(true);
         })
@@ -145,7 +144,7 @@ const Employee = () => {
             </div>
           )}
         </div>
-        <div className="d-flex align-items-center justify-content-between mt-2">
+        <div className="d-flex align-items-center justify-content-between my-3">
           <div className="d-flex align-items-center">
             <input
               placeholder="Tìm kiếm ..."
@@ -168,7 +167,7 @@ const Employee = () => {
             </select>
           </div>
         </div>
-        <Row xs={1} md={2} lg={3} className="g-4 mt-1">
+        <Row xs={1} md={2} lg={3} className="g-4">
           {employees.length > 0 ? (
             employees.map((employee) => (
               <Col key={employee.MaTaikhoan} className="text-center">
@@ -218,7 +217,7 @@ const Employee = () => {
               </Col>
             ))
           ) : (
-            <div className="text-danger">KHÔNG THỂ LẤY DỮ LIỆU NHÂN VIÊN</div>
+            <div className="text-danger">Không thể tải lên dữ liệu nhân viên ...</div>
           )}
         </Row>
       </div>

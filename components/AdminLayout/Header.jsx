@@ -19,7 +19,6 @@ const Header = () => {
       const decodedToken = jwtDecode(token);
       // Lưu thông tin từ token vào trạng thái
       setUserInfo(decodedToken);
-      console.log("Dữ liệu token encode:", decodedToken);
     }
   }, []);
 
@@ -27,16 +26,24 @@ const Header = () => {
     <div className="header-admin d-flex justify-content-between">
       <div className="logo">
         <Link className="fw-bold" href="/admin">
-          HỆ THỐNG QUẢN LÝ ADMIN
+          HỆ THỐNG QUẢN LÝ <span className="text-primary">NEXTBOOKING</span>
         </Link>
       </div>
+      {userInfo && userInfo.role === "admin" && (
+        <div className="fw-bolder">
+          Xin chào, <span className="text-danger">ADMIN</span>
+        </div>
+      )}
       {userInfo && userInfo.role === "nhanvien" && (
         <div className="d-flex justify-content-between align-items-center">
           <p className="m-0 me-3">Mã nhân viên: {userInfo.userId}</p>
           <p className="m-0 me-3">
-            Xin chào! <span className="text-danger">{userInfo.userName}</span>
+            <span className="fw-bolder text-danger">{userInfo.userName}</span>
           </p>
-          <Link className="btn btn-secondary me-3" href="/admin/employee_joining">
+          <Link
+            className="btn btn-secondary me-3"
+            href="/admin/employee_joining"
+          >
             <i className="fa-solid fa-layer-group me-2"></i>Tour tham gia
           </Link>
           <button

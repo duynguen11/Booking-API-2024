@@ -133,7 +133,7 @@ const HistoryBooking = () => {
                     <CardImg
                       height={200}
                       width={250}
-                      src={item.URL}
+                      src={`http://localhost:2024/${item.URL}`}
                       alt="Card image cap"
                     />
                     <CardBody>
@@ -161,20 +161,29 @@ const HistoryBooking = () => {
                         <hr className="m-0" />
                       </CardText>
                     </CardBody>
-                    <CardBody className="d-flex justify-content-between pt-0 mb-0">
+                    <CardBody className="d-flex justify-content-between">
                       <span className="bg-light rounded p-2">
                         {item.TrangThai}
                       </span>
-                      {/* Kiểm tra trạng thái của từng đơn hàng */}
-                      {(item.TrangThai === "Đang đợi duyệt" ||
-                        item.TrangThai === "HDV đã xác nhận") && (
-                        <button
-                          onClick={() => handleUpdateStatus(item.MaDatTour)}
-                          className="btn btn-danger"
-                        >
-                          Hủy đơn
-                        </button>
-                      )}
+                      <div>
+                        {(item.TrangThai === "Đang đợi duyệt" ||
+                          item.TrangThai === "HDV đã xác nhận") && (
+                          <button
+                            onClick={() => handleUpdateStatus(item.MaDatTour)}
+                            className="btn btn-danger"
+                          >
+                            Hủy đơn
+                          </button>
+                        )}
+                        {item.TrangThai === "Tour đã được duyệt" && (
+                          <button
+                            className="btn btn-info"
+                            disabled={true} // Optionally disable the button when already joined
+                          >
+                            Đã tham gia
+                          </button>
+                        )}
+                      </div>
                     </CardBody>
                   </Card>
                 </Col>

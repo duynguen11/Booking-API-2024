@@ -23,6 +23,7 @@ const ThongtinUser = () => {
         .get(`http://localhost:2024/api/account/user-info/${userId}`)
         .then((response) => {
           setUserInfo(response.data.userInfo);
+          console.log("Thông tin user:", response.data.userInfo);
           setIsLoggedIn(true); // Đánh dấu đã đăng nhập
         })
         .catch((error) => {
@@ -140,7 +141,7 @@ const ThongtinUser = () => {
                       style={{ width: "200px", height: "200px" }}
                       src={
                         userInfo.Avatar_URL
-                          ? userInfo.Avatar_URL
+                          ? `http://localhost:2024/${userInfo.Avatar_URL}`
                           : "/avatar/avatar_default.jpg"
                       }
                       alt="Avatar user"
@@ -195,7 +196,10 @@ const ThongtinUser = () => {
                       />
                     </div>
                     <div>
-                      <label className="fw-bolder">Mật khẩu <span className="text-danger">(Thay đổi mật khẩu)</span></label>
+                      <label className="fw-bolder">
+                        Mật khẩu{" "}
+                        <span className="text-danger">(Thay đổi mật khẩu)</span>
+                      </label>
                       <input
                         className="form-control"
                         type="text"

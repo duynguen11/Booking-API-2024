@@ -164,6 +164,7 @@ const EditTour = () => {
   const [gioitinh, setGioitinh] = useState("");
   const [email, setEmail] = useState("");
   const [lienhe, setLienhe] = useState("");
+  const [avatar, setAvatar] = useState("");
 
   function formatDateTTCT(dateString) {
     const date = new Date(dateString);
@@ -188,10 +189,12 @@ const EditTour = () => {
         setNgayVe(ngayVe);
         setTapTrung(data.TTCT_taptrung);
         setDiemDen_ttct(data.TTCT_diemden);
+        setAvatar(data.Avatar_URL);
         setHoten(data.HoTen);
         setGioitinh(data.GioiTinh);
         setEmail(data.Email);
         setLienhe(data.LienHe);
+        console.log("Dữ liệu tổng:", data);
       } catch (error) {
         console.error("Error fetching tour detail:", error);
       }
@@ -785,19 +788,20 @@ const EditTour = () => {
         <div className="d-flex justify-content-around">
           <div style={{ flex: 1 }} className="pe-5">
             <h4 className="fw-bolder">Thông tin hướng dẫn viên</h4>
-              <label htmlFor="ttct_hdv">Chọn hướng dẫn viên</label>
-              <select style={{width: 'fit-content'}}
-                id="ttct_hdv"
-                className="form-select mb-4"
-                value={selectedMaTaikhoan} // Sử dụng selectedMaTaikhoan để đồng bộ giá trị đã chọn với state
-                onChange={(e) => setSelectedMaTaikhoan(e.target.value)} // Cập nhật giá trị khi có sự thay đổi
-              >
-                {employees.map((c) => (
-                  <option key={c.MaTaikhoan} value={c.MaTaikhoan}>
-                    {c.HoTen}
-                  </option>
-                ))}
-              </select>
+            <label htmlFor="ttct_hdv">Chọn hướng dẫn viên</label>
+            <select
+              style={{ width: "fit-content" }}
+              id="ttct_hdv"
+              className="form-select mb-4"
+              value={selectedMaTaikhoan} // Sử dụng selectedMaTaikhoan để đồng bộ giá trị đã chọn với state
+              onChange={(e) => setSelectedMaTaikhoan(e.target.value)} // Cập nhật giá trị khi có sự thay đổi
+            >
+              {employees.map((c) => (
+                <option key={c.MaTaikhoan} value={c.MaTaikhoan}>
+                  {c.HoTen}
+                </option>
+              ))}
+            </select>
             <div className="ps-3 mt-3">
               <div
                 style={{ width: "200px", height: "200px" }}
@@ -806,8 +810,8 @@ const EditTour = () => {
                 <Image
                   width={"200"}
                   height={"200"}
-                  src="/avatar/avatar_default.jpg"
-                  alt=""
+                  src={`http://localhost:2024${avatar}`}
+                  alt="image-HDV"
                 />
               </div>
               <div className="mt-2">

@@ -257,7 +257,7 @@ const Confirmbooking = () => {
                     <div>
                       <Image
                         className="rounded"
-                        src={"/avatars/avatar_default.jpg"}
+                        src={`http://localhost:2024/${dataHDV.Avatar_URL}`}
                         width={150}
                         height={150}
                         alt="HDV-picture"
@@ -290,7 +290,7 @@ const Confirmbooking = () => {
                                 className="rounded"
                                 width={150}
                                 height={100}
-                                src={tour.URL}
+                                src={`http://localhost:2024/${tour.URL}`}
                                 alt="Hinh-tour"
                               />
                               <p className="mb-0">Mã Tour: {tour.MaTour}</p>

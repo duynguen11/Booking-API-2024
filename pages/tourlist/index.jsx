@@ -11,8 +11,10 @@ import ScrollToTop from "@/components/HomeLayout/ScrollToTop";
 import CardDataPagination from "@/components/HomeLayout/CardDataPagination";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 const TourList = () => {
+  const router = useRouter();
   const [initialTour, setInitialTour] = useState([]);
   const [sortType, setSortType] = useState("newest");
   const [searchTerm, setSearchTerm] = useState("");
@@ -296,6 +298,11 @@ const TourList = () => {
     return isDateFiltered && isLocationFiltered && isAreaFiltered;
   });
 
+  const handleClearFilter = () => {
+    // Sử dụng phương thức reload() của router để làm mới trang
+    router.reload();
+  };
+
   return (
     <>
       <HomeLayout />
@@ -432,6 +439,12 @@ const TourList = () => {
                     </Form.Label>
                   </Form.Group>
                 </Form>
+                <button
+                  className="btn btn-primary w-100 mt-3 fw-bolder"
+                  onClick={handleClearFilter}
+                >
+                  Loại bỏ lọc
+                </button>
               </div>{" "}
             </div>
             <div className="col-md-9">

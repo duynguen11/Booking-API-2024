@@ -245,8 +245,8 @@ const Employee_account = () => {
                   <td>{item.MaTour}</td>
                   <td>
                     <Image
-                      width={100}
-                      height={100}
+                      width={70}
+                      height={50}
                       className="rounded"
                       src={`http://localhost:2024/${item.URL}`}
                       alt="image avatar"
